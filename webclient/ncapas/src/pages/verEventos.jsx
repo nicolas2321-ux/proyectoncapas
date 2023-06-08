@@ -8,17 +8,19 @@ import {ImLocation} from 'react-icons/im'
 import { ModalEditarEvento } from "../components/modalEditarEvento.jsx"
 import { useState } from "react"
 import {BsFillPersonFill} from 'react-icons/bs'
+import { ModalAgregarColaboradores } from "../components/modalAgregarColaboradores.jsx"
 
 export function VerEventos(){
     const [verEditarEvento, setVerEditarEvento] = useState(false)
-
+    const [mostraColaboradores, setMostrarcolaboradores] = useState(false)
     function verColaboradores(){
-
+        setMostrarcolaboradores(true)
     }
     function editarEvento(){
         setVerEditarEvento(true)
         console.log('entre')
     }
+    
 
     return (
         <>
@@ -31,6 +33,11 @@ export function VerEventos(){
          localidad = {"Salamanca"}
          capacidad = {100}
          fecha  ={"2023-05-24"}/>
+
+         <ModalAgregarColaboradores
+         show = {mostraColaboradores}
+         onHide = {() => {setMostrarcolaboradores(false)}}
+         />
 
          
          <div className="contenedor-shows-todo">

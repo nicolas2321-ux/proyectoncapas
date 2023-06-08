@@ -1,35 +1,48 @@
-export function ModalAgregarColaboradores(){
+import Modal from 'react-bootstrap/Modal';
+import { Form } from "react-bootstrap"
+import { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table';
+import './../stylesheets/presentation.css'
+export function ModalAgregarColaboradores(props){
     function handleSave(){
-        
+
     }
     return(
         <>
-         <Modal show={props.show} onHide={props.onHide}>
-        <Modal.Header closeButton>
-            <Modal.Title>Registrarse</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <Form>
-                <Form.Group className="mb-3">
-                    <Form.Label className='mt-2'>Nombre completo</Form.Label>
-                    <Form.Control type="text" name='text' placeholder="John Doe"  onChange={(e) => setNombreCompleto(e.target.value)}  value={nombreCompleto} />
-                   
-                    <Form.Label className='mt-2'>Username</Form.Label>
-                    <Form.Control type="text" name='text' placeholder="John2321" onChange={(e) => setUsername(e.target.value)} value={username} />
-
-                    <Form.Label className='mt-2'>Contraseña</Form.Label>
-                    <Form.Control type="password" name='password' placeholder="Ultrasecretpassword" onChange={(e) => setPassword(e.target.value)}  />
-                </Form.Group>
-            </Form>
-        </Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={props.onHide}>
-                Cerrar
-            </Button>
-            <Button variant="primary" onClick={handleSave} >
-                Registrarme
-            </Button>
-        </Modal.Footer>
+         <Modal show={props.show} onHide={props.onHide} className="custom-modal"  style={{padding:"50px"}}>
+         <Form.Label className='m-2'>Agregar usuario al evento</Form.Label>
+        <Form.Control className='my-3' type="text" name='text' placeholder="John Doe"  />
+         <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Usuario</th>
+          <th>Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Nicolas Orellana</td>
+          <td>orellanaj2321@gmail.com</td>
+          <td><Button>Eliminar del evento</Button></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Nicolasio el malasio</td>
+          <td>orellanitas</td>
+          <td><Button>Eliminar del evento</Button></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Larry the Bird</td>
+          <td>Larrylacola</td>
+          <td><Button>Eliminar del evento</Button></td>
+        </tr>
+      </tbody>
+    </Table>
     </Modal>
         </>
     )

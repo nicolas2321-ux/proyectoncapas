@@ -27,3 +27,6 @@
     float: left;
     width: 50%;
 }
+.custom-modal .modal-dialog {
+    max-width: 1000px;
+  }
