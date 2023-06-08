@@ -1,0 +1,59 @@
+.contenedor-shows-todo{
+    background-color: black;
+}
+
+.titulo {
+    font-size: 40px;
+    padding: 40px;
+    text-align: center;
+    color : white;
+}
+
+.contenedor-btn{
+    position: relative;
+    height: 15vh;
+}
+
+.boton-mas {
+    
+    font-size: x-large;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FDBF36;
+    border-radius: 20px;
+    border: none;
+    padding: 3px 20px;
+}
+.boton-editar {
+    
+    font-size: x-large;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #57af1c;
+    border-radius: 20px;
+    border: none;
+    padding: 3px 20px;
+}
+
+.contenedor-solo-shows{
+    min-width: 600px;
+    flex-wrap: wrap;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    justify-content: space-between;
+}
+
+.cartelera {
+    width: calc(33.33% - 20px); 
+    margin-bottom: 20px; 
+}
+
+.btn-info:hover{
+    opacity: 0.8;
+}

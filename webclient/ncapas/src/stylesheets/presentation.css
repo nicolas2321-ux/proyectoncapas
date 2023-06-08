@@ -1,0 +1,29 @@
+.presentationFondo {
+    background-image: url('../images/fotoPresentacion.jpg');
+    background-size: cover;
+    object-fit: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.presentationTitle{
+
+    color: white;
+    font-size: 90px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.divLetras{
+    float: left;
+    width: 50%;
+}
