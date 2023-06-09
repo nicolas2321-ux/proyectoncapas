@@ -21,7 +21,7 @@ import { useDispatch } from 'react-redux';
 import {FaUserAlt} from 'react-icons/fa'
 import {BiLogOut} from 'react-icons/bi'
 import Swal from 'sweetalert2'
-
+import {BsGraphUpArrow} from 'react-icons/bs'
 
 export function NavBarComp() {
   const [islogged, setIslogged] = useState(false);

@@ -3,7 +3,7 @@ import {AiOutlineArrowRight} from 'react-icons/ai';
 import {BiCalendar} from 'react-icons/bi';
 import {GoLocation} from 'react-icons/go';
 import { Link } from 'react-router-dom';
-
+import {BsGraphUpArrow} from 'react-icons/bs'
 import '../stylesheets/cartelera.css';
 
 function Cartelera(props) {
@@ -27,7 +27,10 @@ function Cartelera(props) {
                             <GoLocation /> {props.ubi}
                         </p>
                         {rol === 'admin' ? (
-                        <Link to="/verEventos" className="btn-info">Ver detalles <AiOutlineArrowRight /></Link>
+                        <>
+                        <Link to="/verEstadisiticas" className="btn-info">Ver estadisticas <BsGraphUpArrow /></Link><br />
+                        <Link style={{marginTop:"10px"}}to="/verEventos" className="btn-info">Ver detalles <AiOutlineArrowRight /></Link>
+                        </>
                         ) : (
                         <Link to="/eventoInfo" className="btn-info">Ver evento <AiOutlineArrowRight /></Link>
                         )}
