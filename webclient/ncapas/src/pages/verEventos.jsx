@@ -1,6 +1,6 @@
 import { NavBarComp } from "../components/navbar.jsx"
 import Footer  from "../components/footer.jsx"
-import { Form } from "react-bootstrap"
+import { Button, Form } from "react-bootstrap"
 import "../stylesheets/imagenRedondeada.css"
 import {BsFillCalendarCheckFill} from 'react-icons/bs'
 import {AiFillClockCircle} from 'react-icons/ai'
@@ -9,10 +9,17 @@ import { ModalEditarEvento } from "../components/modalEditarEvento.jsx"
 import { useState } from "react"
 import {BsFillPersonFill} from 'react-icons/bs'
 import { ModalAgregarColaboradores } from "../components/modalAgregarColaboradores.jsx"
+import {AiFillEdit} from 'react-icons/ai'
+import { EditarLocalidades } from "../components/modalEditarLocalidades.jsx"
 
 export function VerEventos(){
     const [verEditarEvento, setVerEditarEvento] = useState(false)
     const [mostraColaboradores, setMostrarcolaboradores] = useState(false)
+    const [EditarLocalidadesModal, setEditarLocalidad] = useState(false)
+    const [platinum, setPlatinum] = useState(100)
+    const [vip, setVip] = useState(100)
+    const [gold, setGold] = useState(100)
+    const [general, setGeneral] = useState(100)
     function verColaboradores(){
         setMostrarcolaboradores(true)
     }
@@ -21,10 +28,22 @@ export function VerEventos(){
         console.log('entre')
     }
     
+    function editarLocalidades(){
+        setEditarLocalidad(true)
+        
+    }
 
     return (
         <>
          <NavBarComp />
+         <EditarLocalidades
+         show={EditarLocalidadesModal}
+         onHide = {() => setEditarLocalidad(false)}
+         platinum = {platinum}
+         gold = {gold}
+         vip = {vip}
+         general = {general}
+         />
          <ModalEditarEvento
          show = {verEditarEvento}
          onHide = {() => {setVerEditarEvento(false)}}
@@ -53,45 +72,52 @@ export function VerEventos(){
         </div>
 
 
-        <div className="contenedor-shows-todo" style={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop:"5px" }}>
+        <div className="contenedor-shows-todo" style={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop:"5px", }}>
             <Form.Label className='mt-2' style={{ color: 'white', margin: '30px', fontSize:"32px" }}>
             Localidades
          </Form.Label>
         </div>
-        <div className="contenedor-shows-todo">
+        <div className="contenedor-shows-todo" style={{ margin: "auto", display: "flex", justifyContent: "center",  }}>
         <div className="row">
             <div className="col-md-6">
         <Form.Label className='mt-2' style={{ color: 'white', margin: '10px', fontSize: '32px' }}>
         Platinum
         </Form.Label>
-            <div style={{width:"10%", marginLeft:"10px"}}>
-        <Form.Control type="text" name='text' placeholder="$$" value={"$100"} className="form-control form-control-sm" readOnly/>
+            <div style={{width:"20%", marginLeft:"10px"}}>
+        <Form.Control type="text" name='text' placeholder="$$" value={platinum} className="form-control form-control-sm" readOnly/>
             </div>
         </div>
         <div className="col-md-6">
             <Form.Label className='mt-2' style={{ color: 'white', margin: '10px', fontSize: '32px' }}>
         VIP
         </Form.Label>
-            <div style={{width:"10%", marginLeft:"10px"}}>
-        <Form.Control type="text" name='text' placeholder="$$" value={"$100"} className="form-control form-control-sm" readOnly/>
+            <div style={{width:"20%", marginLeft:"10px"}}>
+          
+            <Form.Control type="text" name='text' placeholder="$$" value={vip} className="form-control form-control-sm" readOnly/>
+          
             </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6" style={{ marginBottom: "20px"}}>
             <Form.Label className='mt-2' style={{ color: 'white', margin: '10px', fontSize: '32px' }}>
         Gold
         </Form.Label>
-            <div style={{width:"10%", marginLeft:"10px"}}>
-        <Form.Control type="text" name='text' placeholder="$$" value={"$100"} className="form-control form-control-sm" readOnly/>
+            <div style={{width:"20%", marginLeft:"10px"}}>
+        <Form.Control type="text" name='text' placeholder="$$" value={gold} className="form-control form-control-sm" readOnly/>
             </div>
         </div>
         <div className="col-md-6">
             <Form.Label className='mt-2' style={{ color: 'white', margin: '10px', fontSize: '32px' }}>
         General
         </Form.Label>
-            <div style={{width:"10%", marginLeft:"10px"}}>
-        <Form.Control type="text" name='text' placeholder="$$" value={"$100"} className="form-control form-control-sm" readOnly/>
+            <div style={{width:"20%", marginLeft:"10px"}}>
+        <Form.Control type="text" name='text' placeholder="$$" value={general} className="form-control form-control-sm" readOnly/>
             </div>
         </div>
+        </div>
+
+        <div className="contenedor-btn">
+                        <button className="boton-editar" onClick={editarLocalidades}>Editar localidades</button><br />
+                       
         </div>
         
         </div>

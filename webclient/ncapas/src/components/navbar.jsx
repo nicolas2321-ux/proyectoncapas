@@ -18,6 +18,10 @@ import { useState } from 'react';
 import { ModalRegister } from './modalRegister';
 import store from '../store';
 import { useDispatch } from 'react-redux';
+import {FaUserAlt} from 'react-icons/fa'
+import {BiLogOut} from 'react-icons/bi'
+import Swal from 'sweetalert2'
+
 
 export function NavBarComp() {
   const [islogged, setIslogged] = useState(false);
@@ -45,6 +49,12 @@ export function NavBarComp() {
     setName(response.given_name);
     localStorage.setItem("rol", response.rol)
     localStorage.setItem("username", response.family_name+" "+response.given_name)
+    Swal.fire({
+      title: '¡Bienvenido!',
+      text: 'Inicio de sesion exitoso',
+      icon: 'success',
+      confirmButtonText: 'Cool'
+    })
   }
   function handleRegister(register){
     console.log(state)
@@ -58,6 +68,11 @@ export function NavBarComp() {
     setShowRegister(false)
 
   }
+  function logout(){
+    localStorage.setItem("rol", null)
+    localStorage.setItem("username", null)
+    setIslogged(false)
+  }
   if (rolLocal == 'admin') {
     return (
       <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
@@ -68,7 +83,7 @@ export function NavBarComp() {
         data={credenciales}
         />
         <Container>
-          <Navbar.Brand href="#home">ICONO</Navbar.Brand>
+          <Navbar.Brand href="/">ICONO</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Form style={{ marginLeft: '40%', marginTop: 'auto', marginBottom: 'auto' }}>
@@ -88,13 +103,17 @@ export function NavBarComp() {
               <Nav.Link href="/events" className="ms-2 text-white">
                 <BsFillTicketFill /> Administrar eventos
               </Nav.Link>
+              <Nav.Link href="/userAdmin" className="ms-2 text-white">
+                <FaUserAlt /> Administrar usuarios
+              </Nav.Link>
+
               <Nav.Link href="#link" className="ms-2 text-white">
                 <AiFillFilter /> Filtrar
               </Nav.Link>
               <NavDropdown title="Usuario" id="basic-nav-dropdown" drop={'start'}>
-                <NavDropdown.Item href="#action/3.1">
                   {islogged === false ? (
                     <>
+                <NavDropdown.Item href="#action/3.1">
                       <GoogleLogin
                         onSuccess={(credentialResponse) => {
                           handleLogin(jwt(credentialResponse.credential));
@@ -108,7 +127,8 @@ export function NavBarComp() {
                         }}
                       />
                       <p>Iniciar sesión</p>
-  
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="#action/3.1">
                       <GoogleLogin
                         onSuccess={(credentialResponse) => {
                           handleRegister(jwt(credentialResponse.credential));
@@ -122,14 +142,24 @@ export function NavBarComp() {
                         }}
                       />
                       <p>Registrarse</p>
+                      </NavDropdown.Item>
                     </>
                   ) : (
                     <>
+                     <NavDropdown.Item>
                       <BiUser />
                       <p>{username}</p>
+
+                     </NavDropdown.Item>
+
+                     <NavDropdown.Item onClick={logout}>
+                      <BiLogOut />
+                      <p>Log Out</p>
+                     </NavDropdown.Item>
+                    
                     </>
                   )}
-                </NavDropdown.Item>
+              
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
@@ -146,7 +176,7 @@ export function NavBarComp() {
       data={credenciales}
       />
       <Container>
-        <Navbar.Brand href="#home">ICONO</Navbar.Brand>
+        <Navbar.Brand href="/">ICONO</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Form style={{ marginLeft: '40%', marginTop: 'auto', marginBottom: 'auto' }}>
@@ -163,16 +193,16 @@ export function NavBarComp() {
           </Form>
           <div style={{ borderLeft: '1px solid white', height: '40px', marginLeft: '10px' }}></div>
           <Nav className="">
-            <Nav.Link href="#home" className="ms-2 text-white">
-              <BsFillTicketFill /> Eventos del cliente
+            <Nav.Link href="/myevents" className="ms-2 text-white">
+              <BsFillTicketFill /> Mis eventos
             </Nav.Link>
             <Nav.Link href="#link" className="ms-2 text-white">
               <AiFillFilter /> Filtrar
             </Nav.Link>
             <NavDropdown title="Usuario" id="basic-nav-dropdown" drop={'start'}>
-              <NavDropdown.Item href="#action/3.1">
                 {islogged === false ? (
                   <>
+                <NavDropdown.Item href="#action/3.1">
                     <GoogleLogin
                       onSuccess={(credentialResponse) => {
                         handleLogin(jwt(credentialResponse.credential));
@@ -186,7 +216,9 @@ export function NavBarComp() {
                       }}
                     />
                     <p>Iniciar sesión</p>
+                   </NavDropdown.Item>
 
+                   <NavDropdown.Item href="#action/3.1">
                     <GoogleLogin
                       onSuccess={(credentialResponse) => {
                         handleRegister(jwt(credentialResponse.credential));
@@ -200,14 +232,24 @@ export function NavBarComp() {
                       }}
                     />
                     <p>Registrarse</p>
+                     </NavDropdown.Item>
                   </>
                 ) : (
                   <>
-                    <BiUser />
-                    <p>{name} {lastname}</p>
-                  </>
+                  <NavDropdown.Item>
+                   <BiUser />
+                   <p>{username}</p>
+
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item onClick={logout}>
+                   <BiLogOut />
+                   <p>Log Out</p>
+                  </NavDropdown.Item>
+                 
+                 </>
                 )}
-              </NavDropdown.Item>
+            
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

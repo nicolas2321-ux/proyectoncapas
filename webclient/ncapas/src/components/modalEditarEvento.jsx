@@ -26,7 +26,7 @@ export function ModalEditarEvento(props){
     return(
         <Modal show={props.show} onHide={props.onHide}>
         <Modal.Header closeButton>
-            <Modal.Title>Registrarse</Modal.Title>
+            <Modal.Title>Editar evento</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form>

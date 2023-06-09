@@ -12,7 +12,13 @@ export function ModalAgregarColaboradores(props){
         <>
          <Modal show={props.show} onHide={props.onHide} className="custom-modal"  style={{padding:"50px"}}>
          <Form.Label className='m-2'>Agregar usuario al evento</Form.Label>
-        <Form.Control className='my-3' type="text" name='text' placeholder="John Doe"  />
+         <Form.Select aria-label="Default select example" className='my-3'>
+          <option>Selecciona a un usuario</option>
+          <option value="1">Nicolasio segundo</option>
+          <option value="2">Usuario de prueba</option>
+          <option value="3">Usuario de prueba</option>
+        </Form.Select>
+        <Button style={{width:"20%", margin:"10px"}}>Agregar</Button>
          <Table striped bordered hover>
       <thead>
         <tr>

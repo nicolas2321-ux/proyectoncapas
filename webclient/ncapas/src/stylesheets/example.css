@@ -1,5 +1,12 @@
 .contenedor-shows-todo{
     background-color: black;
+ 
+    
+}
+.contenedor-shows-todo-extended{
+    background-color: black;
+    min-height: 600px;
+    
 }
 
 .titulo {
@@ -43,11 +50,21 @@
     min-width: 600px;
     flex-wrap: wrap;
     justify-content: center;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    
     grid-gap: 10px;
     justify-content: space-between;
 }
+.contenedor-solo-shows-extended{
+    min-width: 600px;
+    flex-wrap: wrap;
+    justify-content: center;
+    display: flex;
+    
+    grid-gap: 10px;
+    justify-content: space-between;
+}
+
 
 .cartelera {
     width: calc(33.33% - 20px); 

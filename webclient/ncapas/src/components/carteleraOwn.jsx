@@ -5,16 +5,28 @@ import {GoLocation} from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
 import '../stylesheets/cartelera.css';
+import { ModalBoletos } from "./modalBoletos";
 
-function Cartelera(props) {
+function CarteleraOwn(props) {
 
   const [rol, setRol] = useState(null)
-
+  const [showModalBoletos, setshowModalBoletos] = useState(false)
   useEffect(() => {
     setRol(localStorage.getItem('rol'))
   }, [])
+
+  const showBoletos = () => {
+    setshowModalBoletos(true)
+  }
     
-    return (
+    return (<>
+            <ModalBoletos
+            show={showModalBoletos}
+            onHide={()=>setshowModalBoletos(false)}
+            artista = {props.artista}
+            />
+
+        
             <div className="contenedor-show">
                 <img src={require(`../images/${props.image}.jpg`)} className="img-show" />
                 <div className="texto-superpuesto">
@@ -29,11 +41,12 @@ function Cartelera(props) {
                         {rol === 'admin' ? (
                         <Link to="/verEventos" className="btn-info">Ver detalles <AiOutlineArrowRight /></Link>
                         ) : (
-                        <Link to="/eventoInfo" className="btn-info">Ver evento <AiOutlineArrowRight /></Link>
+                        <Link  onClick={showBoletos} className="btn-info">Ver boletos <AiOutlineArrowRight /></Link>
                         )}
                         </div>
                 </div>
             </div>
+            </>
     );
 }
-export default Cartelera;
+export default CarteleraOwn;
