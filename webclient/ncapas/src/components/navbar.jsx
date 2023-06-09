@@ -22,10 +22,12 @@ import {FaUserAlt} from 'react-icons/fa'
 import {BiLogOut} from 'react-icons/bi'
 import Swal from 'sweetalert2'
 import {BsGraphUpArrow} from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom';
+
 
 export function NavBarComp() {
   const [islogged, setIslogged] = useState(false);
-  const [name, setName] = useState('no actualiza');
+  const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [showRegister, setShowRegister] = useState(false)
   const [credenciales, setCredenciales] = useState(null)
@@ -34,9 +36,12 @@ export function NavBarComp() {
   const state = store.getState();
   const rolLocal = localStorage.getItem("rol")
   const username = localStorage.getItem("username")
+  const navigate = useNavigate();
   
   useEffect(() => {
-    if(username !== null){
+    console.log(rolLocal)
+    if(username !== "null" && username !== null){
+      console.log(username)
       setIslogged(true)
     }
   }, [])
@@ -69,9 +74,10 @@ export function NavBarComp() {
 
   }
   function logout(){
-    localStorage.setItem("rol", null)
-    localStorage.setItem("username", null)
+    localStorage.setItem("rol","null")
+    localStorage.setItem("username", "null")
     setIslogged(false)
+    navigate('/')
   }
   if (rolLocal == 'admin') {
     return (
@@ -256,6 +262,96 @@ export function NavBarComp() {
       </Container>
     </Navbar>
   );
+    }else if(rolLocal === 'moderador'){
+      return(
+      <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
+      <ModalRegister
+      show={showRegister}
+      onHide={()=>setShowRegister(false)}
+      save={saveRegister}
+      data={credenciales}
+      />
+      <Container>
+        <Navbar.Brand href="/">ICONO</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Form style={{ marginLeft: '40%', marginTop: 'auto', marginBottom: 'auto' }}>
+            <InputGroup className="">
+              <InputGroup.Text id="basic-addon1">
+                <BiSearch />
+              </InputGroup.Text>
+              <Form.Control
+                placeholder="Buscar"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
+            </InputGroup>
+          </Form>
+          <div style={{ borderLeft: '1px solid white', height: '40px', marginLeft: '10px' }}></div>
+          <Nav className="">
+            <Nav.Link href="/moderarUsuarios" className="ms-2 text-white">
+              <FaUserAlt /> Moderar usuarios
+            </Nav.Link>
+            <Nav.Link href="#link" className="ms-2 text-white">
+              <AiFillFilter /> Filtrar
+            </Nav.Link>
+            <NavDropdown title="Usuario" id="basic-nav-dropdown" drop={'start'}>
+                {islogged === false ? (
+                  <>
+                <NavDropdown.Item href="#action/3.1">
+                    <GoogleLogin
+                      onSuccess={(credentialResponse) => {
+                        handleLogin(jwt(credentialResponse.credential));
+                      }}
+                      type={'icon'}
+                      text={'login_with'}
+                      useOneTap={false}
+                      auto_select={false}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                    />
+                    <p>Iniciar sesión</p>
+                   </NavDropdown.Item>
+
+                   <NavDropdown.Item href="#action/3.1">
+                    <GoogleLogin
+                      onSuccess={(credentialResponse) => {
+                        handleRegister(jwt(credentialResponse.credential));
+                      }}
+                      type={'icon'}
+                      text={'signup_with'}
+                      useOneTap={false}
+                      auto_select={false}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                    />
+                    <p>Registrarse</p>
+                     </NavDropdown.Item>
+                  </>
+                ) : (
+                  <>
+                  <NavDropdown.Item>
+                   <BiUser />
+                   <p>{username}</p>
+
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item onClick={logout}>
+                   <BiLogOut />
+                   <p>Log Out</p>
+                  </NavDropdown.Item>
+                 
+                 </>
+                )}
+            
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+    )
     }else{
       return (
         <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">

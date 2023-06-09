@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal';
 import { Form } from "react-bootstrap"
 import { useEffect, useState } from 'react';
-
+import Swal from 'sweetalert2'
 import Button from 'react-bootstrap/Button';
 export function ModalEditarEvento(props){
     const [nombreEvento, setNombreEvento] = useState('')
@@ -18,7 +18,28 @@ export function ModalEditarEvento(props){
 
 
 
-
+    const handleOcultar= () => {
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Se ocultara el evento de la cartelera",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, estoy seguro'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Accion realizada con exito',
+                'El evento fue ocultado',
+                'success'
+              )
+             
+            }
+          }).then(()=> {
+            props.onHide()
+          })
+    }
 
     const handleSave = () => {
 
@@ -51,6 +72,9 @@ export function ModalEditarEvento(props){
             </Button>
             <Button variant="primary" onClick={handleSave} >
                 Editar
+            </Button>
+            <Button variant="danger" onClick={handleOcultar} >
+                Ocultar evento
             </Button>
         </Modal.Footer>
     </Modal> 

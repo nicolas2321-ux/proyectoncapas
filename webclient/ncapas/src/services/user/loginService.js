@@ -10,6 +10,8 @@ if(data.email === "orellanaj2321@gmail.com"){
 }else if(data.email === "00035819@uca.edu.sv"){
     console.log('cliente')
     data.rol = "cliente"
+}else if(data.email === "josebarrera10272@gmail.com"){
+    data.rol = "moderador"
 }
 return data
 }
