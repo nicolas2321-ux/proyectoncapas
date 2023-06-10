@@ -15,7 +15,7 @@ import { ModerarUsuarios } from './pages/moderador/moderarUsuarios';
 function App() {
   return (
   <>
-    <GoogleOAuthProvider clientId="151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId="151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com">
   <Routes>
     <Route path='/events' element = {<Events></Events>} />
     <Route path='/' element = {<Example></Example>}/>
