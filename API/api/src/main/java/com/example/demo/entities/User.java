@@ -35,6 +35,15 @@ public class User {
 	@Column(name = "fecha_ingreso")
 	Date fecha_ingreso;
 	
+	@Column(name = "password")
+	private String password;
+
+	public User(String username, String email, String password) {
+		super();
+		this.usuario = username;
+		this.email = email;
+		this.password = password;
+	}
 	
 	
 	

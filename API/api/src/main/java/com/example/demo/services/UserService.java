@@ -9,4 +9,7 @@ public interface UserService {
 	void login();
 	void Signin();
 	User getUsers(String identifier);
+	User getUserByUsername(String username);
+	User login(String usernameOrEmail, String password);
+	User register(User user);
 }
