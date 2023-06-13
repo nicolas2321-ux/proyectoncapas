@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.controllers.dto.UserLoginDTO;
 import com.example.demo.controllers.dto.UserRegistrationDto;
+import com.example.demo.entities.Tokens;
 import com.example.demo.entities.User;
 import com.example.demo.services.UserService;
 
@@ -57,8 +59,26 @@ public class UserController {
 	}
 		}
 	}
+	
 	@PostMapping("/login")
-	public ResponseEntity<?> register(){
-		return null;
+	public ResponseEntity<?> login( @Valid @RequestBody UserLoginDTO info, BindingResult validations){
+		String usernameOrEmail = info.getIdentifier();
+		System.out.print(usernameOrEmail);
+		String password = info.getPassword();
+		User user = userService.login(usernameOrEmail, password);
+		if(user == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro usuario con estas credenciales");
+		}else {
+		User user2 = userService.findUserAuthenticated();
+		
+		try {
+			Tokens token = userService.registerToken(user);
+//				return new ResponseEntity<>(new tokensDTO(token), HttpStatus.OK);
+			return new ResponseEntity<>(token, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		}
 	}
 }
