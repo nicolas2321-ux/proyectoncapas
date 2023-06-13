@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Tickets;
 
-@Service
+
 public interface TicketsService {
 	
 	Tickets traerTicket(UUID code);

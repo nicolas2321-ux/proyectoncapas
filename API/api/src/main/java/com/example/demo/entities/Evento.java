@@ -5,7 +5,10 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,15 +38,18 @@ public class Evento {
 	@Column(name = "fecha_evento")
 	Date fecha_evento;
 
-	@Column(name = "lugar_evento")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "lugar_evento", nullable = false)
 	Lugares lugar_evento;
 	
 	@Column(name = "capacidad")
 	Integer capacidad;
 	
-	@Column(name = "id_categoria")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_categoria", nullable = false)
 	Categoria id_categoria;
 	
-	@Column(name = "usuario_creador")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "usuario_creador", nullable = false)
 	User usuario_creador;
 }

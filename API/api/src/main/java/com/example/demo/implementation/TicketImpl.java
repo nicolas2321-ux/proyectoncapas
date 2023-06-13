@@ -2,9 +2,11 @@ package com.example.demo.implementation;
 
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entities.Tickets;
 import com.example.demo.services.TicketsService;
-
+@Service
 public class TicketImpl implements TicketsService{
 
 	@Override

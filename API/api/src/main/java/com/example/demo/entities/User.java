@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -18,6 +20,7 @@ public class User {
 
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	UUID id;
 	
 	@Column(name = "usuario")
@@ -38,11 +41,14 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-	public User(String username, String email, String password) {
+	public User(String username, String email, String password, String nombre, Integer estado, Date fecha_ingreso) {
 		super();
 		this.usuario = username;
 		this.email = email;
 		this.password = password;
+		this.estado = estado;
+		this.nombre = nombre;
+		this.fecha_ingreso = fecha_ingreso;
 	}
 	
 	

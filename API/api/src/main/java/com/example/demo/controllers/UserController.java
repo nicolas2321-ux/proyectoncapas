@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
 	@Autowired
 	private UserService userService;
 	
@@ -31,11 +34,15 @@ public class UserController {
 	@PostMapping("/register")
 	public ResponseEntity<?> login(@Valid @RequestBody UserRegistrationDto registrationDto, BindingResult bindingResult){
 		if(bindingResult.hasErrors()) {
+			System.out.println(registrationDto.getUsername());
 			return ResponseEntity.ok("Error al introducir las credenciales");
 		}else {
 		String username = registrationDto.getUsername();
 		String email = registrationDto.getEmail();
 		String password = registrationDto.getPassword();
+		String name = registrationDto.getNombre();
+		Date fecha = new Date();
+
 		
 		  User usernameVer = userService.getUserByUsername(username);
 		  User emailver = userService.getUserByUsername(email);
@@ -43,7 +50,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Credenciales ya tomadas");	  	
 		  }else {
 
-		User newUser = new User(username, email, password);
+		User newUser = new User(username, email, password, name,1, fecha );
 		userService.register(newUser);
 		
 		return ResponseEntity.ok("Usuario registrado exitosamente");

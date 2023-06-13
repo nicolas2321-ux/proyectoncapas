@@ -11,8 +11,8 @@ import com.example.demo.services.Usuarios_asignados_eventosService;
 @RestController
 @RequestMapping("/UsuariosAsignados")
 public class UsuariosAsignadosEventosController {
-	@Autowired
-	private Usuarios_asignados_eventosService UsuariosAsignadosService;
+
+
 	
 	@GetMapping(name = "/")
 	public ResponseEntity<?> findall(){

@@ -3,9 +3,11 @@ package com.example.demo.implementation;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entities.Historial_ticket;
 import com.example.demo.services.Historial_ticketService;
-
+@Service
 public class Historial_ticketImpl implements Historial_ticketService {
 
 	@Override

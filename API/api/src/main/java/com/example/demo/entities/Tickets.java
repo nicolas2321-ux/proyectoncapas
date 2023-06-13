@@ -5,7 +5,10 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,9 +29,11 @@ public class Tickets {
 	@Column(name = "fecha_venta")
 	Date fecha_venta;
 	
-	@Column(name = "id_cliente")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_cliente", nullable = false)
 	User id_cliente;
 	
-	@Column(name = "id_localidad")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_localidad", nullable = false)
 	Lugares id_localidad;
 }
