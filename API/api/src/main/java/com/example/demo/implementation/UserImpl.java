@@ -40,10 +40,11 @@ public class UserImpl implements UserService {
 		return userRepository.findByUsernameOrEmail(username, username);
 	}
 
+	//LOGIN POR GOOGLE
 	@Override
-	public User login(String usernameOrEmail, String password) {
+	public User login(String usernameOrEmail) {
 		 User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
-			if (user != null && user.getPassword().equals(password)) {
+			if (user != null) {
 				return user;
 			}
 			return null; // El inicio de sesión falló
