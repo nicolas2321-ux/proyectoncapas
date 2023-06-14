@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -16,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "rol")
 public class Rol {
 	@Id
-	@Column(name = "id_lugares")
+	@Column(name = "id_rol")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	UUID id_rol;
 	
 	@Column(name = "rol")
@@ -27,4 +30,12 @@ public class Rol {
 	
 	@Column(name = "estado")
 	Integer estado;
+
+	public Rol(String rol, String descripcion, Integer estado) {
+		super();
+		this.rol = rol;
+		this.descripcion = descripcion;
+		this.estado = estado;
+		
+	}
 }

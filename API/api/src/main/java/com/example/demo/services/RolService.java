@@ -9,4 +9,6 @@ import com.example.demo.entities.Rol;
 
 public interface RolService {
 	Rol getRol(UUID code);
+	void saveRol(Rol rol);
+	Rol getRolbyRolname(String rol);
 }

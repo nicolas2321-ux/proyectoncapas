@@ -83,4 +83,12 @@ public class UserController {
 		}
 		}
 	}
+	
+	@PostMapping("/revisar")
+		public ResponseEntity<?> revisarToken(){
+			 User user2 = userService.findUserAuthenticated();
+			 
+			 return new ResponseEntity<>(user2, HttpStatus.OK);
+		}
+
 }
