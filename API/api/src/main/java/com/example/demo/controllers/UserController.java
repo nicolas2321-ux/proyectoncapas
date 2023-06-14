@@ -18,6 +18,7 @@ import com.example.demo.entities.Tokens;
 import com.example.demo.entities.User;
 import com.example.demo.services.UserService;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 
 @RestController
@@ -32,20 +33,21 @@ public class UserController {
 		return null;
 	}
 
-	
-	@PostMapping("/register")
+
+	@PostMapping("/signup")
 	public ResponseEntity<?> login(@Valid @RequestBody UserRegistrationDto registrationDto, BindingResult bindingResult){
 		if(bindingResult.hasErrors()) {
-			System.out.println(registrationDto.getUsername());
-			return ResponseEntity.ok("Error al introducir las credenciales");
+			System.out.println(registrationDto.getNombre());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al introducir las creedenciales");
 		}else {
+			System.out.print("username");
 		String username = registrationDto.getUsername();
 		String email = registrationDto.getEmail();
 		String password = registrationDto.getPassword();
 		String name = registrationDto.getNombre();
 		Date fecha = new Date();
 
-		
+	
 		  User usernameVer = userService.getUserByUsername(username);
 		  User emailver = userService.getUserByUsername(email);
 		  if(usernameVer != null || emailver != null) {

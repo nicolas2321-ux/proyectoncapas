@@ -22,7 +22,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 
 public class WebSecurityConfiguration {
-    @Autowired
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
@@ -60,7 +61,7 @@ public class WebSecurityConfiguration {
 	    //Route filter
 	    http.authorizeHttpRequests(auth -> 
 	    	auth
-	    		.requestMatchers("/auth/**").permitAll()
+	    		.requestMatchers("/user/**").permitAll()
 	    		.anyRequest().authenticated()
 	    );
 	    
@@ -80,4 +81,7 @@ public class WebSecurityConfiguration {
 
 			return http.build();
 	}
+
+
+
 }

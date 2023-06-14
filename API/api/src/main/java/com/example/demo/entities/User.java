@@ -35,7 +35,7 @@ public class User  implements UserDetails{
 	UUID id;
 	
 	@Column(name = "usuario")
-	String usuario;
+	String username;
 	
 	@Column(name = "estado")
 	Integer estado;
@@ -63,7 +63,7 @@ public class User  implements UserDetails{
 
 	public User(String username, String email, String password, String nombre, Integer estado, Date fecha_ingreso) {
 		super();
-		this.usuario = username;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.estado = estado;
@@ -96,12 +96,6 @@ public class User  implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return this.active;
-	}
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
 	}
 
 	

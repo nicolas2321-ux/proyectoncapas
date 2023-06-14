@@ -14,6 +14,8 @@ import com.example.demo.services.UserService;
 import com.example.demo.utils.JWTtools;
 
 import jakarta.transaction.Transactional;
+
+
 @Service
 public class UserImpl implements UserService {
 
@@ -25,17 +27,7 @@ public class UserImpl implements UserService {
 	@Autowired
 	private JWTtools jwtTools;
 	
-	@Override
-	public void login() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void Signin() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public User getUsers(String identifier) {
@@ -45,12 +37,12 @@ public class UserImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		return userRepository.findByUsuarioOrEmail(username, username);
+		return userRepository.findByUsernameOrEmail(username, username);
 	}
 
 	@Override
 	public User login(String usernameOrEmail, String password) {
-		 User user = userRepository.findByUsuarioOrEmail(usernameOrEmail, usernameOrEmail);
+		 User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
 			if (user != null && user.getPassword().equals(password)) {
 				return user;
 			}
@@ -118,6 +110,6 @@ public class UserImpl implements UserService {
 				.getAuthentication()
 				.getName();
 			
-			return userRepository.findByUsuarioOrEmail(username, username);
+			return userRepository.findByUsernameOrEmail(username, username);
 		}
 }

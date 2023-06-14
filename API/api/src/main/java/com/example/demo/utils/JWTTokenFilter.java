@@ -21,13 +21,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JWTTokenFilter extends OncePerRequestFilter {
-    @Autowired
+	@Autowired
 	JWTtools jwtTools;
 	
 	@Autowired
 	UserService userService;
-
-    @Override
+	
+	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String tokenHeader = request.getHeader("Authorization");
@@ -74,5 +74,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
 		
 		filterChain.doFilter(request, response);
 	}
+	
+
     
 }
