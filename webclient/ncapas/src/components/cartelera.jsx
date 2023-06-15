@@ -26,14 +26,12 @@ function Cartelera(props) {
                         <p className="ubicacion">
                             <GoLocation /> {props.ubi}
                         </p>
-                        {rol === 'admin' ? (
+                       
                         <>
                         <Link to="/verEstadisiticas" className="btn-info">Ver estadisticas <BsGraphUpArrow /></Link><br />
                         <Link style={{marginTop:"10px"}}to="/verEventos" className="btn-info">Ver detalles <AiOutlineArrowRight /></Link>
                         </>
-                        ) : (
-                        <Link to="/eventoInfo" className="btn-info">Ver evento <AiOutlineArrowRight /></Link>
-                        )}
+                        
                         </div>
                 </div>
             </div>
