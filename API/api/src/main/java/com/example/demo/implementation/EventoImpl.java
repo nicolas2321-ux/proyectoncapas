@@ -15,8 +15,8 @@ public class EventoImpl implements EventoService {
 
 	@Override
 	public Evento get_evento(UUID code) {
-		// TODO Auto-generated method stub
-		return null;
+		Evento evento = eventoRepository.findByIdEvento(code);
+		return evento;
 	}
 
 	@Override

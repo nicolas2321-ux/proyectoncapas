@@ -24,7 +24,7 @@ public class Evento {
 	@Id
 	@Column(name = "id_evento")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	UUID id_evento;
+	UUID idEvento;
 	
 	@Column(name = "descripcion")
 	String descripcion;

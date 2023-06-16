@@ -8,5 +8,5 @@ import com.example.demo.entities.Evento;
 import com.example.demo.entities.Lugares;
 
 public interface EventoRepository extends JpaRepository<Evento, UUID>{
-    
+    Evento findByIdEvento(UUID code);
 }

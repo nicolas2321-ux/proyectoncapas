@@ -26,4 +26,9 @@ public class LugaresImpl implements LugaresService{
 
 	}
 
+	@Override
+	public void save_lugar(Lugares lugar) {
+		lugarRepository.save(lugar);
+	}
+
 }

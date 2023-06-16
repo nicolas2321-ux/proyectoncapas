@@ -10,4 +10,5 @@ import com.example.demo.entities.Lugares;
 public interface LugaresService {
 	Lugares get_lugares(String code);
 	Lugares get_one_lugar(UUID id);
+	void save_lugar(Lugares lugar);
 }
