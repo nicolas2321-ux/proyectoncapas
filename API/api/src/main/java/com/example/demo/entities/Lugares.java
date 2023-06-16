@@ -21,7 +21,7 @@ public class Lugares {
 
 	@Id
 	@Column(name = "id_lugares")
-	UUID id_lugares;
+	UUID code;
 	
 	@Column(name = "descripcion")
 	String descripcion;
@@ -32,6 +32,7 @@ public class Lugares {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_categoria", nullable = false)
 	Evento id_evento;
+	
 	@Column(name = "precio")
 	Double precio;
 	
@@ -40,4 +41,15 @@ public class Lugares {
 	
 	@Column(name = "fecha_creacion")
 	Date fecha_creacion;
+
+	public Lugares(String descripcion, String direccion, Evento evento, Double precio, Integer estado, Date fecha_creacion) {
+		super();
+		this.descripcion = descripcion;
+		this.direccion = direccion;
+		this.id_evento = evento;
+		this.precio = precio;
+		this.estado = estado;
+		this.fecha_creacion = fecha_creacion;
+		
+	}
 }

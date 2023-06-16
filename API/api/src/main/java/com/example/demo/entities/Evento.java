@@ -6,6 +6,8 @@ import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,6 +23,7 @@ public class Evento {
 	
 	@Id
 	@Column(name = "id_evento")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	UUID id_evento;
 	
 	@Column(name = "descripcion")
@@ -38,9 +41,7 @@ public class Evento {
 	@Column(name = "fecha_evento")
 	Date fecha_evento;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "lugar_evento", nullable = false)
-	Lugares lugar_evento;
+
 	
 	@Column(name = "capacidad")
 	Integer capacidad;
@@ -50,6 +51,23 @@ public class Evento {
 	Categoria id_categoria;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "usuario_creador", nullable = false)
+	@JoinColumn(name = "usuarios_creador", nullable = false)
 	User usuario_creador;
+
+	public Evento(String descripcion, Integer tickets_disponibles, Integer estado,
+			Date fecha_evento, Integer capacidad, Categoria id_categoria, User usuario_creador) {
+
+		this.descripcion = descripcion;
+		this.tickets_disponibles = tickets_disponibles;
+		this.estado = estado;
+		this.fecha_creacion =  new Date();
+		this.fecha_evento = fecha_evento;
+		
+		this.capacidad = capacidad;
+		this.id_categoria = id_categoria;
+		this.usuario_creador = usuario_creador;
+	}
+
+	
+
 }

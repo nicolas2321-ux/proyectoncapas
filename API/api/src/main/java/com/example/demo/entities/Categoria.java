@@ -20,15 +20,21 @@ import lombok.NoArgsConstructor;
 @Table(name = "categoria")
 public class Categoria {
 	@Id
-	@Column(name = "id_categoria")
+	@Column(name = "idCategoria")
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private UUID id_categoria;
+	private UUID idCategoria;
 	
 	@Column(name = "descripcion")
 	private String descripcion;
 	
 	@Column(name = "estado")
 	private Integer estado;
+
+	public Categoria(String descripcion, Integer estado) {
+		this.descripcion = descripcion;
+		this.estado = estado;
+	}
+
 	
 
 }

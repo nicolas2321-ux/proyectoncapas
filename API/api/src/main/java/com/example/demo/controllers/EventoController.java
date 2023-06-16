@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.controllers.dto.CreareventoDTO;
+import com.example.demo.entities.Categoria;
+import com.example.demo.entities.Evento;
+import com.example.demo.entities.Lugares;
+import com.example.demo.entities.User;
+import com.example.demo.services.CategoriaService;
 import com.example.demo.services.EventoService;
+import com.example.demo.services.LugaresService;
+import com.example.demo.services.UserService;
 
 import jakarta.validation.Valid;
 
@@ -19,13 +28,37 @@ public class EventoController {
 
 	@Autowired
 	private EventoService eventoservice;
-	
+	@Autowired
+	private LugaresService lugaresService;
+	@Autowired
+	private CategoriaService categoriaService;
+	@Autowired
+	private UserService userService;
 	@GetMapping(name = "/")
 	public ResponseEntity<?> findall(){
 		return null;
 	}
 	@PostMapping("/crearEvento")
-	public ResponseEntity<?> crearEvento(@Valid @RequestBody UserRegistrationDto registrationDto, BindingResult bindingResult){
-		return null;
+	public ResponseEntity<?> crearEvento(@Valid @RequestBody CreareventoDTO eventoDto, BindingResult bindingResult){
+		
+		Categoria get_categoria = categoriaService.get_categoria(eventoDto.getId_categoria());
+		if(get_categoria == null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encontro el lugar o la categoria");
+		}else{
+			User user2 = userService.findUserAuthenticated();
+			Evento newEvento = new Evento(
+				eventoDto.getDescripcion(),
+				eventoDto.getTickets_disponibles(),
+				0,
+				eventoDto.getFecha_evento(),
+				
+				eventoDto.getCapacidad(),
+				get_categoria,
+				user2
+			);
+		eventoservice.crear_evento(newEvento);
+		return ResponseEntity.ok("Evento creado exitosamente");
+		}
+
 	}
 }
