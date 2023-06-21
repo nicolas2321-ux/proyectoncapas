@@ -1,5 +1,6 @@
 package com.example.demo.implementation;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,12 @@ public class CategoriaImpl implements CategoriaService{
 	public Categoria get_categoria(UUID code) {
 		Categoria categoria = categoriaRepository.findByIdCategoria(code);
 		return categoria;
+	}
+
+	@Override
+	public List<Categoria> get_all() {
+		List<Categoria> categorias = categoriaRepository.findAll();
+		return categorias;
 	}
 
 }

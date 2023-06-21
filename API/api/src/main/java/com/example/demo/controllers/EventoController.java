@@ -1,11 +1,16 @@
 package com.example.demo.controllers;
 
+import java.util.Date;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +39,7 @@ public class EventoController {
 	private CategoriaService categoriaService;
 	@Autowired
 	private UserService userService;
+	
 	@GetMapping(name = "/")
 	public ResponseEntity<?> findall(){
 		return null;
@@ -59,6 +65,24 @@ public class EventoController {
 		eventoservice.crear_evento(newEvento);
 		return ResponseEntity.ok("Evento creado exitosamente");
 		}
+		
+	}
+	
+	@PutMapping("/editarEvento/{id}")
+	public ResponseEntity<?> editarEvento(@PathVariable("id") UUID id, @RequestBody CreareventoDTO info){
+		Evento findEvento = eventoservice.get_evento(id);
+		if(findEvento == null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encontro el evento");
+		}else{
+			Categoria categoria = categoriaService.get_categoria(info.getId_categoria());
+			findEvento.setCapacidad(info.getCapacidad());
+			findEvento.setDescripcion(info.getDescripcion());
+			findEvento.setTickets_disponibles(info.getTickets_disponibles());
+			findEvento.setId_categoria(categoria);
+			eventoservice.save(findEvento);
+			return ResponseEntity.ok("Evento editado exitosamente");
+		}
 
 	}
+
 }

@@ -24,4 +24,10 @@ public class EventoImpl implements EventoService {
 		eventoRepository.save(evento);
 	}
 
+	@Override
+	public void save(Evento evento) {
+		eventoRepository.save(evento);
+		
+	}
+
 }

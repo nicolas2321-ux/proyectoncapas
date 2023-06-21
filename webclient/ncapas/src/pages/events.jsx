@@ -9,7 +9,7 @@ export function Events(){
     const [addModal, setAddModal] = useState(false)
 
     function handleCrearEvento(){
-        console.log('entrte')
+       
         setAddModal(true)
     }
     return (
