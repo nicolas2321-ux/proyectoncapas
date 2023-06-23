@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controllers.dto.CreareventoDTO;
@@ -84,5 +87,43 @@ public class EventoController {
 		}
 
 	}
+	@GetMapping("/getEventosAdmin")
+	public ResponseEntity<?> getEventosAdmin(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size){
+		  Pageable pageable = PageRequest.of(page, size);
+		  
+		return ResponseEntity.ok(eventoservice.getEventos(pageable,0));
+	}
+	
+	@GetMapping("/getEventoCancelados")
+	public ResponseEntity<?> getEventosAdminCancelados(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size){
+		  Pageable pageable = PageRequest.of(page, size);
+		  
+		return ResponseEntity.ok(eventoservice.getEventos(pageable,1));
+	}
+	
+	
+	@GetMapping("/getSingleEvent")
+	public ResponseEntity<?> getOneEventAdmin(@RequestParam(defaultValue = "0") UUID event){ 
+		Evento findEvent = eventoservice.get_evento(event);
+		return ResponseEntity.ok(findEvent);
+	}
+	@PutMapping("/actualizarEstado")
+	public ResponseEntity<?> actualizarEstadoEvento(@RequestParam(required =false) UUID evento){
+		
+		Evento findEvento = eventoservice.get_evento(evento);
+		if(findEvento == null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encontro el evento");
+		}else{
+			findEvento.setEstado(1);
+			eventoservice.save(findEvento);
+			return ResponseEntity.ok("Evento editado exitosamente");
+		}
+		
+	}
+	
+	
+	
+	}
+	
 
-}
+
