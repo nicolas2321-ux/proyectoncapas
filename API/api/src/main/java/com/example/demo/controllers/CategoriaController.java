@@ -16,6 +16,7 @@ public class CategoriaController {
 	
 	@GetMapping(name = "/")
 	public ResponseEntity<?> findall(){
-		return null;
+		return ResponseEntity.ok(categoriaservice.get_all());
 	}
+	
 }

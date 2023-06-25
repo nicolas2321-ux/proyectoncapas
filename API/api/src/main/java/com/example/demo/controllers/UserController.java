@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controllers.dto.UserLoginDTO;
@@ -23,6 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class UserController {
 
 	@Autowired
@@ -40,7 +43,7 @@ public class UserController {
 			System.out.println(registrationDto.getNombre());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al introducir las creedenciales");
 		}else {
-			System.out.print("username");
+			
 		String username = registrationDto.getUsername();
 		String email = registrationDto.getEmail();
 		String password = registrationDto.getPassword();
@@ -66,8 +69,8 @@ public class UserController {
 	public ResponseEntity<?> login( @Valid @RequestBody UserLoginDTO info, BindingResult validations){
 		String usernameOrEmail = info.getIdentifier();
 		System.out.print(usernameOrEmail);
-		String password = info.getPassword();
-		User user = userService.login(usernameOrEmail, password);
+		
+		User user = userService.login(usernameOrEmail);
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro usuario con estas credenciales");
 		}else {

@@ -9,7 +9,7 @@ public interface UserService {
 
 	User getUsers(String identifier);
 	User getUserByUsername(String username);
-	User login(String usernameOrEmail, String password);
+	User login(String usernameOrEmail);
 	User register(User user);
 
 	Tokens registerToken(User user) throws Exception;

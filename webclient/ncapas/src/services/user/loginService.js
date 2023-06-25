@@ -1,20 +1,23 @@
+const BASE_URL = process.env.REACT_APP_API_URL
 
 
 
+export const login = async(data) => {
+    const response = await fetch(`${BASE_URL}user/login`,{
+        "method": "POST",
+        headers:{
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+            identifier: data.email,
 
-export const login = (data) => {
-console.log(data)
-if(data.email === "orellanaj2321@gmail.com"){
-    console.log("admin")
-    data.rol = "admin"
-}else if(data.email === "00035819@uca.edu.sv"){
-    console.log('cliente')
-    data.rol = "cliente"
-}else if(data.email === "josebarrera10272@gmail.com"){
-    data.rol = "moderador"
+        })
+    })
+    const respuesta = await response;
+    return respuesta
 }
-return data
-}
+
+
 
 export const register = (data) => {
     console.log('peticion para el registro')
