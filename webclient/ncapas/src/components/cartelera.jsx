@@ -20,7 +20,7 @@ function Cartelera(props) {
   }, [])
 
     const handleInformacion = () => {
-        console.log(props.idEvento)
+       
         dispatch({
             type: 'CHANGE_ID', payload:{
                 id: props.idEvento

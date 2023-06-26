@@ -40,7 +40,7 @@ export function CrearEvento(props){
         const response = await insertEvento
        
         if(response.status === 200){
-            console.log('creado')
+         
             Swal.fire(
                 'Evento creado!',
                 'El evento fue creado con exito',

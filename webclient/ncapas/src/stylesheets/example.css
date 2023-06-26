@@ -28,6 +28,10 @@ color: #ffffff;
 
 }
 .contenedor-shows-todo{
+    min-height: 80vh;
+    background-color: black;
+}
+.contenedor-shows-todo-events{
     background-color: black;
 }
 .contenedor-shows-todo-extended{

@@ -74,6 +74,7 @@ public class EventoController {
 	
 	@PutMapping("/editarEvento/{id}")
 	public ResponseEntity<?> editarEvento(@PathVariable("id") UUID id, @RequestBody CreareventoDTO info){
+		System.out.println(info.getImagen());
 		Evento findEvento = eventoservice.get_evento(id);
 		if(findEvento == null){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encontro el evento");
@@ -83,6 +84,7 @@ public class EventoController {
 			findEvento.setDescripcion(info.getDescripcion());
 			findEvento.setTickets_disponibles(info.getTickets_disponibles());
 			findEvento.setId_categoria(categoria);
+			findEvento.setImagen(info.getImagen());
 			eventoservice.save(findEvento);
 			return ResponseEntity.ok("Evento editado exitosamente");
 		}
