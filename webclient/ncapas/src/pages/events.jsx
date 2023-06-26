@@ -4,10 +4,29 @@ import "../stylesheets/example.css"
 import Footer  from "../components/footer.jsx"
 import Cartelera from "../components/cartelera.jsx"
 import { CrearEvento } from "../components/creaEventoModal.jsx"
-import { useState } from "react"
+import { getEvento } from "../services/administrador/evento.js"
+import { useEffect, useState } from "react"
 export function Events(){
     const [addModal, setAddModal] = useState(false)
-
+    const [page, setPage] = useState(0)
+    const [eventos, setEventos] = useState([])
+    const token = localStorage.getItem('token')
+    useEffect(() => {
+        const object = {
+            token: token,
+            page: page,
+            limit: 20
+        }
+        const traerEventos = async() =>{
+            const evento = await getEvento(object) 
+           // console.log(await evento.json())
+            const eventoArray = await evento.json()
+            setEventos(eventoArray.content)
+          
+        }
+        traerEventos()
+       
+    }, [])
     function handleCrearEvento(){
        
         setAddModal(true)
@@ -21,38 +40,20 @@ export function Events(){
         onHide={()=>setAddModal(false)}
         />
         <div className="contenedor-shows-todo"> 
+      
                     <h1 className="titulo">Eventos próximos...</h1>
                     <div className="contenedor-solo-shows" >
-                        <Cartelera
-                            image="Bailar"
-                            artista="no se xd"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="Homenaje"
-                            artista="NO SE TAMPOCO lol"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="IlVolo"
-                            artista="il volo"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="JuanLuisGuerra"
-                            artista="Juan Luis Guerra"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="LagoDeCisnes"
-                            artista="saber xd"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="VanGogh"
-                            artista="saber xd"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
+                    {eventos.map((elemento, index) => (
+                    <Cartelera
+                    image="Bailar"
+                    artista={elemento.descripcion}
+                    fecha={elemento.fecha_evento.substr(0,10)}
+                    key={elemento.idEvento}
+                    idEvento={elemento.idEvento}
+                    imagen={elemento.imagen}
+                    />
+                        ))}
+                      
                     </div>
                     <div className="contenedor-btn">
                         <button className="boton-mas" onClick={handleCrearEvento}>Crear evento</button>

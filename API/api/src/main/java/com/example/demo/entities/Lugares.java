@@ -33,7 +33,7 @@ public class Lugares {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_evento", nullable = false)
-	Evento id_evento;
+	Evento idevento;
 	
 	@Column(name = "precio")
 	Double precio;
@@ -44,14 +44,16 @@ public class Lugares {
 	@Column(name = "fecha_creacion")
 	Date fecha_creacion;
 
-	public Lugares(String descripcion, Evento evento, Double precio, Integer estado, Date fecha_creacion) {
+	@Column(name = "tickets")
+	Integer tickets;
+	public Lugares(String descripcion, Evento evento, Double precio, Integer estado, Date fecha_creacion, Integer tickets) {
 		super();
 		this.descripcion = descripcion;
-		
-		this.id_evento = evento;
+		this.idevento = evento;
 		this.precio = precio;
 		this.estado = estado;
 		this.fecha_creacion = fecha_creacion;
+		this.tickets = tickets;
 		
 	}
 }

@@ -13,7 +13,7 @@ public class CrearLugarDTO {
     @NotEmpty
     private String descripcion;
     private UUID id_evento;
-    
+    private Integer tickets;
     private Double precio;
 
     

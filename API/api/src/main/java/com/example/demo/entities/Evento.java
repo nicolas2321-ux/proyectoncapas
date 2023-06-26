@@ -46,6 +46,9 @@ public class Evento {
 	@Column(name = "capacidad")
 	Integer capacidad;
 	
+	@Column(name = "imagen")
+	String imagen;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_categoria", nullable = false)
 	Categoria id_categoria;
@@ -55,7 +58,7 @@ public class Evento {
 	User usuario_creador;
 
 	public Evento(String descripcion, Integer tickets_disponibles, Integer estado,
-			Date fecha_evento, Integer capacidad, Categoria id_categoria, User usuario_creador) {
+			Date fecha_evento, Integer capacidad, Categoria id_categoria, User usuario_creador, String imagen) {
 
 		this.descripcion = descripcion;
 		this.tickets_disponibles = tickets_disponibles;
@@ -66,6 +69,7 @@ public class Evento {
 		this.capacidad = capacidad;
 		this.id_categoria = id_categoria;
 		this.usuario_creador = usuario_creador;
+		this.imagen = imagen;
 	}
 
 	

@@ -52,7 +52,7 @@ export function NavBarComp() {
     const result = await roles.json()
     setName(result.user.nombre)
     setRoles(result.roles)
-    console.log( result)
+   
     }
     if(token != null){
       
@@ -84,7 +84,7 @@ export function NavBarComp() {
     setHelper(true)
   }
   function handleRegister(register){
-    console.log(state)
+   
     setShowRegister(true)
     setCredenciales(register)
   }
