@@ -4,19 +4,34 @@ import {BiCalendar} from 'react-icons/bi';
 import {GoLocation} from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import {BsGraphUpArrow} from 'react-icons/bs'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import '../stylesheets/cartelera.css';
 
 function Cartelera(props) {
 
   const [rol, setRol] = useState(null)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setRol(localStorage.getItem('rol'))
   }, [])
+
+    const handleInformacion = () => {
+        console.log(props.idEvento)
+        dispatch({
+            type: 'CHANGE_ID', payload:{
+                id: props.idEvento
+            }
+        })
+        navigate('/verEventos')
+    }
     
     return (
             <div className="contenedor-show">
-                <img src={require(`../images/${props.image}.jpg`)} className="img-show" />
+                <img src={props.imagen} className="img-show" />
                 <div className="texto-superpuesto">
                     <div className="contenedor-texto">
                         <h1 className="artista">{props.artista}</h1>
@@ -24,12 +39,12 @@ function Cartelera(props) {
                             <BiCalendar /> {props.fecha}
                         </p>
                         <p className="ubicacion">
-                            <GoLocation /> {props.ubi}
+                           
                         </p>
                        
                         <>
                         <Link to="/verEstadisiticas" className="btn-info">Ver estadisticas <BsGraphUpArrow /></Link><br />
-                        <Link style={{marginTop:"10px"}}to="/verEventos" className="btn-info">Ver detalles <AiOutlineArrowRight /></Link>
+                        <Button style={{marginTop:"10px"}} onClick={handleInformacion} className="btn-info">Ver detalles <AiOutlineArrowRight /></Button>
                         </>
                         
                         </div>

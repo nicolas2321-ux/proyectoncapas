@@ -63,7 +63,8 @@ public class EventoController {
 				
 				eventoDto.getCapacidad(),
 				get_categoria,
-				user2
+				user2,
+				eventoDto.getImagen()
 			);
 		eventoservice.crear_evento(newEvento);
 		return ResponseEntity.ok("Evento creado exitosamente");

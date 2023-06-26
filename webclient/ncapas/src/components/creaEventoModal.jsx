@@ -13,6 +13,7 @@ export function CrearEvento(props){
     const [fecha, setFecha] = useState('')
     const [capacidad, setCapacidad] = useState(0)
     const [categoria, setCategoria] = useState('')
+    const [imagen, setImagen] = useState('')
     const token = localStorage.getItem('token')
 
     useEffect(() => {
@@ -20,7 +21,7 @@ export function CrearEvento(props){
             const categorias = await GetCategoria(token)
             const listCategorias = await categorias.json()
             setCategorias(listCategorias)
-            console.log(listCategorias)
+           
         }
         getCategoria()
       }, [])
@@ -32,11 +33,12 @@ export function CrearEvento(props){
             tickets_disponibles: tickets_disponibles,
             fecha: fecha,
             capacidad: capacidad,
-            categoria: categoria
+            categoria: categoria,
+            imagen: imagen
         }
         const insertEvento = await crearEvento(object)
         const response = await insertEvento
-        console.log(response.status)
+       
         if(response.status === 200){
             console.log('creado')
             Swal.fire(
@@ -44,7 +46,7 @@ export function CrearEvento(props){
                 'El evento fue creado con exito',
                 'success'
               ).then(()=>{
-                props.onHide()
+                window.location.reload()
               })
         }else{
             Swal.fire(
@@ -55,7 +57,7 @@ export function CrearEvento(props){
                 props.onHide()
               })
         }
-        console.log(object)
+       
     }
     return (
         <Modal show={props.show} onHide={props.onHide}>
@@ -86,6 +88,9 @@ export function CrearEvento(props){
                     </option>
                     ))}
                      </Form.Select>
+                    
+                    <Form.Label className='mt-2'>Imagen</Form.Label>
+                    <Form.Control type="text" name='text' placeholder="https://i.pinimg.com/originals/24/58/5f/24585fc9b7433a224a6ff5506e346969.png"  onChange={(e) => {setImagen(e.target.value)}} />
                 </Form.Group>
             </Form>
         </Modal.Body>

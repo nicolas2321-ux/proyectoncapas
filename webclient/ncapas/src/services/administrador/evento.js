@@ -14,10 +14,34 @@ export const crearEvento = async(data) => {
             tickets_disponibles: data.tickets_disponibles,
             fecha_evento: data.fecha,
             capacidad: data.capacidad,
-            id_categoria: data.categoria
+            id_categoria: data.categoria,
+            imagen: data.imagen
 
         })
     })
     const respuesta = await response;
+    return respuesta
+}
+export const getEvento = async(data) => {
+    const response = await fetch(`${BASE_URL}evento/getEventosAdmin?page=${data.page}&size=${data.limit}`,{
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${data.token}`,
+            "Content-Type": "application/json",
+        }
+    })
+    const respuesta = await response
+    return respuesta
+}
+
+export const traerEvento = async(data) => {
+    const response = await fetch(`${BASE_URL}evento/getSingleEvent?event=${data.id}`,{
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${data.token}`,
+            "Content-Type": "application/json",
+        }
+    })
+    const respuesta = await response
     return respuesta
 }

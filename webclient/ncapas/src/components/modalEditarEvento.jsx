@@ -10,11 +10,14 @@ export function ModalEditarEvento(props){
     const [capacidad, setCapacidad] = useState(0)
     useEffect(() => {
        setNombreEvento(props.nombreEvento)
-       setFecha(props.fecha)
+       console.log(props.fecha)
+       if(props.fecha !== undefined){
+       setFecha(props.fecha.substr(0,10))
+       }
        setDuration(props.duration)
        setCapacidad(props.capacidad)
        
-     }, [props.data])
+     }, [props.show])
 
 
 
@@ -41,8 +44,13 @@ export function ModalEditarEvento(props){
           })
     }
 
-    const handleSave = () => {
-
+    const handleSave = async() => {
+        const object = {
+            descripcion: nombreEvento,
+            tickets_disponibles: capacidad,
+            fecha_evento: fecha,
+        }
+        const result = await editarEvento()
     }
     return(
         <Modal show={props.show} onHide={props.onHide}>

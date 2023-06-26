@@ -20,9 +20,7 @@ public class CreareventoDTO{
 
     private Integer capacidad;
 
-   
-
     private UUID id_categoria;
     
-
+    private String imagen;
 }

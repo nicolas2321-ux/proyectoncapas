@@ -11,6 +11,9 @@ import {BsFillPersonFill} from 'react-icons/bs'
 import { ModalAgregarColaboradores } from "../components/modalAgregarColaboradores.jsx"
 import {AiFillEdit} from 'react-icons/ai'
 import { EditarLocalidades } from "../components/modalEditarLocalidades.jsx"
+import { useEffect } from "react"
+import { traerEvento } from "../services/administrador/evento.js"
+import store from "../store/index.js"
 
 export function VerEventos(){
     const [verEditarEvento, setVerEditarEvento] = useState(false)
@@ -20,12 +23,33 @@ export function VerEventos(){
     const [vip, setVip] = useState(100)
     const [gold, setGold] = useState(100)
     const [general, setGeneral] = useState(100)
+    const state  = store.getState()
+    const token = localStorage.getItem('token')
+    const [fecha, setFecha] = useState('')
+    const [currentEvent, setcurrentEvent] = useState({})
+    useEffect(() => {
+        const getSingleEvent = async() =>{
+            const id = state.ID_evento.id
+            console.log(id)
+            const object = {
+                id: id,
+                token: token
+            }
+            const getOneEvent = await traerEvento(object)
+          
+            setcurrentEvent(await getOneEvent.json())
+            setFecha(currentEvent.fecha_evento)
+           
+        }
+        getSingleEvent()
+        
+    }, [])
+
     function verColaboradores(){
         setMostrarcolaboradores(true)
     }
     function editarEvento(){
         setVerEditarEvento(true)
-        console.log('entre')
     }
     
     function editarLocalidades(){
@@ -47,11 +71,12 @@ export function VerEventos(){
          <ModalEditarEvento
          show = {verEditarEvento}
          onHide = {() => {setVerEditarEvento(false)}}
-         nombreEvento = {"Vivimos para bailar"}
+         nombreEvento = {currentEvent.descripcion}
          duration = {60}
-         localidad = {"Salamanca"}
-         capacidad = {100}
-         fecha  ={"2023-05-24"}/>
+        
+         capacidad = {currentEvent.capacidad}
+         
+         fecha  ={currentEvent.fecha_evento}/>
 
          <ModalAgregarColaboradores
          show = {mostraColaboradores}
@@ -60,13 +85,17 @@ export function VerEventos(){
 
          
          <div className="contenedor-shows-todo">
-         <img src={require(`../images/Bailar.jpg`)} className="img-show-panel " />  
-        <Form.Label className='mt-2' style={{color:'white'}}><BsFillCalendarCheckFill style={{fontSize:"24px"}}></BsFillCalendarCheckFill> 24/05/2023</Form.Label>
+         <img src={currentEvent.imagen} className="img-show-panel " />  
+         {currentEvent.fecha_evento !== undefined && (
+        <Form.Label className='mt-2 mx-1' style={{color:'white'}}>
+            <BsFillCalendarCheckFill style={{fontSize:"24px"}}></BsFillCalendarCheckFill> {currentEvent.fecha_evento.substr(0,10)}
+        </Form.Label>
+            )}
         <Form.Label className='mt-2' style={{color:'white', margin:"30px"}}><AiFillClockCircle style={{fontSize:"24px"}}></AiFillClockCircle> 1 hr</Form.Label>
         
-        <Form.Label className='mt-2' style={{color:'white', margin:"30px"}}><ImLocation style={{fontSize:"24px"}}></ImLocation> Salamanca</Form.Label>
+
         
-        <Form.Label className='mt-2' style={{color:'white', margin:"30px"}}><BsFillPersonFill style={{fontSize:"24px"}}></BsFillPersonFill> 100</Form.Label>
+        <Form.Label className='mt-2' style={{color:'white', margin:"30px"}}><BsFillPersonFill style={{fontSize:"24px"}}></BsFillPersonFill> {currentEvent.capacidad}</Form.Label>
       
 
         </div>
