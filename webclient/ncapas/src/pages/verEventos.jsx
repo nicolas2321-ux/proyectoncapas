@@ -214,11 +214,11 @@ export function VerEventos(){
 
 
         <div  className="contenedor-shows-todo-events"  style={{marginTop: "5px"}}>
-
+{/* 
         <div className="contenedor-btn">
                         <button className="boton-mas" onClick={verColaboradores}>Ver colaboradores</button><br />
                        
-        </div>
+        </div> */}
         <div className="contenedor-btn">
                         <button className="boton-editar" onClick={editarEvento}>Editar evento</button><br />
                        

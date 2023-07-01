@@ -1,6 +1,7 @@
 package com.example.demo.implementation;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -113,4 +114,24 @@ public class UserImpl implements UserService {
 			
 			return userRepository.findByUsernameOrEmail(username, username);
 		}
+
+		@Override
+		public List<User> findAll(Integer estado) {
+			List<User> users = userRepository.findByEstado(estado);
+			return users;
+		}
+
+		@Override
+		public User findById(UUID id) {
+			User user = userRepository.findByid(id);
+			return user;
+		}
+
+		@Override
+		public List<User> findAll() {
+			List<User> users = userRepository.findAll();
+			return users;
+		}
+
+	
 }

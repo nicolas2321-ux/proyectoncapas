@@ -38,4 +38,9 @@ public class EventoImpl implements EventoService {
 		return eventoRepository.findByEstado(pageable, estado);
 	}
 
+	@Override
+	public Page<Evento> buscarEventos(Pageable pageable, String evento, Integer estado) {
+		return eventoRepository.findByDescripcionAndEstadoContainingIgnoreCase(pageable, evento, estado);
+	}
+
 }

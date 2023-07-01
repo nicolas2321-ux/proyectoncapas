@@ -9,8 +9,8 @@ import { useEffect, useState } from "react"
 export function Events(){
     const [addModal, setAddModal] = useState(false)
     const [page, setPage] = useState(0)
-    const [eventos, setEventos] = useState([])
     const token = localStorage.getItem('token')
+    const [eventos, setEventos] = useState([])
     useEffect(() => {
         const object = {
             token: token,
@@ -51,6 +51,7 @@ export function Events(){
                     key={elemento.idEvento}
                     idEvento={elemento.idEvento}
                     imagen={elemento.imagen}
+                    tipo={"administrador"}
                     />
                         ))}
                       

@@ -2,8 +2,12 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Form } from "react-bootstrap"
 import Swal from 'sweetalert2'
+import { activar, desactivar } from '../services/user/loginService';
 export function ModerarUsuario(props){
-    const handleSave = ()=> {
+    const token = localStorage.getItem('token')
+    const handleDesactivar = async ()=> {
+        const res = await desactivar(props.id)
+        if(res.status === 200){
         Swal.fire(
             'Accion realizada con exito',
             '',
@@ -14,8 +18,39 @@ export function ModerarUsuario(props){
              
             }
           })
+        }else{
+            Swal.fire(
+                'Ocurrio un error',
+                '',
+                'error'
+              )
+        }
     }
-    if(props.estado === "activo"){
+
+    
+    const handleActivar = async()=> {
+        
+        const res = await activar(props.id)
+        if(res.status === 200){
+        Swal.fire(
+            'Accion realizada con exito',
+            '',
+            'success'
+          ).then((result) => {
+            if (result.isConfirmed) {
+                props.onHide()
+             
+            }
+          })
+        }else{
+            Swal.fire(
+                'Ocurrio un error',
+                '',
+                'error'
+              )
+        }
+    }
+    if(props.estado === 1){
         return (
 
             <Modal show={props.show} onHide={props.onHide}>
@@ -29,8 +64,8 @@ export function ModerarUsuario(props){
                 <Button variant="secondary" onClick={props.onHide}>
                     Cerrar
                 </Button>
-                <Button variant="primary" onClick={handleSave} >
-                    Activar
+                <Button variant="primary" onClick={handleDesactivar} >
+                    Desactivar
                 </Button>
             </Modal.Footer>
         </Modal> 
@@ -49,7 +84,7 @@ export function ModerarUsuario(props){
                 <Button variant="secondary" onClick={props.onHide}>
                     Cerrar
                 </Button>
-                <Button variant="primary" onClick={handleSave} >
+                <Button variant="primary" onClick={handleActivar} >
                     Activar
                 </Button>
             </Modal.Footer>

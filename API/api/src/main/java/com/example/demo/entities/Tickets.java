@@ -6,6 +6,8 @@ import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,11 +18,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "rol")
+@Table(name = "tickets")
 public class Tickets {
 	
 	@Id
 	@Column(name = "id_ticket")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	UUID id_ticket;
 	
 	@Column(name = "estado")
@@ -36,4 +39,19 @@ public class Tickets {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_localidad", nullable = false)
 	Lugares id_localidad;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_evento", nullable = false)
+	Evento id_evento;
+
+	public Tickets(Integer estado, Date fecha_venta, User id_cliente, Lugares id_localidad, Evento id_evento) {
+		super();
+		this.estado = estado;
+		this.fecha_venta = fecha_venta;
+		this.id_cliente = id_cliente;
+		this.id_localidad = id_localidad;
+		this.id_evento = id_evento;
+	}
+	
+	
 }

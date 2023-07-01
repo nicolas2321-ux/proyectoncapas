@@ -13,6 +13,7 @@ export const ProtectedAdmin = ({component: Component}) => {
            get_roles()
         }
        async function get_roles(){
+        if(token !== null){
         const object = {token: token}
         const roles = await get_rol(object)
         const result = await roles.json()
@@ -26,7 +27,10 @@ export const ProtectedAdmin = ({component: Component}) => {
         if(!verificacion){
             history('/')
         }
+       }else{
+        history('/')
        } 
+    }
     }, [])
     return <Component></Component>
 }

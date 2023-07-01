@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import '../stylesheets/cartelera.css';
-
+import {BiMoney} from 'react-icons/bi'
 function Cartelera(props) {
 
   const [rol, setRol] = useState(null)
@@ -28,8 +28,18 @@ function Cartelera(props) {
         })
         navigate('/verEventos')
     }
-    
+    const handleComprar = () => {
+       
+        dispatch({
+            type: 'CHANGE_ID', payload:{
+                id: props.idEvento
+            }
+        })
+        navigate('/eventoInfo')
+    }
+    if(props.tipo === 'administrador'){
     return (
+            
             <div className="contenedor-show">
                 <img src={props.imagen} className="img-show" />
                 <div className="texto-superpuesto">
@@ -51,5 +61,29 @@ function Cartelera(props) {
                 </div>
             </div>
     );
+    }else{
+        return(
+            <div className="contenedor-show">
+            <img src={props.imagen} className="img-show" />
+            <div className="texto-superpuesto">
+                <div className="contenedor-texto">
+                    <h1 className="artista">{props.artista}</h1>
+                    <p className="fecha">
+                        <BiCalendar /> {props.fecha}
+                    </p>
+                    <p className="ubicacion">
+                       
+                    </p>
+                   
+                    <>
+                   
+                    <Button style={{marginTop:"10px"}} onClick={handleComprar} className="btn-info">Comprar <BiMoney /></Button>
+                    </>
+                    
+                    </div>
+            </div>
+        </div>
+        )
+    }
 }
 export default Cartelera;

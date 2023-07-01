@@ -15,4 +15,5 @@ public interface EventoService {
 	void crear_evento(Evento evento);
 	void save(Evento evento);
 	Page<Evento> getEventos(Pageable pageable, Integer estado);
+	Page<Evento> buscarEventos(Pageable pageable, String evento, Integer estado);
 }

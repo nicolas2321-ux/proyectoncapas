@@ -16,6 +16,53 @@ export const login = async(data) => {
     const respuesta = await response;
     return respuesta
 }
+export const GetUsers = async(token) => {
+    const response = await fetch(`${BASE_URL}user/getAllUsers`,{
+        "method": "GET",
+        headers:{
+            "Authorization": `Bearer ${token}`,
+            "Content-type": "application/json",
+
+        },
+    })
+    const respuesta = await response;
+    return respuesta
+}
+export const getAllUsers = async(token) => {
+    const response = await fetch(`${BASE_URL}user/getALL`,{
+        "method": "GET",
+        headers:{
+            "Authorization": `Bearer ${token}`,
+            "Content-type": "application/json",
+
+        },
+    })
+    const respuesta = await response;
+    return respuesta
+}
+export const activar = async(data) => {
+    const response = await fetch(`${BASE_URL}user/activarUsuario?id=${data}`,{
+        "method": "POST",
+        headers:{
+           
+            "Content-type": "application/json",
+
+        },
+    })
+    const respuesta = await response;
+    return respuesta
+}
+export const desactivar = async(data) => {
+    const response = await fetch(`${BASE_URL}user/desactivarUsuario?id=${data}`,{
+        "method": "POST",
+        headers:{
+            "Content-type": "application/json",
+
+        },
+    })
+    const respuesta = await response;
+    return respuesta
+}
 
 
 

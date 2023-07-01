@@ -24,7 +24,7 @@ import Swal from 'sweetalert2'
 import {BsGraphUpArrow} from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import { get_rol } from '../services/user/rol';
-
+import {TbMoodSilence} from 'react-icons/tb'
 
 export function NavBarComp() {
   const token = localStorage.getItem("token")
@@ -41,15 +41,18 @@ export function NavBarComp() {
   const [roles, setRoles] = useState([])
   const navigate = useNavigate();
   const [helper, setHelper] = useState(false)
+  const [busqueda, setBusqueda] = useState('')
   
   useEffect(() => {
 
 
     async function rol_fetch(){
+    console.log('eeeeee')
     const object = {token: token}
     const roles = await get_rol(object)
     setIslogged(true)
     const result = await roles.json()
+
     setName(result.user.nombre)
     setRoles(result.roles)
    
@@ -102,6 +105,20 @@ export function NavBarComp() {
     setHelper(false)
 
   }
+  const handleKeyPress = (event) =>{
+    if (event.key === 'Enter') {
+      event.preventDefault();
+     
+        dispatch({ type: 'CHANGE_BUSQUEDA', payload: {
+            nombreEvento: busqueda,
+           
+
+
+        } });
+       navigate('/busqueda')
+    
+    }
+  }
   if(token != null){
     return (
       <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
@@ -115,12 +132,14 @@ export function NavBarComp() {
           <Navbar.Brand href="/">ICONO</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Form style={{ marginLeft: '40%', marginTop: 'auto', marginBottom: 'auto' }}>
+            <Form style={{ marginLeft: '20%', marginTop: 'auto', marginBottom: 'auto' }}>
               <InputGroup className="">
                 <InputGroup.Text id="basic-addon1">
                   <BiSearch />
                 </InputGroup.Text>
-                <Form.Control
+                <Form.Control onChange={(e) => {setBusqueda(e.target.value)}}
+                 onKeyPress={(e) => {handleKeyPress(e)}}
+               
                   placeholder="Buscar"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
@@ -128,9 +147,7 @@ export function NavBarComp() {
               </InputGroup>
             </Form>
             <div style={{ borderLeft: '1px solid white', height: '40px', marginLeft: '10px' }}></div>
-            <Nav.Link href="#link" className="ms-2 text-white">
-                <AiFillFilter /> Filtrar
-              </Nav.Link>
+          
 
               
            
@@ -143,18 +160,26 @@ export function NavBarComp() {
                 <BsFillTicketFill /> Administrar eventos
               </Nav.Link>
             ):(<></>)}
-               {rol.rol === "moderador" ? (
+               {rol.rol === "administrador" ? (
               <Nav.Link href="/userAdmin" className="ms-2 text-white">
                 <FaUserAlt /> Administrar usuarios
               </Nav.Link>
              ):(<></>)}
-               {rol.rol === "cliente" ? (
+
+            {rol.rol === "moderador" ? (
+              <Nav.Link href="/moderarUsuarios" className="ms-2 text-white">
+                <TbMoodSilence /> Moderar usuarios
+              </Nav.Link>
+             ):(<></>)}
+              
+             
+               
+             </>
+             ))}
+
               <Nav.Link href="/myevents" className="ms-2 text-white">
               <BsFillTicketFill /> Mis eventos
               </Nav.Link>
-                ):(<></>)}
-             </>
-             ))}
               <NavDropdown title="Usuario" id="basic-nav-dropdown" drop={'start'}>
                   {islogged === false ? (
                     <>
@@ -244,9 +269,7 @@ export function NavBarComp() {
             <Nav className="">
              
 
-              <Nav.Link href="#link" className="ms-2 text-white">
-                <AiFillFilter /> Filtrar
-              </Nav.Link>
+
               <NavDropdown title="Usuario" id="basic-nav-dropdown" drop={'start'}>
                   {islogged === false ? (
                     <>

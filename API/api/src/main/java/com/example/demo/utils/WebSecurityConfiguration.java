@@ -61,6 +61,7 @@ public class WebSecurityConfiguration {
 			.csrf().disable()
 			.authorizeRequests(auth -> auth
 				.requestMatchers("/user/**").permitAll()
+				.requestMatchers("/evento/getEventosAdmin").permitAll()
 				.anyRequest().authenticated()
 			)
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

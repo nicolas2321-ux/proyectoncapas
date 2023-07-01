@@ -54,4 +54,10 @@ public class user_RolImpl implements user_rolService {
 		}
 	}
 
+	@Override
+	public User_rol verificarSiExiste(User user, Rol rol) {
+		User_rol user_rol = user_rolRepository.findByUserAndRolAndEstado(user, rol,1);
+		return user_rol;
+	}
+
 }

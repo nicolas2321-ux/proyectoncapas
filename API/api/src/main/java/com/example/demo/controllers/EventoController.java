@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controllers.dto.CreareventoDTO;
+import com.example.demo.controllers.dto.SearchDTO;
 import com.example.demo.entities.Categoria;
 import com.example.demo.entities.Evento;
 import com.example.demo.entities.Lugares;
@@ -95,6 +96,14 @@ public class EventoController {
 		  Pageable pageable = PageRequest.of(page, size);
 		  
 		return ResponseEntity.ok(eventoservice.getEventos(pageable,0));
+	}
+	
+	@PostMapping("/buscarEventos")
+	public ResponseEntity<?> buscarEventos(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size, @RequestBody SearchDTO title){
+		System.out.print(title.getTitle().toLowerCase());  
+		Pageable pageable = PageRequest.of(page, size);
+		  
+		return ResponseEntity.ok(eventoservice.buscarEventos(pageable, title.getTitle().toLowerCase(), 0));
 	}
 	
 	@GetMapping("/getEventoCancelados")

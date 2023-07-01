@@ -13,6 +13,7 @@ import { Stadistics } from './pages/estadistics';
 import { ModerarUsuarios } from './pages/moderador/moderarUsuarios';
 import { ProtectedAdmin } from './services/general/ProtectedAdmin';
 import { ProtectedModerador } from './services/general/ProtectedModerador';
+import { Busqueda } from './pages/busqueda';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
     <Route path='/myEvents' element ={<Myevents></Myevents>} />
     <Route path='/eventoInfo' element = {<VerEvento></VerEvento>} />
     <Route path='/comprarBoleto' element = {<ComprarBoleto></ComprarBoleto>}/>
+    <Route path='/busqueda' element = {<Busqueda></Busqueda>}/>
 
     <Route path='/events' element = {<ProtectedAdmin component={Events}></ProtectedAdmin>} />
     <Route path='/verEventos' element = {<ProtectedAdmin component={VerEventos}></ProtectedAdmin>} />
@@ -31,6 +33,7 @@ function App() {
     <Route path='/verEstadisiticas' element = {<ProtectedAdmin component={Stadistics}></ProtectedAdmin>} />
     
     <Route path='/moderarUsuarios' element = {<ProtectedModerador component={ModerarUsuarios}></ProtectedModerador>}/>
+
   </Routes>
   </GoogleOAuthProvider>
   </>

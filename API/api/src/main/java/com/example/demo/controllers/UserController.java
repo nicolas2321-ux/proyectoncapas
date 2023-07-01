@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controllers.dto.UserLoginDTO;
@@ -93,5 +96,32 @@ public class UserController {
 			 
 			 return new ResponseEntity<>(user2, HttpStatus.OK);
 		}
+	@PostMapping("/activarUsuario")
+	public ResponseEntity<?> activar(@RequestParam UUID id){
+		User user = userService.findById(id);
+		user.setEstado(1);
+		userService.register(user);
+		return ResponseEntity.ok("Activado");
+	}
+	@PostMapping("/desactivarUsuario")
+	public ResponseEntity<?> desactivar(@RequestParam UUID id){
+		User user = userService.findById(id);
+		user.setEstado(0);
+		userService.register(user);
+		return ResponseEntity.ok("Desactivado");
+	}
+	
+	@GetMapping("/getAllUsers")
+	public ResponseEntity<?> getAllUser(){
+		 User user2 = userService.findUserAuthenticated();
+		 List<User> users = userService.findAll(1);
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	@GetMapping("/getALL")
+	public ResponseEntity<?> getAll(){
+		 User user2 = userService.findUserAuthenticated();
+		 List<User> users = userService.findAll();
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
 
 }

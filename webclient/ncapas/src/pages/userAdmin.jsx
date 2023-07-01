@@ -2,55 +2,77 @@ import NavBarComp from "../components/navbar";
 import BootstrapTable from "react-bootstrap-table-next";
 import Button from 'react-bootstrap/Button';
 import { ModalCambiarRol } from "../components/modalCambiarRol";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { GetUsers } from "../services/user/loginService";
+
 export function UserAdmin(){
+
     const [showModal, setShowModal] = useState(false)
     const [rol, setRol] = useState('')
     const [name, setName] = useState('')
+    const [users, setUsers] = useState([])
     const [username, setUsername] = useState('')
+    const [id, setId] = useState('')
+   const token = localStorage.getItem('token')
+
+    useEffect(() => {
+
+        const fetchUsers = async() => {
+            const res = await GetUsers(token)
+            //console.log(await res.json())
+            const data = await res.json()
+            const array = [];
+            data.map(element => {
+                const object = {email: element.email, name: element.nombre, usuario:element.username, id: element.id}
+                array.push(object)
+             })
+            
+            setUsers(array)
+               
+              
+        }
+        fetchUsers()
+      
+    }, [])
+   
     const handleRol = (e) => {
+        setId(e.id)
         setShowModal(true)
         setRol(e.rol)
         setName(e.name)
         setUsername(e.usuario)
     }
-    const products = [ {
-        id:"1",name:"Nicolas Orellana",rol:"administrador", usuario:"orellanaj2321"
-    }, 
-    {
-        id:"2", name:"Usuario de prueba 2",rol:"cliente", usuario: "usuarioPrueba2321"
-    }]
+
+
     const columns = [{
-    dataField: 'id',
-    text: ' ID'
+    dataField: 'email',
+    text: ' email'
     }, {
     dataField: 'name',
     text: 'Nombre del usuario'
     }, {
     dataField: 'usuario',
     text: 'Usuario'
-    },{
-        dataField: "rol",
-        text: "rol"
     }, {
         text: 'Acciones',
         formatter: (cell, row) => (
-          <Button variant="primary" onClick={() => handleRol(row)}>Cambiar de rol</Button>
+          <Button variant="primary" onClick={() => handleRol(row)}>Agregar rol</Button>
         )
       }];
 
     return(
         <>
         <NavBarComp></NavBarComp>
-        <ModalCambiarRol
+         <ModalCambiarRol
         show={showModal}
         onHide = {() => setShowModal(false)}
         rol = {rol}
         name = {name}
         username = {username}
-        />
+        id={id}
+        /> 
         <div style={{margin:"20px"}}>
-        <BootstrapTable keyField='id' data={ products } columns={ columns } />
+         <BootstrapTable keyField='id' data={ users } columns={ columns } /> 
         </div>
         </>
     )

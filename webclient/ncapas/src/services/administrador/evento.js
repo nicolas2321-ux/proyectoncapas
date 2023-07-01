@@ -26,7 +26,7 @@ export const getEvento = async(data) => {
     const response = await fetch(`${BASE_URL}evento/getEventosAdmin?page=${data.page}&size=${data.limit}`,{
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${data.token}`,
+          
             "Content-Type": "application/json",
         }
     })

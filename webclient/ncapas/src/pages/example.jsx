@@ -3,10 +3,32 @@ import Presentation from "../components/presentation.jsx"
 import Cartelera from "../components/cartelera.jsx"
 import Footer  from "../components/footer.jsx"
 import "../stylesheets/example.css"
-
-
+import { useEffect, useState } from "react"
+import { getEvento } from "../services/administrador/evento.js"
 
 export function Example(){
+    const [page, setPage] = useState(0)
+    const token = localStorage.getItem('token')
+    const [evento, setEventos] = useState([])
+    useEffect(() => {
+        const object = {
+           
+            page: page,
+            limit: 20
+        }
+         const traerEventos = async() =>{
+            const evento = await getEvento(object) 
+            const eventoArray = await evento.json()
+            setEventos(eventoArray.content)
+          
+        }
+
+          return () => {
+          traerEventos()
+          }; 
+       
+    
+    },[])
     return (
             <>
                 <NavBarComp />
@@ -14,36 +36,17 @@ export function Example(){
                 <div className="contenedor-shows-todo"> 
                     <h1 className="titulo">Eventos próximos...</h1>
                     <div className="contenedor-solo-shows" >
-                        <Cartelera
-                            image="Bailar"
-                            artista="no se xd"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="Homenaje"
-                            artista="NO SE TAMPOCO lol"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="IlVolo"
-                            artista="il volo"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="JuanLuisGuerra"
-                            artista="Juan Luis Guerra"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="LagoDeCisnes"
-                            artista="saber xd"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                        <Cartelera
-                            image="VanGogh"
-                            artista="saber xd"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
+                    {evento.map((elemento, index) => (
+                    <Cartelera
+                    image="Bailar"
+                    artista={elemento.descripcion}
+                    fecha={elemento.fecha_evento.substr(0,10)}
+                    key={elemento.idEvento}
+                    idEvento={elemento.idEvento}
+                    imagen={elemento.imagen}
+                    tipo={"cliente"}
+                    />
+                        ))}
                     </div>
                     <div className="contenedor-btn">
                         <button className="boton-mas">Cargar más eventos</button>
