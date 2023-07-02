@@ -51,6 +51,7 @@ export  function ModalAgregarRol(props){
           <option>Selecciona una opcion</option>
           <option value="administrador">Administrador</option>
           <option value="moderador">Moderador</option>
+          <option value="empleado">Empleado</option>
          
         </Form.Select>
         </Modal.Body>

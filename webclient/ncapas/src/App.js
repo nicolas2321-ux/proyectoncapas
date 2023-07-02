@@ -13,7 +13,9 @@ import { Stadistics } from './pages/estadistics';
 import { ModerarUsuarios } from './pages/moderador/moderarUsuarios';
 import { ProtectedAdmin } from './services/general/ProtectedAdmin';
 import { ProtectedModerador } from './services/general/ProtectedModerador';
+import { ProtectedEmpleado } from './services/general/ProtectedEmpleado';
 import { Busqueda } from './pages/busqueda';
+import VerificarTicket from './pages/cliente/verificarTicke';
 
 function App() {
   return (
@@ -33,7 +35,7 @@ function App() {
     <Route path='/verEstadisiticas' element = {<ProtectedAdmin component={Stadistics}></ProtectedAdmin>} />
     
     <Route path='/moderarUsuarios' element = {<ProtectedModerador component={ModerarUsuarios}></ProtectedModerador>}/>
-
+    <Route path='/verificarTicket/:idTicket' element = {<ProtectedEmpleado component={VerificarTicket}></ProtectedEmpleado>}/>
   </Routes>
   </GoogleOAuthProvider>
   </>

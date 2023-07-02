@@ -1,8 +1,9 @@
 import QRCode from 'qrcode.react';
 import Modal from 'react-bootstrap/Modal';
-
+import Swal from 'sweetalert2'
+const BASE_URL = process.env.REACT_APP
 export function QRimage(props){
-    const link = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+    const link = BASE_URL+'/verificarTicket/'+props.idTicket
     return (
         <Modal show={props.show} onHide={props.onHide}>
     <Modal.Header closeButton>
