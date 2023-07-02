@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { ModalTransferirTicket } from './modalTransferirTicket';
@@ -8,6 +8,7 @@ import {QRimage} from './QR'
 export function ModalBoletos(props){
   const [showModalTransferir, setshowModalTransferir] = useState(false)
   const [showQR, setShowQR] = useState(false)
+  const [idTicket, setidTicket] = useState(null)
   const handleTransferir = () =>{
     props.onHide()
     setshowModalTransferir(true)
@@ -16,6 +17,10 @@ export function ModalBoletos(props){
     props.onHide()
     setShowQR(true)
   }
+  useEffect(() => {
+   // console.log(props.idTicket)
+    setidTicket(props.idTicket)
+  }, [props.show])
 return(
     <> 
     <ModalTransferirTicket
@@ -25,6 +30,7 @@ return(
     <QRimage
     show={showQR}
     onHide={()=> setShowQR(false)}
+    idTicket = {idTicket}
     />
     <Modal show={props.show} onHide={props.onHide}>
     <Modal.Header closeButton>

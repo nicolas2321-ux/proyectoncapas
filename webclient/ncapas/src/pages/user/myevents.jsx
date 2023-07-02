@@ -2,7 +2,29 @@ import NavBarComp from "../../components/navbar";
 import Footer  from "../../components/footer.jsx"
 import Cartelera from "../../components/cartelera.jsx"
 import CarteleraOwn from '../../components/carteleraOwn'
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { GetEvents } from "../../services/general/cliente";
+import { Navigate } from "react-router-dom";
+import { useState } from "react";
 export function Myevents() {
+    const token = localStorage.getItem('token')
+    const navigate = useNavigate();
+    const [events, setEvents] = useState([])
+    const [tickets, setTickets] = useState([])
+    useEffect(() => {
+        if(token === null){
+            navigate('/')
+        }
+        const fetch = async() => {
+            const data = await GetEvents(token)
+            const res = await data.json()
+            console.log(res)
+           setEvents(res)
+        }
+        fetch()
+
+    }, [])
 
     return (
         <>
@@ -11,22 +33,17 @@ export function Myevents() {
                     <div className="contenedor-shows-todo-extended">
                     <div className="contenedor-solo-shows-extended">
                        
-                        <CarteleraOwn
-                            image="LagoDeCisnes"
-                            artista="Lago de cisnes"
-                            fecha="25-09-23"
-                            ubi="Salamanca"
-                                />
-                        <CarteleraOwn
-                            image="VanGogh"
-                            artista="Van gogh"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
-                             <CarteleraOwn
-                            image="VanGogh"
-                            artista="Arte"
-                            fecha="25-09-23"
-                            ubi="Salamanca" />
+                    {events.map((elemento, index) => (
+
+                    <CarteleraOwn
+                        image={elemento.id_evento.imagen}
+                        artista={elemento.id_evento.descripcion}
+                        fecha={elemento.id_evento.fecha_evento.substring(0,10)}
+                        categoria={elemento.id_evento.id_categoria.descripcion}
+                        idTicket={elemento.idTicket}
+                        ubi="Salamanca"
+                            />
+                    ))}
                             
                     </div>
                     {/* <div className="contenedor-btn">

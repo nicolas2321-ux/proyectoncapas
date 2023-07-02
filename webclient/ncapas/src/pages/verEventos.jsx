@@ -19,6 +19,8 @@ import {BiCategory} from 'react-icons/bi'
 import { getLocalidades } from "../services/administrador/localidad.js"
 import Swal from 'sweetalert2'
 import { deleteLocalidad } from "../services/administrador/localidad.js"
+import { useNavigate } from "react-router-dom";
+
 export function VerEventos(){
     const [verEditarEvento, setVerEditarEvento] = useState(false)
     const [mostraColaboradores, setMostrarcolaboradores] = useState(false)
@@ -37,9 +39,12 @@ export function VerEventos(){
     const [precio, setPrecio] = useState([])
     const [tickets, setTickets] = useState([])
     const [helper, setHelper] = useState(true)
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getSingleEvent = async() =>{
+             console.log(state.ID_evento.id)
+            if(state.ID_evento.id !== null){
             const id = state.ID_evento.id
            
             const object = {
@@ -55,10 +60,14 @@ export function VerEventos(){
               
                 setCategoria(currentEvent.id_categoria.idCategoria)
             }
+        }else{
+            navigate('/')
         }
+    }
         getSingleEvent()
 
         const getLocalidad = async() => {
+            if(state.ID_evento.id !== null){
             const id = state.ID_evento.id
             const object = {
                 id: id,
@@ -70,7 +79,7 @@ export function VerEventos(){
             setDescripcionLocalidad(response.descripcion)
             setPrecio(response.precio)
             setTickets(response.tickets)
-            
+            }
         }
         getLocalidad()
         

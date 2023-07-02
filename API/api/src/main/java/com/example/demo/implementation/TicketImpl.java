@@ -1,6 +1,7 @@
 package com.example.demo.implementation;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class TicketImpl implements TicketsService{
 	private TicketRepository ticketrepository;
 	@Override
 	public Tickets traerTicket(UUID code) {
-		// TODO Auto-generated method stub
-		return null;
+	Tickets ticket = ticketrepository.findByIdTicket(code);
+		return ticket;
 	}
 
 	@Override
@@ -31,11 +32,23 @@ public class TicketImpl implements TicketsService{
 			Tickets ticket = new Tickets();
 			ticket.setEstado(1);
 			ticket.setFecha_venta(fecha);
-			ticket.setId_cliente(user);
+			ticket.setIdCliente(user);
 			ticket.setId_evento(evento);
 			ticket.setId_localidad(lugar);
 			ticketrepository.save(ticket);
 		}
+	}
+
+
+	@Override
+	public List<Tickets> getMyTickets(User user) {
+		List<Tickets> gettickets = ticketrepository.findByIdCliente(user);
+		return gettickets;
+	}
+
+	@Override
+	public void cambiarEstado(Tickets ticket) {
+		ticketrepository.save(ticket);
 	}
 
 }
