@@ -24,7 +24,7 @@ public class Tickets {
 	@Id
 	@Column(name = "id_ticket")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	UUID idTicket;
+	UUID id_ticket;
 	
 	@Column(name = "estado")
 	Integer estado;
@@ -34,7 +34,7 @@ public class Tickets {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_cliente", nullable = false)
-	User idCliente;
+	User id_cliente;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_localidad", nullable = false)
@@ -48,7 +48,7 @@ public class Tickets {
 		super();
 		this.estado = estado;
 		this.fecha_venta = fecha_venta;
-		this.idCliente = id_cliente;
+		this.id_cliente = id_cliente;
 		this.id_localidad = id_localidad;
 		this.id_evento = id_evento;
 	}

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {AiOutlineArrowRight} from 'react-icons/ai';
-import {BiCalendar, BiCategory} from 'react-icons/bi';
+import {BiCalendar} from 'react-icons/bi';
 import {GoLocation} from 'react-icons/go';
 import { Link } from 'react-router-dom';
+
 import '../stylesheets/cartelera.css';
 import { ModalBoletos } from "./modalBoletos";
 
@@ -23,12 +24,11 @@ function CarteleraOwn(props) {
             show={showModalBoletos}
             onHide={()=>setshowModalBoletos(false)}
             artista = {props.artista}
-            idTicket = {props.idTiket}
             />
 
         
             <div className="contenedor-show">
-                <img src={props.image} className="img-show" />
+                <img src={require(`../images/${props.image}.jpg`)} className="img-show" />
                 <div className="texto-superpuesto">
                     <div className="contenedor-texto">
                         <h1 className="artista">{props.artista}</h1>
@@ -36,7 +36,7 @@ function CarteleraOwn(props) {
                             <BiCalendar /> {props.fecha}
                         </p>
                         <p className="ubicacion">
-                           <BiCategory /> {props.categoria}
+                            <GoLocation /> {props.ubi}
                         </p>
                         {rol === 'admin' ? (
                         <Link to="/verEventos" className="btn-info">Ver detalles <AiOutlineArrowRight /></Link>

@@ -25,7 +25,6 @@ return(
     <QRimage
     show={showQR}
     onHide={()=> setShowQR(false)}
-    idTicket = {props.idTicket}
     />
     <Modal show={props.show} onHide={props.onHide}>
     <Modal.Header closeButton>
