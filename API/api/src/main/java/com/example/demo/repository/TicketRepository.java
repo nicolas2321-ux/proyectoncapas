@@ -10,7 +10,7 @@ import com.example.demo.entities.Tickets;
 import com.example.demo.entities.User;
 
 public interface TicketRepository extends JpaRepository<Tickets, UUID> {
-	List<Tickets> findByIdCliente(User user);
+	List<Tickets> findByIdClienteAndEstado(User user, Integer estado);
     Tickets findByIdTicket(UUID ticket);
 	
 }

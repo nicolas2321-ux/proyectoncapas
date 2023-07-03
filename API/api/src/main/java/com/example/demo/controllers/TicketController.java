@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controllers.dto.EventoDTO;
 import com.example.demo.controllers.dto.TicketDto;
+import com.example.demo.controllers.dto.TraspasoDTO;
 import com.example.demo.entities.Evento;
 import com.example.demo.entities.Lugares;
 import com.example.demo.entities.Tickets;
+import com.example.demo.entities.Traspaso_tickets;
 import com.example.demo.entities.User;
 import com.example.demo.services.EventoService;
 import com.example.demo.services.LugaresService;
 import com.example.demo.services.TicketsService;
+import com.example.demo.services.Traspaso_ticketsService;
 import com.example.demo.services.UserService;
 
 @RestController
@@ -33,6 +36,8 @@ public class TicketController {
 	private LugaresService lugaresService;
 	@Autowired
 	private EventoService eventoservice;
+	@Autowired
+	private Traspaso_ticketsService traspaso_ticketsService;
 	
 	@GetMapping(name = "/")
 	public ResponseEntity<?> findall(){
@@ -72,5 +77,21 @@ public class TicketController {
 		find.setEstado(0);
 		ticketService.cambiarEstado(find);
 		 return ResponseEntity.status(HttpStatus.OK).body("Ticket verificado");
+	}
+	@PostMapping("/verificarTranspaso")
+	public ResponseEntity<?> verificar(@RequestBody TraspasoDTO traspaso){
+		Tickets find   = ticketService.traerTicket(traspaso.getTicket());
+		if(find == null){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket no encontrado");
+		}else{
+
+			Traspaso_tickets findTranspaso = traspaso_ticketsService.get_traspaso(find);
+			User userBeneficiado =  findTranspaso.getIdnuevousuario();
+			find.setEstado(0);
+			findTranspaso.setEstado(2);
+			traspaso_ticketsService.save(findTranspaso);
+
+			return null;
+		}
 	}
 }

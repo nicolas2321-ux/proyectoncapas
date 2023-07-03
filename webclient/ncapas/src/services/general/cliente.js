@@ -14,3 +14,20 @@ export const GetEvents = async(data) => {
 
     return respuesta
 }
+
+export const transferirTicket = async(data) => {
+    const response = await fetch(`${BASE_URL}email/sendEmail`,{
+        "method": "POST",
+        headers: {
+            "Authorization": `Bearer ${data.token}`,
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+          
+                to: data.username,
+                ticket: data.ticket,
+             })
+    })
+    const respuesta = await response;
+    return respuesta
+}

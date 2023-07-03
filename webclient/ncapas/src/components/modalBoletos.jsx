@@ -26,6 +26,7 @@ return(
     <ModalTransferirTicket
     show={showModalTransferir}
     onHide = {() => setshowModalTransferir(false)}
+    idTicket = {idTicket}
     />
     <QRimage
     show={showQR}

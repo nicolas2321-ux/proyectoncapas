@@ -42,7 +42,7 @@ public class TicketImpl implements TicketsService{
 
 	@Override
 	public List<Tickets> getMyTickets(User user) {
-		List<Tickets> gettickets = ticketrepository.findByIdCliente(user);
+		List<Tickets> gettickets = ticketrepository.findByIdClienteAndEstado(user, 1);
 		return gettickets;
 	}
 
