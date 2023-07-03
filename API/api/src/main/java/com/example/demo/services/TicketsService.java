@@ -18,4 +18,5 @@ public interface TicketsService {
 	void crearTicket(User user, Lugares lugar, Evento evento,Date fecha,Integer cantidadTickets);
 	List<Tickets> getMyTickets(User user);
 	void cambiarEstado(Tickets ticket);
+	void saveTicket(Tickets ticket);
 }

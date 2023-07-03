@@ -31,7 +31,7 @@ export function ModalTransferirTicket(props){
     if(data.status === 200){
      
       Swal.fire(
-        'Ticket ya verificado!',
+        'Ticket transferido!',
         'Exito',
         'success'
       ).then(()=>{

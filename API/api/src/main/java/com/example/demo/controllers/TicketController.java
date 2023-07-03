@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,14 +86,25 @@ public class TicketController {
 		if(find == null){
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket no encontrado");
 		}else{
-
+			LocalDate fechaActual = LocalDate.now();
+			Date fechaActualDate = java.sql.Date.valueOf(fechaActual);
+			
 			Traspaso_tickets findTranspaso = traspaso_ticketsService.get_traspaso(find);
 			User userBeneficiado =  findTranspaso.getIdnuevousuario();
 			find.setEstado(0);
 			findTranspaso.setEstado(2);
 			traspaso_ticketsService.save(findTranspaso);
+			ticketService.saveTicket(find);
+			Tickets ticket = new Tickets();
+			ticket.setEstado(1);
+			ticket.setFecha_venta(fechaActualDate);
+			ticket.setIdCliente(userBeneficiado);
+			ticket.setId_evento(find.getId_evento());
+			ticket.setId_localidad(find.getId_localidad());
+			ticketService.saveTicket(ticket);
+			return ResponseEntity.status(HttpStatus.OK).body("Transpaso realizado");
 
-			return null;
+			
 		}
 	}
 }

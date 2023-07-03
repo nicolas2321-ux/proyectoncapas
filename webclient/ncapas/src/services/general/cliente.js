@@ -31,3 +31,20 @@ export const transferirTicket = async(data) => {
     const respuesta = await response;
     return respuesta
 }
+
+export const recibirTicket = async(data) => {
+    const response = await fetch(`${BASE_URL}ticket/verificarTranspaso`,{
+        "method": "POST",
+        headers: {
+            "Authorization": `Bearer ${data.token}`,
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+          
+              
+                ticket: data.ticket,
+             })
+    })
+    const respuesta = await response;
+    return respuesta
+}

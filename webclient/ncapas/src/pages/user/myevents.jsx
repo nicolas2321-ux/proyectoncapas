@@ -7,11 +7,13 @@ import { useEffect } from "react"
 import { GetEvents } from "../../services/general/cliente";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
+import { ModalRecibirTicket } from "../../components/modalRecibirTicket";
 export function Myevents() {
     const token = localStorage.getItem('token')
     const navigate = useNavigate();
     const [events, setEvents] = useState([])
     const [tickets, setTickets] = useState([])
+    const [showModal, setShowModal] = useState(false)
     useEffect(() => {
         if(token === null){
             navigate('/')
@@ -24,13 +26,21 @@ export function Myevents() {
         }
         fetch()
 
-    }, [])
+    }, [showModal])
+
+    const recibirTicketHandler = () => {
+        setShowModal(true)
+    }
 
     return (
         <>
         <NavBarComp></NavBarComp>
+        <ModalRecibirTicket show={showModal} onHide={() => setShowModal(false)}></ModalRecibirTicket>
                     <h1 className="titulo" style={{ backgroundColor: "black", margin:"0"}}>Mis eventos</h1>
                     <div className="contenedor-shows-todo-extended">
+                         <div className="contenedor-btn">
+                        <button className="boton-mas" onClick={recibirTicketHandler}>Recibir ticket</button>
+                    </div>
                     <div className="contenedor-solo-shows-extended">
                        
                     {events.map((elemento, index) => (
@@ -46,9 +56,7 @@ export function Myevents() {
                     ))}
                             
                     </div>
-                    {/* <div className="contenedor-btn">
-                        <button className="boton-mas" onClick={handleCrearEvento}>Crear evento</button>
-                    </div> */}
+                   
                 </div>
         <Footer />
         </>

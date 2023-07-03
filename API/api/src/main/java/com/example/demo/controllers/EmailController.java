@@ -55,6 +55,9 @@ public class EmailController {
                 traspaso.setEstado(1);
                 traspaso.setIdticket(find);
                 traspaso_ticketsService.save(traspaso);
+
+                find.setEstado(0);
+                ticketsService.saveTicket(find);
                 return ResponseEntity.ok("Email enviado");
             }
 	}catch (Exception e) {

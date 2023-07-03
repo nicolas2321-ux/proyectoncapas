@@ -16,6 +16,23 @@ export const login = async(data) => {
     const respuesta = await response;
     return respuesta
 }
+export const register = async(data) => {
+    const response = await fetch(`${BASE_URL}user/signup`,{
+        "method": "POST",
+        headers:{
+            "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+            username: data.username,
+            email: data.email,
+            password: data.password,
+            nombre: data.nombre,
+
+        })
+    })
+    const respuesta = await response;
+    return respuesta
+}
 export const GetUsers = async(token) => {
     const response = await fetch(`${BASE_URL}user/getAllUsers`,{
         "method": "GET",
@@ -66,8 +83,3 @@ export const desactivar = async(data) => {
 
 
 
-export const register = (data) => {
-    console.log('peticion para el registro')
-    console.log('data')
-    return data
-}
