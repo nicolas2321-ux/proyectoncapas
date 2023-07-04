@@ -11,13 +11,11 @@ export function ModalRegister(props){
     const [email, setEmail] = useState('')
     
     useEffect(() => {
-       
-       if(props.data !== null){
-        setNombreCompleto(props.data.name)
-        setUsername(props.data.email)
-        setEmail(props.data.email)
-       }
-    }, [props.data])
+        setNombreCompleto('')
+        setUsername('')
+        setPassword('')
+        setEmail('')
+    },[])
 
     const handleSave = async() => {
         if(nombreCompleto === '' || username === '' || password === '' || email === ''){
@@ -27,7 +25,7 @@ export function ModalRegister(props){
                 'error'
                 )
             }else{
-        const object = {nombre: nombreCompleto, username: username, password: password, email:username}
+        const object = {nombre: nombreCompleto, username: username, password: password, email:email}
         // props.save(object)
         const res = await register(object)
         const data = await res
@@ -65,13 +63,13 @@ export function ModalRegister(props){
                     <Form.Control type="text" name='text' placeholder="John Doe"  onChange={(e) => setNombreCompleto(e.target.value)}  value={nombreCompleto} />
                     
                     <Form.Label className='mt-2'>Username</Form.Label>
-                    <Form.Control type="text" name='text' placeholder="John Doe"  onChange={(e) => setNombreCompleto(e.target.value)}  value={nombreCompleto} />
+                    <Form.Control type="text" name='text' placeholder="John Doe"  onChange={(e) => setUsername(e.target.value)}  value={username} />
                     
                     <Form.Label className='mt-2'>Email</Form.Label>
-                    <Form.Control type="text" name='text' placeholder="John2321"  value={username} disabled/>
+                    <Form.Control type="email" name='text' placeholder="John2321"  onChange={(e) => setEmail(e.target.value)}  value={email}/>
 
                     <Form.Label className='mt-2'>Contraseña</Form.Label>
-                    <Form.Control type="password" name='password' placeholder="Ultrasecretpassword" onChange={(e) => setPassword(e.target.value)}  />
+                    <Form.Control type="password" name='password' placeholder="Ultrasecretpassword" value={password} onChange={(e) => setPassword(e.target.value)}  />
                 </Form.Group>
             </Form>
         </Modal.Body>

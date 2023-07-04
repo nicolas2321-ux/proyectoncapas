@@ -25,6 +25,7 @@ import {BsGraphUpArrow} from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import { get_rol } from '../services/user/rol';
 import {TbMoodSilence} from 'react-icons/tb'
+import Modal from 'react-bootstrap/Modal';
 
 export function NavBarComp() {
   const token = localStorage.getItem("token")
@@ -42,7 +43,8 @@ export function NavBarComp() {
   const navigate = useNavigate();
   const [helper, setHelper] = useState(false)
   const [busqueda, setBusqueda] = useState('')
-  
+  const [show, setShow] = useState(false)
+  const [identificador, setIdentificador] = useState('')
   useEffect(() => {
 
 
@@ -65,7 +67,10 @@ export function NavBarComp() {
   }, [helper])
 
 
-  async function handleLogin(credentials) {
+  async function handleLogin() {
+    const credentials = {
+      email: identificador
+    }
     const response = await login(credentials)
     if(response.status === 200){
       const res = await response.json()
@@ -76,6 +81,7 @@ export function NavBarComp() {
         icon: 'success',
         confirmButtonText: 'Cool'
       })
+      setShow(false)
     }else{
       Swal.fire({
         title: 'Credenciales invalidas!',
@@ -85,6 +91,7 @@ export function NavBarComp() {
       })
     }
     setHelper(true)
+    setShow(false)
   }
   function handleRegister(register){
    
@@ -121,6 +128,30 @@ export function NavBarComp() {
   }
   if(token != null){
     return (
+      <>
+       <Modal show={show} onHide={() => {setShow(false)}}>
+      <Modal.Header closeButton>
+        <Modal.Title>Iniciar sesion</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Form>
+                <Form.Group className="mb-3">
+                    <Form.Label className='mt-2'>Identificador</Form.Label>
+                    <Form.Control type="text" name='text' placeholder="John Doe"  onChange={(e) => setIdentificador(e.target.value)}  value={identificador} />
+                    </Form.Group>
+      </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => {setShow(false)}}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleLogin}>
+          Iniciar sesion
+        </Button>
+      </Modal.Footer>
+    </Modal>
+
+    
       <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
         <ModalRegister
         show={showRegister}
@@ -185,7 +216,7 @@ export function NavBarComp() {
                     <>
 
                 <NavDropdown.Item href="#action/3.1">
-                      <GoogleLogin
+                      {/* <GoogleLogin
                         onSuccess={(credentialResponse) => {
                           handleLogin(jwt(credentialResponse.credential));
                         }}
@@ -211,8 +242,9 @@ export function NavBarComp() {
                         onError={() => {
                           console.log('Login Failed');
                         }}
-                      />
-                      <p>Registrarse</p>
+                      /> */}
+                      <Button>Iniciar sesion</Button><br />
+                      <Button>Registrarse</Button>
                       </NavDropdown.Item>
                     </>
                   ) : (
@@ -239,9 +271,32 @@ export function NavBarComp() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      </>
     );
   }else{
     return (
+      <>
+      <Modal show={show} onHide={() => {setShow(false)}}>
+      <Modal.Header closeButton>
+        <Modal.Title>Iniciar sesion</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Form>
+                <Form.Group className="mb-3">
+                    <Form.Label className='mt-2'>Identificador</Form.Label>
+                    <Form.Control type="text" name='text' placeholder="John Doe"  onChange={(e) => setIdentificador(e.target.value)}  value={identificador} />
+                    </Form.Group>
+      </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => {setShow(false)}}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleLogin}>
+          Iniciar sesion
+        </Button>
+      </Modal.Footer>
+    </Modal>
       <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
         <ModalRegister
         show={showRegister}
@@ -253,28 +308,33 @@ export function NavBarComp() {
           <Navbar.Brand href="/">ICONO</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Form style={{ marginLeft: '40%', marginTop: 'auto', marginBottom: 'auto' }}>
+          {islogged !== false ? (
+          <Form style={{ marginLeft: '20%', marginTop: 'auto', marginBottom: 'auto' }}>
               <InputGroup className="">
                 <InputGroup.Text id="basic-addon1">
                   <BiSearch />
                 </InputGroup.Text>
-                <Form.Control
+                <Form.Control onChange={(e) => {setBusqueda(e.target.value)}}
+                 onKeyPress={(e) => {handleKeyPress(e)}}
+               
                   placeholder="Buscar"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                 />
               </InputGroup>
             </Form>
+          ): (<></>)}
             <div style={{ borderLeft: '1px solid white', height: '40px', marginLeft: '10px' }}></div>
             <Nav className="">
              
 
 
               <NavDropdown title="Usuario" id="basic-nav-dropdown" drop={'start'}>
-                  {islogged === false ? (
+              {islogged === false ? (
                     <>
+
                 <NavDropdown.Item href="#action/3.1">
-                      <GoogleLogin
+                      {/* <GoogleLogin
                         onSuccess={(credentialResponse) => {
                           handleLogin(jwt(credentialResponse.credential));
                         }}
@@ -300,15 +360,19 @@ export function NavBarComp() {
                         onError={() => {
                           console.log('Login Failed');
                         }}
-                      />
-                      <p>Registrarse</p>
+                      /> */}
+                      <Button onClick={() => {setShow(true)}}>Iniciar sesion</Button><br /><br />
+                      
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                      <Button onClick={()=>setShowRegister(true)}>Registrarse</Button>
                       </NavDropdown.Item>
                     </>
                   ) : (
                     <>
                      <NavDropdown.Item>
                       <BiUser />
-                      <p>{username}</p>
+                      <p>{name}</p>
 
                      </NavDropdown.Item>
 
@@ -325,6 +389,7 @@ export function NavBarComp() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      </>
     );
   }
 }
