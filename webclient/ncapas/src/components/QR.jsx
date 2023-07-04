@@ -2,7 +2,7 @@ import QRCode from 'qrcode.react';
 import { useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Swal from 'sweetalert2'
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'http://157.245.210.118:443/'
 
 
 export function QRimage(props){
