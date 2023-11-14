@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +43,22 @@ public class EventoImpl implements EventoService {
 	public Page<Evento> buscarEventos(Pageable pageable, String evento, Integer estado) {
 		return eventoRepository.findByDescripcionAndEstadoContainingIgnoreCase(pageable, evento, estado);
 	}
+	
+	//Controllers Pagination--------------------------------------
+	@Override
+	public Page<Evento> findAll(PageRequest pageRequest) {
+		return eventoRepository.findAll(pageRequest);
+	}
+
+	@Override
+	public long count() {
+		return eventoRepository.count();
+	}
+
+	@Override
+	public List<Evento> getAll() {
+		return eventoRepository.findAll();
+	}
+	//------------------------------------------------------------
 
 }

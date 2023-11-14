@@ -1,9 +1,12 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controllers.dto.CreareventoDTO;
+import com.example.demo.controllers.dto.PageDTO;
 import com.example.demo.controllers.dto.SearchDTO;
 import com.example.demo.entities.Categoria;
 import com.example.demo.entities.Evento;
@@ -44,10 +48,33 @@ public class EventoController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping(name = "/")
-	public ResponseEntity<?> findall(){
-		return null;
+	@GetMapping("/")
+	public ResponseEntity<?> getAllEvents(@RequestParam(defaultValue = "1") int page,
+	                                      @RequestParam(defaultValue = "6") int size,
+	                                      @RequestParam(defaultValue = "") String title){
+
+	    long totalElements = eventoservice.count();
+	    int totalPages = (int) Math.ceil((double) totalElements / size);
+
+	    List<Evento> eventsMatch = new ArrayList<>();
+
+	    for (int i = 1; i <= totalPages; i++) {
+	        Page<Evento> events = eventoservice.findAll(PageRequest.of(i - 1, size));
+
+	        for (Evento event : events.getContent()) {
+	            if (event.getDescripcion().toUpperCase().contains(title.toUpperCase())) {
+	                    eventsMatch.add(event);
+	                
+	            }
+	        }
+	    }
+
+	    List<Evento> eventsOnCurrentPage = eventsMatch.subList((page - 1) * size, Math.min(page * size, eventsMatch.size()));
+	    PageDTO<Evento> eventPageDTO = new PageDTO<>(eventsOnCurrentPage, page, size, eventsMatch.size(), totalPages);
+
+	    return new ResponseEntity<>(eventPageDTO, HttpStatus.OK);
 	}
+	
 	@PostMapping("/crearEvento")
 	public ResponseEntity<?> crearEvento(@Valid @RequestBody CreareventoDTO eventoDto, BindingResult bindingResult){
 		
