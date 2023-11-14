@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +17,9 @@ public interface EventoService {
 	void save(Evento evento);
 	Page<Evento> getEventos(Pageable pageable, Integer estado);
 	Page<Evento> buscarEventos(Pageable pageable, String evento, Integer estado);
+	
+	//Pagination
+	Page<Evento> findAll(PageRequest of);
+	long count();
+	public List<Evento> getAll();
 }
