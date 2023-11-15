@@ -2,6 +2,7 @@ package com.example.demo.services.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import com.example.demo.model.dto.RolByUSerDTO;
 import com.example.demo.model.entities.Rol;
 import com.example.demo.model.entities.User;
 import com.example.demo.model.entities.User_rol;
+import com.example.demo.repository.RolRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.User_rolRepository;
 import com.example.demo.services.user_rolService;
 @Service
@@ -18,6 +21,23 @@ public class user_RolImpl implements user_rolService {
 
 	@Autowired
 	private User_rolRepository user_rolRepository;
+	
+	@Autowired
+	private UserRepository user_repository;
+	
+	@Autowired
+	private RolRepository rol_repository;
+	
+	@Override
+	public void defaultRole(UUID userId) {
+        User user = user_repository.findById(userId).orElse(null);
+        Rol defaultRole = rol_repository.findByRol("Cliente"); 
+        if (user != null && defaultRole != null) {
+            User_rol newUserRole = new User_rol(user, defaultRole, 1);
+            user_rolRepository.save(newUserRole);
+        }
+    }
+ 
 
 	@Override
 	public RolByUSerDTO getRolbyUser(User user) {
