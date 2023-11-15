@@ -1,5 +1,6 @@
 package com.example.demo.model.entities;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -40,6 +41,5 @@ public class User_rol {
 		this.rol = id_rol;
 		this.estado = estado;
 	}
-
 	
 }

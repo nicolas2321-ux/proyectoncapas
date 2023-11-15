@@ -22,6 +22,7 @@ import com.example.demo.model.dto.UserRegistrationDto;
 import com.example.demo.model.entities.Tokens;
 import com.example.demo.model.entities.User;
 import com.example.demo.services.UserService;
+import com.example.demo.services.user_rolService;
 
 import jakarta.validation.Valid;
 
@@ -33,6 +34,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private user_rolService user_roleService;
+	
 	@GetMapping(name = "/")
 	public ResponseEntity<?> findall(){
 		return null;
@@ -40,7 +44,7 @@ public class UserController {
 
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> login(@Valid @RequestBody UserRegistrationDto registrationDto, BindingResult bindingResult){
+	public ResponseEntity<?> login(@Valid @RequestBody UserRegistrationDto registrationDto, BindingResult bindingResult) throws Exception{
 		if(bindingResult.hasErrors()) {
 			System.out.println(registrationDto.getNombre());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al introducir las creedenciales");
@@ -61,6 +65,9 @@ public class UserController {
 
 		User newUser = new User(username, email, password, name,1, fecha );
 		userService.register(newUser);
+		
+		User UserDefaultRole = userService.register(newUser);
+		user_roleService.defaultRole(UserDefaultRole.getId());//Default rol -> Cliente
 		
 		return ResponseEntity.ok("Usuario registrado exitosamente");
 	}
