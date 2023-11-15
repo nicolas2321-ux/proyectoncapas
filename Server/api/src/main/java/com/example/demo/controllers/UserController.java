@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,11 +77,13 @@ public class UserController {
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro usuario con estas credenciales");
 		}else {
-		User user2 = userService.findUserAuthenticated();
-		
+			
+			if(user.getActive() == false) {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Este usuario se encuentra desactivado");
+			}
+
 		try {
 			Tokens token = userService.registerToken(user);
-//				return new ResponseEntity<>(new tokensDTO(token), HttpStatus.OK);
 			return new ResponseEntity<>(token, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,25 +92,26 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/revisar")
+	@GetMapping("/revisar")
 		public ResponseEntity<?> revisarToken(){
 			 User user2 = userService.findUserAuthenticated();
 			 
 			 return new ResponseEntity<>(user2, HttpStatus.OK);
 		}
+	
 	@PostMapping("/activarUsuario")
 	public ResponseEntity<?> activar(@RequestParam UUID id){
 		User user = userService.findById(id);
-		user.setEstado(1);
+		user.setActive(true);
 		userService.register(user);
-		return ResponseEntity.ok("Activado");
+		return ResponseEntity.ok("Usuario Activado");
 	}
 	@PostMapping("/desactivarUsuario")
 	public ResponseEntity<?> desactivar(@RequestParam UUID id){
 		User user = userService.findById(id);
-		user.setEstado(0);
+		user.setActive(false);
 		userService.register(user);
-		return ResponseEntity.ok("Desactivado");
+		return ResponseEntity.ok("Usuario Desactivado");
 	}
 	
 	@GetMapping("/getAllUsers")

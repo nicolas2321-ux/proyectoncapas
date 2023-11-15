@@ -63,6 +63,7 @@ public class WebSecurityConfiguration {
 				.requestMatchers("/user/**").permitAll()
 				.requestMatchers("/evento/all").permitAll()
 				.requestMatchers("/email/sendEmail").permitAll()
+				.requestMatchers("/evento/getSingleEvent").permitAll()
 				.anyRequest().authenticated()
 			)
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
