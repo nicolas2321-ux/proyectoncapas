@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import './App.css'
-import Navbar from './components/Navbar/NavbarHomepage.jsx'
+import Footer from './components/Footer/Footer.jsx'
+import Home from './pages/user/Home.jsx'
 
 function App() {
 
 
   return (
     <>
-      <Navbar />
-    
+      <Home />
+      <Footer /> 
       
     </>
   )
