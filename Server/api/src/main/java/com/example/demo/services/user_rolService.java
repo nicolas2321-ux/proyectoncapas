@@ -13,4 +13,5 @@ public interface user_rolService {
 	void saveRol(User user, Rol rol);
 	void cambiarEstado(UUID id);
 	User_rol verificarSiExiste(User user, Rol rol);
+	void defaultRole (UUID user) throws Exception;
 }
