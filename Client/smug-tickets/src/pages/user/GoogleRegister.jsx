@@ -15,7 +15,7 @@ function GoogleRegister() {
       username : register.email,
       email : register.email,
       password : register.sub,
-      name : register.name,
+      nombre : register.name,
     }
     const res = await authService.register(object)
     if(res == 200){

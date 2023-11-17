@@ -6,6 +6,7 @@ import CardHome from "../../components/Card/CardHome.jsx";
 //import SearchBox from "../../components/SearchBox";
 //import FilterButton from "../../components/Button/FilterButton";
 //import context from "../../context/UserContex";
+import Footer from "../../components/Footer/Footer.jsx";
 import EventService from "../../services/Publico/PublicService.js";
 
 const Home = () => {
@@ -91,6 +92,7 @@ const Home = () => {
         </div>
 
         <div className="mt-2">
+        <Footer />
         </div>
       </div>
     </>
