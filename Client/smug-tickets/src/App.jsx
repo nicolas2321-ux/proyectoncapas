@@ -3,7 +3,7 @@ import './App.css'
 import Footer from './components/Footer/Footer.jsx'
 import Home from './pages/user/Home.jsx'
 //import AuthGoogle from './pages/user/AuthGoogle.jsx'
-import GoogleRegister from './pages/user/GoogleRegister.jsx'
+//mport GoogleRegister from './pages/user/GoogleRegister.jsx'
 /**
  * Componente principal de la aplicación.
  * @returns {JSX.Element} Elemento JSX que contiene el componente Home y el Footer.
@@ -11,10 +11,10 @@ import GoogleRegister from './pages/user/GoogleRegister.jsx'
 function App() {
   return (
     <>
-      <GoogleRegister />
+      {/*<GoogleRegister />/}
       {/*<AuthGoogle />*/}
-      {/*<Home />*/}
-      {/*<Footer />*/}
+      <Home />
+      <Footer />
     </>
   )
 }
