@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-oauth/google": "^0.11.1",
     "axios": "^1.6.2",
+    "force": "^0.0.3",
     "gapi-script": "^1.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

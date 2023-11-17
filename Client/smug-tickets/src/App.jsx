@@ -2,8 +2,8 @@ import { useState } from 'react'
 import './App.css'
 import Footer from './components/Footer/Footer.jsx'
 import Home from './pages/user/Home.jsx'
-//import AuthGoogle from '../src/components/AuthGoogle.jsx'
-
+//import AuthGoogle from './pages/user/AuthGoogle.jsx'
+import GoogleRegister from './pages/user/GoogleRegister.jsx'
 /**
  * Componente principal de la aplicación.
  * @returns {JSX.Element} Elemento JSX que contiene el componente Home y el Footer.
@@ -11,9 +11,10 @@ import Home from './pages/user/Home.jsx'
 function App() {
   return (
     <>
+      <GoogleRegister />
       {/*<AuthGoogle />*/}
-      <Home />
-      <Footer />
+      {/*<Home />*/}
+      {/*<Footer />*/}
     </>
   )
 }

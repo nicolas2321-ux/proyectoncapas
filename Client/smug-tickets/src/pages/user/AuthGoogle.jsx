@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { gapi } from 'gapi-script';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';  // Añade GoogleOAuthProvider aquí
-import logo from "../assets/smug_ticket.png";
+import logo from '../../assets/img/logo.png';
 
 function AuthGoogle(props) {
   const clientID = "151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com";
