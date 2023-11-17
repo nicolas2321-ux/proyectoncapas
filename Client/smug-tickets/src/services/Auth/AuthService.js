@@ -52,6 +52,21 @@ const authService = {
                 hasError: true,
             };
         }
+    },
+
+    register: async (user) => {
+        try {
+            const response = await API.post('/signup', user);
+            if (response.status === 200) {
+                return response.status;
+            } else {
+                throw new Error(response.status);
+            }
+        } catch (error) {
+            return {
+                hasError: true,
+            };
+        }
     }
 }
 
