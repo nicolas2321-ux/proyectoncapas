@@ -10,14 +10,10 @@ const API = axios.create({
 });
 
 const PublicService = {
+    //Trae todos los eventos
     getAllEvents: async (page, size) => {
         try {
-            const response = await API.get('/all', {
-                params: {
-                    page,
-                    size,
-                },
-            });
+            const response = await API.get(`/all?page=${page}&size=${size}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching events:', error);
