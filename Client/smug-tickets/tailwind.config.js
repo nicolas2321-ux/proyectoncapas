@@ -13,7 +13,8 @@ export default {
         "locations-gray": "#D9D9D9",
         "white": "#FFFFFF",
         "orange": "#E98A15",
-        "pay-gray": "#F9F7F4"
+        "pay-gray": "#F9F7F4",
+        "mustard": "#c99a00"
       },
     },
   },
