@@ -34,13 +34,13 @@ const Home = () => {
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
+    if (currentPage > 0) {
       setCurrentPage((prevPage) => prevPage - 1);
     }
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
+    if (currentPage < totalPages-1) {
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
