@@ -5,6 +5,7 @@ import logo from '../../assets/smug_ticket.png'
 import {jwtDecode} from 'jwt-decode'
 import authService from '../../services/Auth/AuthService';
 import context from '../../Context/UserContext';
+import rolService from '../../services/Auth/RolService';
 
 function AuthGoogle(props) {
   const clientID = "151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com";
@@ -25,14 +26,18 @@ function AuthGoogle(props) {
       context.login(data.email);
       const id = await authService.verifyToken(res.data.content);
       console.log(id);
+      getRole(id);
       console.log("Inicio de sesión exitoso!")
     }else{
       console.log("Error al iniciar sesión!")
     }
   }
-  const onSuccess = (res) => {
-    console.log(res);
-  };
+
+  const getRole = async(data) =>{
+    //const res = await authService.verifyToken(context.getToken());
+    const rol = await rolService.getRoles(data);
+    console.log(rol);
+  }
 
   const onFailure = () => {
     console.log("SALIO MAL :C");
