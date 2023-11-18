@@ -12,7 +12,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 function App() {
   return (
     <>
-    
      {/*<GoogleOAuthProvider clientId="151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com">
      <GoogleRegister /> */}
       {/*/}
