@@ -6,6 +6,8 @@ import Home from './pages/user/Home.jsx'
 //import AuthGoogle from './pages/user/AuthGoogle.jsx'
 import GoogleRegister from './pages/user/GoogleRegister.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import AuthGoogle from './pages/user/AuthGoogle.jsx'
+
 /**
  * Componente principal de la aplicación.
  * @returns {JSX.Element} Elemento JSX que contiene el componente Home y el Footer.

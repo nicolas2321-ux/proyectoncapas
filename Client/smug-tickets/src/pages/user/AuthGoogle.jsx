@@ -28,6 +28,7 @@ function AuthGoogle(props) {
       <div className="flex justify-center bg-[#E3C4A8] items-center h-screen">
         <div className="max-w-md mx-auto bg-[#F1F1F1F1] p-8 rounded-lg shadow-2xl text-center">
           <h2 className="text-2xl font-bold">Smug Ticket</h2>
+          <h3 className="text-2xl font-bold">Login</h3>
           <div>
             <img src={logo} alt="logo" className="w-64" />
           </div>
