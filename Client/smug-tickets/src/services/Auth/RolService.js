@@ -11,10 +11,14 @@ const API = axios.create({
 
 const rolService = {
     //Obtener el rol del usuario por medio del ID
-  getRoles: async (userid) => {
+  getRoles: async (userid, token) => {
     try {
-      const response = await API.get(`/getRolesById?userid=${userid}`);
-
+      const response = await API.get(`/getRolesById?userid=${userid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
       if (response.status === 200) {
         console.log(response.data);
         const { roles } = response.data;

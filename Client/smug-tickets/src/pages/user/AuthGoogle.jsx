@@ -34,8 +34,8 @@ function AuthGoogle(props) {
   }
 
   const getRole = async(data) =>{
-    //const res = await authService.verifyToken(context.getToken());
-    const rol = await rolService.getRoles(data);
+    let token = context.getToken();
+    const rol = await rolService.getRoles(data,token);
     console.log(rol);
   }
 
