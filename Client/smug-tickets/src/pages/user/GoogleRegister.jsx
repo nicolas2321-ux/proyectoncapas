@@ -3,11 +3,17 @@ import logo from '../../assets/smug_ticket.png'
 import { GoogleLogin } from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode'
 import authService from '../../services/Auth/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 function GoogleRegister() {
   const [showRegister, setShowRegister] = useState(false)
   const [credenciales, setCredenciales] = useState({})
 
+  const navigate = useNavigate();
+  
+  const redirectToHome = () => {
+    navigate("/");
+  };
 
   async function handleRegister(register){
 
@@ -19,6 +25,7 @@ function GoogleRegister() {
     }
     const res = await authService.register(object)
     if(res == 200){
+      redirectToHome();
       console.log("Usuario registrado")
     }else{
       console.log("Error al registrar usuario")

@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gapi } from 'gapi-script';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';  // Añade GoogleOAuthProvider aquí
 import logo from '../../assets/smug_ticket.png'
+import {jwtDecode} from 'jwt-decode'
+import authService from '../../services/Auth/AuthService';
+import context from '../../Context/UserContext';
+import rolService from '../../services/Auth/RolService';
+import { ProtectedRoutesClient } from '../../routes/ProtectedRoutesClient';
 
 function AuthGoogle(props) {
   const clientID = "151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com";
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const start = () => {
@@ -15,12 +21,29 @@ function AuthGoogle(props) {
     gapi.load("client:auth2", start);
   }, []);
 
-  const onSuccess = (res) => {
-    console.log(res);
-  };
+  const handleLogin = async(data) =>{
+
+    const res = await authService.login(data.email);
+    if(res.status == 200){
+      context.login(data.email);
+      //console.log(res.data.content);
+      const id = await authService.verifyToken(res.data.content);
+      //console.log(id);
+      getRole(id);
+      console.log("Inicio de sesión exitoso!")
+    }else{
+      console.log("Error al iniciar sesión!")
+    }
+  }
+
+  const getRole = async(data) =>{
+    //const res = await authService.verifyToken(context.getToken());
+    const rol = await rolService.getRoles(data);
+    console.log(rol);
+  }
 
   const onFailure = () => {
-    console.log("SALIO MAL :C");
+    console.log("Login failed!");
   };
 
   return (
@@ -33,7 +56,9 @@ function AuthGoogle(props) {
             <img src={logo} alt="logo" className="w-64" />
           </div>
           <GoogleLogin
-            onSuccess={onSuccess}
+            onSuccess={(credentialResponse) => {
+              handleLogin(jwtDecode(credentialResponse.credential));
+            }}
             onFailure={onFailure}
             cookiePolicy={"single_host_policy"}
             className="w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 transition duration-300"

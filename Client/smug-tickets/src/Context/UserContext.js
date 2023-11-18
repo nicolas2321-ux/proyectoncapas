@@ -7,9 +7,9 @@ const context = {
         const asyncFetchUser = async (identifier) => {
         let response = await authService.login(identifier);
         let token = response.data.content;
-        console.log(token);
+        //console.log(token);
         let responseCode = await authService.verifyToken(token);//Obtenemos el ID del usuario
-        console.log("Esto es el responseCode: " + responseCode); 
+        //console.log("Esto es el responseCode: " + responseCode); 
         if (response.hasError) return false;
     
         if (localStorage.getItem("content")) {
