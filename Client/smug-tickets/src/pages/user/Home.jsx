@@ -23,7 +23,7 @@ const Home = () => {
 
   const fetchAllEvents = async () => {
 
-    const response = await EventService.getAllEvents(currentPage, 3);
+    const response = await EventService.getAllEvents(currentPage, 6);
 
     console.log(response.content);
     if (!response.error) {
