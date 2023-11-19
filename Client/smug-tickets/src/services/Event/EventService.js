@@ -63,6 +63,55 @@ const eventService = {
                 hasError: true,
             };
         }
+    },
+    //Traer información de un evento
+    getEventById: async (event) => {
+        try {
+            const response = await API.get(`/getSingleEvent?event=${event}`);
+
+            if (response.status === 200) {
+                return response.data;
+                console.log(response.data);
+            } else {
+                throw new Error(response.status);
+            }
+        } catch (error) {
+            console.error(error);
+            return {
+                hasError: true,
+            };
+        }
+    },
+    //Editar un evento
+    editEvent: async (token, id, descripcion, tickets_disponibles, fecha_evento, capacidad, id_categoria, imagen) => {
+        let payload = {
+            descripcion: descripcion,
+            tickets_disponibles: tickets_disponibles,
+            fecha_evento: fecha_evento,
+            capacidad: capacidad,
+            id_categoria: id_categoria,
+            imagen: imagen
+        };
+      
+        try {
+          const response = await API.put(`/editarEvento/${id}`, payload, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+      
+          if (response.status == 200) {
+            console.log('Evento editado exitosamente:', response.data);
+            return response.data;
+          } else {
+            throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+          }
+        } catch (error) {
+          console.error('Error al editar el evento:', error);
+          return {
+            hasError: true,
+          };
+        }
     }
 }
 

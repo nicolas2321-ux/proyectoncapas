@@ -1,35 +1,102 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
-import NavbarAdmin from "../../components/Navbars/NavbarAdmin"
 import { useNavigate } from 'react-router-dom';
+import EventService from '../../services/Event/EventService';
+import CategoryService from '../../services/Category/CategoryService';
+import context from '../../Context/UserContext';
 
-export const EditEvent = () => {
-    const [imageUrl, setImageUrl] = useState('');
+const EditEvent = () => {
+  const navigate = useNavigate();
+  const [imagenUrl, setImagenUrl] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [ticketDisponible, setTicketDisponible] = useState('');
+  const [fecha, setFecha] = useState('');
+  const [hora, setHora] = useState('04:32');
+  const [duracion, setDuracion] = useState('2');
+  const [capacidad, setCapacidad] = useState('');
+  const [imagenUrl1, setImagenUrl1] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState('');
+  const id = 'bf7a377c-43da-48d1-925d-3ea8ed139365';
 
-    const handleUrlChange = (e) => {
-        setImageUrl(e.target.value);
+  const formatearFecha = (fecha) => {
+    const fechaFormateada = new Date(fecha).toISOString().split('T')[0];
+    return fechaFormateada;
+  };
+
+  const fetchEvent = async () => {
+    try {
+      const response = await EventService.getEventById(id);
+      console.log('response', response);
+
+      if (response) {
+        setDescripcion(response.descripcion);
+        setTicketDisponible(response.tickets_disponibles);
+        setFecha(formatearFecha(response.fecha_evento));
+        setHora(response.hora);
+        setDuracion(response.duracion);
+        setCapacidad(response.capacidad);
+        setImagenUrl1(response.imagen);
+        setSelectedCategoryId(response.id_categoria.idCategoria);
+      }
+    } catch (error) {
+      console.error('Error al obtener el evento:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const token = context.getToken();
+      try {
+        const response = await CategoryService.getAll(token);
+        if (Array.isArray(response)) {
+          setCategories(response);
+        }
+      } catch (error) {
+        console.error('Error al obtener las categorías:', error);
+      }
     };
 
-    const handleUrlSubmit = (e) => {
-        e.preventDefault();
+    fetchCategories();
+    fetchEvent();
+  }, []);
+
+  const handleEditEvent = async () => {
+    const token = context.getToken();
+    const payload = {
         
-    };
-
-    const navigate = useNavigate();
-
-    const handlLocation = () => {
-        navigate('/admin/newlocation');
     }
+    const response = await EventService.editEvent(
+      token,
+      id,
+      descripcion,
+      ticketDisponible,
+      fecha,
+      capacidad,
+      selectedCategoryId,
+      imagenUrl1
+    );
 
-    const handlCreateEvent = () => {
-        navigate('/admin/upcoming');
+    if (!response.error) {
+      console.log('Evento actualizado exitosamente');
+      navigate('/');
     }
+  };
 
-    const handlCancel = () => {
-        navigate('/admin/upcoming');
-    }
+  const handleUrlSubmit = (e) => {
+    e.preventDefault();
+    setImagenUrl(imagenUrl1);
+  };
 
-    
+  const handleImageUrlChange = (e) => {
+    const url = e.target.value;
+    setImagenUrl1(url);
+    setImagenUrl(url);
+  };
+
+  const handleCancel = () => {
+    navigate('/');
+  };
 
     return (
         <>
@@ -40,16 +107,15 @@ export const EditEvent = () => {
                     </h1>
 
                     <div className='mt-3 lg:mt-8 flex flex-col items-center lg:flex lg:flex-row lg:items-start'>
-                        {imageUrl ? (
+                        {imagenUrl ? (
                             <img
-                                src={imageUrl}
+                                src={imagenUrl}
                                 alt='Preview'
                                 className='w-2/3 lg:mx-6 xl:w-1/3 h-5/6 lg:h-1/2 lg:w-1/2 xl:h-full rounded-xl object-cover'
                             />
                         ) : (
                             <form onSubmit={handleUrlSubmit} className="flex justify-center items-center">
                                 <label
-                                    htmlFor='image-url'
                                     className='cursor-pointer flex flex-col p-10 lg:p-24 lg:mt-24 xl:mt-24 items-center rounded-xl border-2 border-dashed border-blue-400 bg-white xl:p-32 text-center'
                                 >
                                     <div className='text-center'> {/* Movida la clase "text-center" al contenedor del input */}
@@ -58,8 +124,8 @@ export const EditEvent = () => {
                                             type='text'
                                             className='h-20 w-80 lg:w-96 p-4 text-2xl font-bold bg-gray-100 rounded-xl'
                                             placeholder='Pega la URL de la imagen aquí'
-                                            value={imageUrl}
-                                            onChange={handleUrlChange}
+                                            value={imagenUrl1}
+                                            onChange={handleImageUrlChange}
                                         />
                                     </div>
 
@@ -73,11 +139,15 @@ export const EditEvent = () => {
                         <div className='mt-6 lg:w-1/2 lg:mt-0 lg:mx-6'>
                             <div className='mb-6 pl-2 lg:pl-0'>
                                 <label className='text-base block lg:ml-0 mb-2 font-extrabold lg:text-lg' for="">Titulo del evento</label>
-                                <input className='inline-block w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text" />
+                                <input className='inline-block w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text"
+                                    value={descripcion}
+                                    onChange={(e) => setDescripcion(e.target.value)} />
                             </div>
                             <div className='mb-6 pl-2 lg:p-0'>
-                                <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Involucrados</label>
-                                <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text" />
+                                <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Ticket Disponibles</label>
+                                <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text"
+                                    value={ticketDisponible}
+                                    onChange={(e) => setTicketDisponible(e.target.value)} />
                             </div>
                             <div className='-mx-3 flex lg:flex-nowrap lg:flex-row flex-col' >
                                 <div className='w-full px-3 sm:w-auto'>
@@ -89,6 +159,8 @@ export const EditEvent = () => {
                                             type="date"
                                             name="date"
                                             id="date"
+                                            value={fecha}
+                                            onChange={(e) => setFecha(e.target.value)}
                                             className='lg:w-xl rounded-md border-gray bg-white shadow border-2 py-2 px-2 lg:py-3 lg:px-6 text-base font-normal 
                                         text-black outline-none focus:border-black focus:shadow-md' />
                                     </div>
@@ -100,6 +172,8 @@ export const EditEvent = () => {
                                             type="time"
                                             name="time"
                                             id="time"
+                                            value={hora}
+                                            onChange={(e) => setHora(e.target.value)}
                                             className='lg:w-xl rounded-md shadow border-2 border-gray bg-white py-2 px-2 lg:py-3 lg:px-6 text-base font-medium 
                                         text-black outline-none focus:border-black focus:shadow-md' />
 
@@ -107,11 +181,13 @@ export const EditEvent = () => {
                                 </div>
                                 <div className='lg:w-full lg:px-3 sm:w-1/2'>
                                     <div className='mb-5 pl-5 lg:pl-0'>
-                                        <label for="time" class=" mb-3 block text-base font-extrabold text-black">Duracion</label>
+                                        <label for="time" class=" mb-3 block text-base font-extrabold text-black">Duracion(hr)</label>
                                         <input
                                             type="number"
                                             name="number"
                                             id="number"
+                                            value={duracion}
+                                            onChange={(e) => setDuracion(e.target.value)}
                                             className='lg:w-1/3 rounded-md shadow border-2 border-gray bg-white p-2 lg:py-3 lg:px-6 text-base font-medium 
                                         text-black outline-none focus:border-black focus:shadow-md' />
                                     </div>
@@ -122,46 +198,44 @@ export const EditEvent = () => {
                                 <div className='relative flex bg-gray-100'>
                                     <button className=' relative text-lg px-3 py-3 leading-6 font-normal  flex justify-center items-center  bg-white focus:outline-none shadow border-2 border-gray focus:border-black text-black rounded group'>
                                         <form action="#">
-                                            <select className='text-sm text-center'>
-                                                <option value="Categoria 1">Categoria 1</option>
-                                                <option value="Categoria 2">Categoria 2</option>
-                                                <option value="Categoria 3">Categoria 3</option>
-                                                <option value="Categoria 4">Categoria 4</option>
+                                            <select className='text-sm text-center'
+                                            
+                                                value={selectedCategoryId}
+                                                onChange={(e) => setSelectedCategoryId(e.target.value)}>
+                                                    <option value="">Selecciona una categoría</option>
+                                                {categories.map((category) => (
+                                                    <option key={category.idCategoria} value={category.idCategoria}>{category.descripcion}
+                                                    </option>
+                                                ))}
                                             </select>
                                         </form>
                                     </button>
                                 </div>
                             </div>
                             <div className='mb-6 pl-2 lg:pl-0'>
-                                <label className='block mb-2 font-extrabold text-normal lg:text-lg' for="">Patrocinadores</label>
-                                <input className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text" />
+                                <label className='block mb-2 font-extrabold text-normal lg:text-lg' for="">Capacidad</label>
+                                <input value={capacidad} onChange={(e) => setCapacidad(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text" />
                             </div>
                             <div className='flex flex-row items-start  lg:mx-0 gap-5 lg:flex-col '>
-                                <button onClick={handlLocation} type="submit" class=" lg:ml-0  py-4 px-4  lg:px-5 lg:py-3 bg-blue rounded-2xl
-                            font-extrabold text-white capitalize
-                            focus:outline-none hover:shadow-none">
-                                    <p className='text-xs lg:text-base  lg:w-24' >Crear Localidad</p>
-                                </button>
-
-                                <button onClick={handlCreateEvent} type="submit" className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl
+                                <button  type="submit" onClick={handleEditEvent}  className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl
                             font-extrabold text-white capitalize
                             focus:outline-none hover:shadow-none'>
-                                    <p className='text-xs lg:text-base  lg:w-24' >Editar Evento</p>
+                                    <p className='text-xs lg:text-base  lg:w-24' >Guardar Cambios</p>
                                 </button>
 
-                                <button onClick={handlCancel} type="submit" className='lg:ml-0 py-4 px-4 lg:hidden lg:px-5 lg:py-3 bg-blue rounded-2xl
+                                <button  type="submit" onClick={handleCancel}  className='lg:ml-0 py-4 px-4 lg:hidden lg:px-5 lg:py-3 bg-blue rounded-2xl
                             font-extrabold text-white capitalize
                             focus:outline-none hover:shadow-none'>
                                     <p className='text-xs lg:text-base  lg:w-24' >Cancelar</p>
                                 </button>
                             </div>
                             <div className='lg:flex hidden lg:flex-row gap-2 lg:gap-5 lg:pt-3 lg:ml-80 '>
-                                <button onClick={handlCreateEvent} type="submit" className='ml-14 px-3 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-orange rounded-2xl
+                                <button onClick={handleEditEvent} type="submit" className='ml-14 px-3 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-orange rounded-2xl
                     font-extrabold text-black capitalize
                     focus:outline-none hover:shadow-none'>
-                                    <p className='lg:w-auto text-xs lg:text-base'>Editar Evento</p>
+                                    <p className='lg:w-auto text-xs lg:text-base'>Guardar Cambios</p>
                                 </button>
-                                <button onClick={handlCancel} type="submit" className='py-3 px-5 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-blue rounded-2xl
+                                <button  type="submit" onClick={handleCancel} className='py-3 px-5 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-blue rounded-2xl
                     font-extrabold text-white capitalize
                     focus:outline-none hover:shadow-none'>
                                     <p className='text-xs lg:text-base'>Cancelar</p>
