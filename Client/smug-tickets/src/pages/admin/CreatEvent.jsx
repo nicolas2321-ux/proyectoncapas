@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 //import { MessageSuccess } from '../../utils/Alert';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EventService from '../../services/Event/EventService';
 import CategoryService from '../../services/Category/CategoryService';
 import context from '../../Context/UserContext';
 
 export const CreateEvent = () => {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     const [imagenUrl, setImagenUrl] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [ticketDisponible, setTicketDisponible] = useState('');
@@ -64,10 +64,18 @@ export const CreateEvent = () => {
             selectedCategoryId,
             imagenUrl
         );
+
+        //Obtener el id del evento creado
+        const search = await EventService.searchEventsByTitle(token,descripcion,0 ,50);
+
+        const idEventos = search.content.map((evento) => evento.idEvento);
+        const id = idEventos;
         if(!response.error){
             //MessageSuccess('Evento creado exitosamente');
-            //navigate('/admin/events');
             console.log("Evento creado exitosamente");
+            console.log(id);
+            navigate(`/newlocation/${id}/${descripcion}`); // Modificación aquí
+
         }
         
     }
@@ -77,6 +85,10 @@ export const CreateEvent = () => {
         setImagenUrl1(url);
         setImagenUrl(url);
     };
+
+    const handleCancel = () => {
+        navigate('/');
+    }
     
     return (
         <>
@@ -198,18 +210,13 @@ export const CreateEvent = () => {
                                 <input value={capacidad} onChange={(e) => setCapacidad(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text" />
                             </div>
                             <div className='flex flex-row items-start  lg:mx-0 gap-5 lg:flex-col '>
-                                <button type="submit" class=" lg:ml-0  py-4 px-4  lg:px-5 lg:py-3 bg-blue rounded-2xl
-                            font-extrabold text-white capitalize
-                            focus:outline-none hover:shadow-none">
-                                    <p className='text-xs lg:text-base  lg:w-24' >Crear Localidad</p>
-                                </button>
-                                <button  type="submit" className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl
+                                <button  type="submit" onClick={handleCreateEvent}  className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl
                             font-extrabold text-white capitalize
                             focus:outline-none hover:shadow-none'>
                                     <p className='text-xs lg:text-base  lg:w-24' >Crear Evento</p>
                                 </button>
 
-                                <button  type="submit" className='lg:ml-0 py-4 px-4 lg:hidden lg:px-5 lg:py-3 bg-blue rounded-2xl
+                                <button  type="submit" onClick={handleCancel}  className='lg:ml-0 py-4 px-4 lg:hidden lg:px-5 lg:py-3 bg-blue rounded-2xl
                             font-extrabold text-white capitalize
                             focus:outline-none hover:shadow-none'>
                                     <p className='text-xs lg:text-base  lg:w-24' >Cancelar</p>
@@ -221,7 +228,7 @@ export const CreateEvent = () => {
                     focus:outline-none hover:shadow-none'>
                                     <p className='lg:w-auto text-xs lg:text-base'>Crear Evento</p>
                                 </button>
-                                <button  type="submit" className='py-3 px-5 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-blue rounded-2xl
+                                <button  type="submit" onClick={handleCancel} className='py-3 px-5 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-blue rounded-2xl
                     font-extrabold text-white capitalize
                     focus:outline-none hover:shadow-none'>
                                     <p className='text-xs lg:text-base'>Cancelar</p>

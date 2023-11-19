@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL_ROLE = 'http://localhost:8080/evento';
+const BASE_URL_ROLE = 'http://localhost:8080/lugares';
 
 const API = axios.create({
   baseURL: BASE_URL_ROLE,
@@ -9,19 +9,17 @@ const API = axios.create({
   },
 });
 
-const eventService = {
-    //Crear un evento nuevo
-    createEvent: async (token, descripcion, tickets_disponibles, fecha_evento,capacidad, id_categoria, imagen ) => {
+const localityService = {
+    //Crear una Localidad
+    createLocality: async (token, descripcion, id_evento, precio, tickets ) => {
         let payload = {
             descripcion: descripcion,
-            tickets_disponibles: tickets_disponibles,
-            fecha_evento: fecha_evento,
-            capacidad: capacidad,
-            id_categoria: id_categoria,
-            imagen: imagen
+            id_evento: id_evento,
+            precio: precio,
+            tickets: tickets
         };
         try {
-            const response = await API.post('/crearEvento', payload, {
+            const response = await API.post('/saveLugar', payload, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -39,21 +37,29 @@ const eventService = {
             };
         }
     },
-    //Buscar un evento
-    searchEventsByTitle: async (token, title, page, size ) => {
-        let payload = {
-            title: title
-        };
+    //Obtener todas las Localidades
+    getLocalidadesPorEvento: async (token, idEvento) => {
         try {
-            const response = await API.post(`/buscarEventos?page=${page}&size=${size}`, payload, {
+            const response = await API.get(`/getLocalidad?evento=${idEvento}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
             if (response.status === 200) {
-                return response.data;
                 console.log(response.data);
+    
+                // Extraer datos específicos del JSON de respuesta
+                const localidades = response.data.code.map((code, index) => ({
+                    code,
+                    descripcion: response.data.descripcion[index],
+                    precio: response.data.precio[index],
+                    tickets: response.data.tickets[index],
+                }));
+
+                console.log(localidades);
+    
+                return localidades;
             } else {
                 throw new Error(response.status);
             }
@@ -66,4 +72,4 @@ const eventService = {
     }
 }
 
-export default eventService;
+export default localityService;

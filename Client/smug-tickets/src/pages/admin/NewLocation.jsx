@@ -1,74 +1,133 @@
-import NavbarAdmin from '../../components/Navbars/NavbarAdmin'
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useState, useEffect } from "react";
+//import NavbarAdmin from '../../components/Navbars/NavbarAdmin'
+import { useNavigate,useParams } from "react-router-dom";
+import LocalityService from "../../services/Locality/LocalityService";
+import context from "../../Context/UserContext";
 
 export const NewLocation = () => {
+  const navigate = useNavigate();
+  const [descripcion, setDescripcion] = useState("");
+  const [capacidad, setCapacidad] = useState("");
+  const [precio, setPrecio] = useState("");
 
-    const navigate = useNavigate();
+  const { id, evento} = useParams();
 
-    const handlePrevious = () => {
-        navigate('/admin/create');
-    }
+  const reset = () => {
+    // Reiniciar los estados a sus valores iniciales
+    setDescripcion("");
+    setCapacidad("");
+    setPrecio("");
+  }
 
-    const handleFollowing = () => {
-        navigate('/admin/listlocations');
-    }
+  const handleAddlocality = () => {
+    handleCreateLocation();
+    reset();// Reiniciar los estados a sus valores iniciales
+    
+  };
 
+  const handleViewLocations = () => {
+    navigate(`/listlocations/${id}`);// Pasamos el id del evento
+  };
 
-    return (
-        <>
-            
-            <div className="flex justify-center items-center py-5 ">
-                <h1 className="text-3xl text-white font-black bg-orange py-2 rounded-lg w-5/6 text-center"> Evento: Bad Bunny</h1>
-            </div>
-            <h1 className="text-center text-4xl font-bold">Crear Localidades</h1>
+  const handleCreateLocation = async (e) => {
 
-            <div className="max-w-lg mx-auto border border-dashed border-blue flex flex-col items-center p-5 mt-6">
-                <label className="mb-2 font-bold border border-solid border-gray w-full text-center py-2" htmlFor="evento">
-                    Nombre del evento:
-                </label>
-                <input
-                    id="evento"
-                    type="text"
-                    placeholder="Evento..."
-                    className="w-full p-2 border border-solid border-gray-400 rounded text-center border-blue"
-                />
-            </div>
+    let token = context.getToken();
 
-            <div className="max-w-lg mx-auto border border-dashed border-blue flex flex-col items-center p-5 mt-6">
-                <label className="mb-2 font-bold border border-solid border-gray w-full text-center py-2" htmlFor="evento">
-                    Capacidad:
-                </label>
-                <input
-                    id="capacidad"
-                    type="text"
-                    placeholder="Capacidad..."
-                    className="w-full p-2 border border-solid border-gray-400 rounded text-center border-blue"
-                />
-            </div>
+    //TODO: Validar que los campos no esten vacios
+    console.log(token, id, descripcion, capacidad, precio);
 
-            <div className="max-w-lg mx-auto border border-dashed border-blue flex flex-col items-center p-5 mt-6">
-                <label className="mb-2 font-bold border border-solid border-gray w-full text-center py-2" htmlFor="evento">
-                    Precio:
-                </label>
-                <input
-                    id="precio"
-                    type="text"
-                    placeholder="Precio..."
-                    className="w-full p-2 border border-solid border-gray-400 rounded text-center border-blue"
-                />
-            </div>
-
-            <div className="flex justify-center py-10">
-                <button onClick={handlePrevious} className="px-4 py-2 bg-orange rounded-md mr-4 text-black font-bold">Anterior</button>
-                <button onClick={handleFollowing} className="px-4 py-2 bg-blue rounded-md text-white font-bold">Siguiente</button>
-            </div>
-
-
-        </>
+    const response = await LocalityService.createLocality(
+      token,
+      descripcion,
+      id,
+      precio,
+      capacidad
     );
 
+    if (!response.error) {
+      //MessageSuccess('Localidad creada exitosamente');
+      console.log("Localidad creado exitosamente");
+    }
 
+    console.log(response);
+  };
+
+  return (
+    <>
+      <div className="flex justify-center items-center py-5 ">
+        <h1 className="text-3xl text-white font-black bg-orange py-2 rounded-lg w-5/6 text-center">
+          Evento: {evento}
+        </h1>
+      </div>
+      <h1 className="text-center text-4xl font-bold">Crear Localidades</h1>
+
+      <div className="max-w-lg mx-auto border border-dashed border-blue flex flex-col items-center p-5 mt-6">
+        <label
+          className="mb-2 font-bold border border-solid border-gray w-full text-center py-2"
+          htmlFor="evento"
+        >
+          Nombre de la localidad:
+        </label>
+        <input
+          id="evento"
+          type="text"
+          placeholder="Evento..."
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          className="w-full p-2 border border-solid border-gray-400 rounded text-center border-blue"
+        />
+      </div>
+
+      <div className="max-w-lg mx-auto border border-dashed border-blue flex flex-col items-center p-5 mt-6">
+        <label
+          className="mb-2 font-bold border border-solid border-gray w-full text-center py-2"
+          htmlFor="evento"
+        >
+          Capacidad:
+        </label>
+        <input
+          id="capacidad"
+          type="number"
+          placeholder="Capacidad..."
+          value={capacidad}
+          onChange={(e) => setCapacidad(e.target.value)}
+          className="w-full p-2 border border-solid border-gray-400 rounded text-center border-blue"
+        />
+      </div>
+
+      <div className="max-w-lg mx-auto border border-dashed border-blue flex flex-col items-center p-5 mt-6">
+        <label
+          className="mb-2 font-bold border border-solid border-gray w-full text-center py-2"
+          htmlFor="evento"
+        >
+          Precio:
+        </label>
+        <input
+          id="precio"
+          type="number"
+          placeholder="Precio..."
+          value={precio}
+          onChange={(e) => setPrecio(e.target.value)}
+          className="w-full p-2 border border-solid border-gray-400 rounded text-center border-blue"
+        />
+      </div>
+
+      <div className="flex justify-center py-10">
+        <button
+          onClick={handleAddlocality}
+          className="px-4 py-2 bg-orange rounded-md mr-4 text-black font-bold"
+        >
+           Guardar
+        </button>
+        <button
+          onClick={handleViewLocations}
+          className="px-4 py-2 bg-blue rounded-md text-white font-bold"
+        >
+          Ver localidades
+        </button>
+      </div>
+    </>
+  );
 };
 
 export default NewLocation;
