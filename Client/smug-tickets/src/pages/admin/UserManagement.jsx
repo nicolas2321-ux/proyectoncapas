@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
+import UserService from '../../services/Users/UsersService';
 //import SearchBox from '../../components/SearchBoxTicket';
 //import { Alert, MessageSuccess} from '../../utils/Alert';
 
@@ -14,11 +15,11 @@ export const UserManagement = () => {
     }
 
     const handleActive = () => {
-        MessageSuccess('El usuario se ha activado correctamente');
+        //MessageSuccess('El usuario se ha activado correctamente');
     }
 
     const handleInactive = () => {
-        MessageSuccess('El usuario se ha desactivado correctamente');
+        //MessageSuccess('El usuario se ha desactivado correctamente');
     }
 
     const [users, setUsers] = useState([]);
@@ -30,11 +31,10 @@ export const UserManagement = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:8080/user/getALL');
-            const data = await response.json();
+            const response = await UserService.getAllUsers();
 
             // Actualizar el estado con los datos de la API
-            setUsers(data);
+            setUsers(response);
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
         }
@@ -63,7 +63,8 @@ export const UserManagement = () => {
                             {users.map((user) => (
                                 <tr key={user.id} className='border-b-2 border-b-locations-gray'>
                                     <td className='p-4 text-black font-semibold'>{user.nombre}</td>
-                                    <td className='p-4 text-black font-semibold'>{user.email}</td>
+                                    <td className='p-4 text-black font-semibold'
+                                    style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</td>
                                     <td className='p-4 text-black font-semibold'>{user.estado}</td>
                                 </tr>
                             ))}
