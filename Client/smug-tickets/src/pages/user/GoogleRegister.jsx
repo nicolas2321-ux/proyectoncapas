@@ -4,6 +4,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode'
 import authService from '../../services/Auth/AuthService';
 
+
 function GoogleRegister() {
   const [showRegister, setShowRegister] = useState(false)
   const [credenciales, setCredenciales] = useState({})
@@ -18,7 +19,7 @@ function GoogleRegister() {
       nombre : register.name,
     }
     const res = await authService.register(object)
-    if(res == 200){
+    if(res == 200){ 
       console.log("Usuario registrado")
     }else{
       console.log("Error al registrar usuario")
