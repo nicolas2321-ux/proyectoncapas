@@ -33,6 +33,7 @@ export const UserManagement = () => {
             // Verificar si la solicitud fue exitosa
             if (response.ok) {
                 console.log('Usuario activado con éxito');
+                fetchUsers();
             } else {
                 console.error('Error al activar usuario:', response.statusText);
             }
@@ -41,7 +42,7 @@ export const UserManagement = () => {
         }
     };
 
-    const deactivateUser = async (userId) => {
+    const desactivateUser = async (userId) => {
         try {
             // Realizar la solicitud POST para desactivar el usuario
             const response = await fetch(`http://localhost:8080/user/desactivarUsuario?id=${userId}`, {
@@ -54,6 +55,7 @@ export const UserManagement = () => {
             // Verificar si la solicitud fue exitosa
             if (response.ok) {
                 console.log('Usuario desactivado con éxito');
+                fetchUsers();
             } else {
                 console.error('Error al desactivar usuario:', response.statusText);
             }
@@ -84,13 +86,15 @@ export const UserManagement = () => {
                                 <tr key={user.id} className='border-b-2 border-b-locations-gray'>
                                     <td className='p-4 text-black font-semibold'>{user.nombre}</td>
                                     <td className='p-4 text-black font-semibold' style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</td>
-                                    <td className='p-4 text-black font-semibold'>{user.estado}</td>
+                                    <td className='p-4'>
+                                        <input type='checkbox' disabled checked={user.active} />
+                                    </td>
                                     <td className='p-4 flex'>
                                         <button onClick={() => activateUser(user.id)} className='hover:bg-black hover:text-white text-black border-2 font-bold py-2 px-4 rounded'>
-                                            Activar Usuario
+                                            Activar
                                         </button>
-                                        <button onClick={() => deactivateUser(user.id)} className='bg-black hover:bg-slate-800 text-white font-bold py-2 px-2 ml-2 rounded'>
-                                            Desactivar Usuario
+                                        <button onClick={() => desactivateUser(user.id)} className='bg-black hover:bg-slate-800 text-white font-bold py-2 px-2 ml-2 rounded'>
+                                            Desactivar
                                         </button>
                                     </td>
                                 </tr>
