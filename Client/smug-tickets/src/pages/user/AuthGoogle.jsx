@@ -40,14 +40,28 @@ function AuthGoogle(props) {
 
     const res = await context.login(data.email);
     if(res.status == 200){
-      //useAuth();
-      console.log("Inicio de sesión exitoso!")
-      navigate('/prueba2');
-      //getRole();
-      //console.log(name);
-      //<AppRouter myRol={name} />;
-      //navigate('/user/prueba');
-      //userLogged();
+     const token = localStorage.getItem('content');
+     const object = {token: token}
+     const roles = await rolService.getRol(object)
+     const result = await roles.json()
+   
+     switch (result.roles[0].rol) {
+      case "Admin":
+      return navigate('/admin');
+        
+     case "Cliente":
+        return navigate('/cliente');
+        
+      case "LectorQR":
+        return navigate('/lector');
+        
+      case "Moderador":
+        return navigate('/moderador');
+        
+      default:
+        return navigate('/');
+        
+     }
     }else{
       console.log("Error al iniciar sesión!")
     }
