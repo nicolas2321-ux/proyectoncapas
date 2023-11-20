@@ -27,7 +27,7 @@ export const NavbarAdmin = () => {
     }
 
     const handleGraph = () => {
-       //navigate('/admin/graph');
+       navigate('/admin/graph');
     }
 
     const handleManagement = () => {

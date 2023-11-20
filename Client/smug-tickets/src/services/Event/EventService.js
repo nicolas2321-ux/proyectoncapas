@@ -112,6 +112,25 @@ const eventService = {
             hasError: true,
           };
         }
+    },
+    //Traer todos los eventos ocultos/finalizados
+    getAllEventsHide: async (token, page, size) => {
+        try {
+            const response = await API.get(`/getEventoCancelados?page=${page}&size=${size}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (response.status === 200) {
+                return response.data;
+                console.log(response.data);
+            } else {
+                throw new Error(response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            throw error;
+        }
     }
 }
 
