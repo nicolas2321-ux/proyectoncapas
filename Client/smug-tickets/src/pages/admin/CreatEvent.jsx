@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../../components/Footer/Footer';
+import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 //import { MessageSuccess } from '../../utils/Alert';
 import { useNavigate } from 'react-router-dom';
 import EventService from '../../services/Event/EventService';
@@ -74,7 +75,7 @@ export const CreateEvent = () => {
             //MessageSuccess('Evento creado exitosamente');
             console.log("Evento creado exitosamente");
             console.log(id);
-            navigate(`/newlocation/${id}/${descripcion}`); // Modificación aquí
+            navigate(`/admin/newlocation/${id}/${descripcion}`); // Modificación aquí
 
         }
         
@@ -87,11 +88,12 @@ export const CreateEvent = () => {
     };
 
     const handleCancel = () => {
-        navigate('/');
+        navigate('/admin/upcoming');
     }
     
     return (
         <>
+            <NavbarAdmin />
             <section className='bg-white dark:bg-gray-900'>
                 <div className='container px-6 py-10 mx-auto'>
                     <h1 className='text-base md:text-2xl font-bold text-black capitalize lg:text-4xl dark:text-white text-center'>

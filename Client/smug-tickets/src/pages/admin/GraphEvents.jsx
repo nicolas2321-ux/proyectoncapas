@@ -1,5 +1,6 @@
 import React from "react";
-import Footer from "../../components/Footer/Footer";
+import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 import SearchBoxTicket from "../../components/SearchBoxTicket";
 import CardGraph from "../../components/Card/CardGraph";
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +13,7 @@ export const GraphEvents = () => {
   return (
     <>
       <div>
+        <NavbarAdmin />
         <h1 className="text-center text-4xl font-bold mt-8 mb-4">Gráficas de cada evento</h1>
         <div className="flex justify-center">
           <div className="w-full max-w-lg">

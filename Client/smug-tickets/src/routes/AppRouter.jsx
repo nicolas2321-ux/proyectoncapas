@@ -21,25 +21,40 @@ import UserManagement from "../pages/admin/UserManagement";
 import NewLocation from "../pages/admin/NewLocation";
 import ListOfLocations from "../pages/admin/ListOfLocations";
 import EditEvent from "../pages/admin/EditEvent";
+import HomeAdmin from "../pages/admin/HomeAdmin";
+import UpcomingEvents from "../pages/admin/UpcomingEvents";
+import FinishedEvents from "../pages/admin/FinishedEvents";
+//import GraphEvents from "../pages/admin/GraphEvents";
 
 
 const Location = () => {
 
     return (
         <Routes>
+            {/*VISTAS PÚBLICAS*/ }
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<AuthGoogle />} />
             <Route path="/register" element={<GoogleRegister />} />
+
+            {/*VISTAS DE PRUEBA*/ }
             <Route path="/admin" element={<ProtectedAdmin component={Prueba} />} />
             <Route path="/lector" element={<ProtectedLectorQR component={Prueba2} />} />
             <Route path="/cliente" element={<ProtectedCliente component={Prueba3} />} />
             <Route path="/moderador" element={<ProtectedModerador component={Prueba4} />} />
 
-             <Route path="/create" element={<CreateEvent />} />
-             <Route path="/allusers" element={<UserManagement />} />
-             <Route path="/newlocation/:id/:evento" element={<NewLocation />} />
-             <Route path="/listlocations/:id" element={<ListOfLocations />} />
-              <Route path="/edit" element={<EditEvent />} />
+            {/*VISTAS DE ADMIN*/ }
+            <Route path="/admin/Home" element={<ProtectedAdmin component={HomeAdmin} />} />
+            <Route path="/admin/createEvent" element={<ProtectedAdmin component={CreateEvent} />} />
+            <Route path="/admin/newlocation/:id/:evento" element={<ProtectedAdmin component={NewLocation} />} />
+            <Route path="/admin/listlocations/:id" element={<ProtectedAdmin component={ListOfLocations} />} />
+            <Route path="/admin/editEvent/:id" element={<ProtectedAdmin component={EditEvent} />} />
+            <Route path="/admin/allusers" element={<ProtectedAdmin component={UserManagement} />} />
+            <Route path="/admin/upcoming" element={<ProtectedAdmin component={UpcomingEvents} />} />
+            <Route path="/admin/finished" element={<ProtectedAdmin component={FinishedEvents} />} />
+            
+    
+            {/*VISTAS DE CLIENTE*/ }
+            
         </Routes>
     );
 };

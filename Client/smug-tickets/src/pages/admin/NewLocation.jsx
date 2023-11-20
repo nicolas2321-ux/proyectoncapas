@@ -26,7 +26,7 @@ export const NewLocation = () => {
   };
 
   const handleViewLocations = () => {
-    navigate(`/listlocations/${id}`);// Pasamos el id del evento
+    navigate(`/admin/listlocations/${id}`);// Pasamos el id del evento
   };
 
   const handleCreateLocation = async (e) => {
