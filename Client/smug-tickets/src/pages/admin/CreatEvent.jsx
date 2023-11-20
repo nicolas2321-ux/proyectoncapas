@@ -1,37 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
-import { MessageSuccess } from '../../utils/Alert';
+//import { MessageSuccess } from '../../utils/Alert';
 import { useNavigate } from 'react-router-dom';
-import EventService from '../../services/EventServices';
-import CategoryService from '../../services/CategoryService';
-import context from '../../context/UserContex';
+import EventService from '../../services/Event/EventService';
+import CategoryService from '../../services/Category/CategoryService';
+import context from '../../Context/UserContext';
 
 export const CreateEvent = () => {
-    /*
     const navigate = useNavigate();
-    const [imageUrl, setImageUrl] = useState('');
-
-    const [title, setTitle] = useState('');
-    const [involved, setInvolved] = useState('');
-    const [date, setDate] = useState('');
-    const [hour, setHour] = useState('');
-    const [duration, setDuration] = useState('');
-    const [categories, setCategories] = useState([]);
-    const [sponsor, setSponsor] = useState('');
-    const [imagesURL1, setImagesURL1] = useState('');
-    const [imagesURL2, setImagesURL2] = useState('');
+    const [imagenUrl, setImagenUrl] = useState('');
+    const [descripcion, setDescripcion] = useState('');
+    const [ticketDisponible, setTicketDisponible] = useState('');
+    const [fecha, setFecha] = useState('');
+    const [hora, setHora] = useState('');
+    const [duracion, setDuracion] = useState('');
+    const [capacidad, setCapacidad] = useState('');
+    const [imagenUrl1, setImagenUrl1] = useState('');
+    const [categories, setCategories] = useState([]); // Lista de categorias
 
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
 
+    //Traer todas las categorias
     useEffect(() => {
         const fetchCategories = async () => {
             const token = context.getToken();
             try {
-                const response = await CategoryService.getAllEvents(token);
+                const response = await CategoryService.getAll(token);
                 console.log(response);
-                if (Array.isArray(response.data)) {
-                    setCategories(response.data);
-                    console.log(response.data);
+                if (Array.isArray(response)) {
+                    setCategories(response);
+                    console.log(categories);
+
                 }
             } catch (error) {
                 console.error('Error al obtener las categorías:', error);
@@ -41,53 +40,56 @@ export const CreateEvent = () => {
         fetchCategories();
     }, []);
 
+    //Actualizar la imagen de preview al haber cambios
+    const handleUrlSubmit = (e) => {
+        e.preventDefault();
+        setImagenUrl(imagenUrl1);
+
+    };
 
     const handleCreateEvent = async (e) => {
         e.preventDefault();
+
         const token = context.getToken();
-        console.log(token);
-        console.log(title, date,hour,duration,sponsor,involved,imagesURL1,imagesURL2,selectedCategoryId);
+
+        //TODO: Falta validaciones de campo --> cuando ya esten las alertas se debe de implementar
+        console.log(token, descripcion, ticketDisponible, fecha, capacidad, selectedCategoryId, imagenUrl)
+
         const response = await EventService.createEvent(
             token,
-            title,
-            date,
-            hour +':00',
-            duration,
-            sponsor,
-            involved,
-            imagesURL1,
-            imagesURL2,
-            selectedCategoryId
+            descripcion,
+            ticketDisponible,
+            fecha,
+            capacidad,
+            selectedCategoryId,
+            imagenUrl
         );
-        if (!response.error) {
-            MessageSuccess('Evento creado correctamente');
-            navigate('/admin/upcoming');
+
+        //Obtener el id del evento creado
+        const search = await EventService.searchEventsByTitle(token,descripcion,0 ,50);
+
+        const idEventos = search.content.map((evento) => evento.idEvento);
+        const id = idEventos;
+        if(!response.error){
+            //MessageSuccess('Evento creado exitosamente');
+            console.log("Evento creado exitosamente");
+            console.log(id);
+            navigate(`/newlocation/${id}/${descripcion}`); // Modificación aquí
+
         }
-    };
-
-
-
-    /*const handleUrlChange = (e) => {
-        setImageUrl(e.target.value);
-    };*/
-
-    const handleUrlSubmit = (e) => {
-        e.preventDefault();
-
-    };
-
-    /*const handleCreateEvent = () => {
-        MessageSuccess('Evento creado correctamente');
-        navigate('/admin/upcoming');
-    }*/
-/*
-    const handlLocation = () => {
-        navigate('/admin/newlocation');
+        
     }
 
-    const handlCancel = () => {
-        navigate('/admin/upcoming');
-    }*/
+    const handleImageUrlChange = (e) => {
+        const url = e.target.value;
+        setImagenUrl1(url);
+        setImagenUrl(url);
+    };
+
+    const handleCancel = () => {
+        navigate('/');
+    }
+    
     return (
         <>
             <section className='bg-white dark:bg-gray-900'>
@@ -97,9 +99,9 @@ export const CreateEvent = () => {
                     </h1>
 
                     <div className='mt-3 lg:mt-8 flex flex-col items-center lg:flex lg:flex-row lg:items-start'>
-                        {imageUrl ? (
+                        {imagenUrl ? (
                             <img
-                                //src={imageUrl}
+                                src={imagenUrl}
                                 alt='Preview'
                                 className='w-2/3 lg:mx-6 xl:w-1/3 h-5/6 lg:h-1/2 lg:w-1/2 xl:h-full rounded-xl object-cover'
                             />
@@ -115,8 +117,8 @@ export const CreateEvent = () => {
                                             type='text'
                                             className='h-20 w-80 lg:w-96 p-4 text-2xl font-bold bg-gray-100 rounded-xl'
                                             placeholder='Pega la URL de la imagen aquí'
-                                            value={imagesURL1}
-                                            onChange={(e) => setImagesURL1(e.target.value)}
+                                            value={imagenUrl1}
+                                            onChange={handleImageUrlChange}
                                         />
                                     </div>
 
@@ -131,14 +133,14 @@ export const CreateEvent = () => {
                             <div className='mb-6 pl-2 lg:pl-0'>
                                 <label className='text-base block lg:ml-0 mb-2 font-extrabold lg:text-lg' for="">Titulo del evento</label>
                                 <input className='inline-block w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)} />
+                                    value={descripcion}
+                                    onChange={(e) => setDescripcion(e.target.value)} />
                             </div>
                             <div className='mb-6 pl-2 lg:p-0'>
-                                <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Involucrados</label>
+                                <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Ticket Disponibles</label>
                                 <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text"
-                                    value={involved}
-                                    onChange={(e) => setInvolved(e.target.value)} />
+                                    value={ticketDisponible}
+                                    onChange={(e) => setTicketDisponible(e.target.value)} />
                             </div>
                             <div className='-mx-3 flex lg:flex-nowrap lg:flex-row flex-col' >
                                 <div className='w-full px-3 sm:w-auto'>
@@ -150,8 +152,8 @@ export const CreateEvent = () => {
                                             type="date"
                                             name="date"
                                             id="date"
-                                            value={date}
-                                            onChange={(e) => setDate(e.target.value)}
+                                            value={fecha}
+                                            onChange={(e) => setFecha(e.target.value)}
                                             className='lg:w-xl rounded-md border-gray bg-white shadow border-2 py-2 px-2 lg:py-3 lg:px-6 text-base font-normal 
                                         text-black outline-none focus:border-black focus:shadow-md' />
                                     </div>
@@ -163,8 +165,8 @@ export const CreateEvent = () => {
                                             type="time"
                                             name="time"
                                             id="time"
-                                            value={hour}
-                                            onChange={(e) => setHour(e.target.value)}
+                                            value={hora}
+                                            onChange={(e) => setHora(e.target.value)}
                                             className='lg:w-xl rounded-md shadow border-2 border-gray bg-white py-2 px-2 lg:py-3 lg:px-6 text-base font-medium 
                                         text-black outline-none focus:border-black focus:shadow-md' />
 
@@ -172,13 +174,13 @@ export const CreateEvent = () => {
                                 </div>
                                 <div className='lg:w-full lg:px-3 sm:w-1/2'>
                                     <div className='mb-5 pl-5 lg:pl-0'>
-                                        <label for="time" class=" mb-3 block text-base font-extrabold text-black">Duracion</label>
+                                        <label for="time" class=" mb-3 block text-base font-extrabold text-black">Duracion(hr)</label>
                                         <input
                                             type="number"
                                             name="number"
                                             id="number"
-                                            value={duration}
-                                            onChange={(e) => setDuration(e.target.value)}
+                                            value={duracion}
+                                            onChange={(e) => setDuracion(e.target.value)}
                                             className='lg:w-1/3 rounded-md shadow border-2 border-gray bg-white p-2 lg:py-3 lg:px-6 text-base font-medium 
                                         text-black outline-none focus:border-black focus:shadow-md' />
                                     </div>
@@ -190,10 +192,12 @@ export const CreateEvent = () => {
                                     <button className=' relative text-lg px-3 py-3 leading-6 font-normal  flex justify-center items-center  bg-white focus:outline-none shadow border-2 border-gray focus:border-black text-black rounded group'>
                                         <form action="#">
                                             <select className='text-sm text-center'
+                                            
                                                 value={selectedCategoryId}
                                                 onChange={(e) => setSelectedCategoryId(e.target.value)}>
+                                                    <option value="">Selecciona una categoría</option>
                                                 {categories.map((category) => (
-                                                    <option key={category.id} value={category.id}>{category.description}
+                                                    <option key={category.idCategoria} value={category.idCategoria}>{category.descripcion}
                                                     </option>
                                                 ))}
                                             </select>
@@ -202,26 +206,17 @@ export const CreateEvent = () => {
                                 </div>
                             </div>
                             <div className='mb-6 pl-2 lg:pl-0'>
-                                <label className='block mb-2 font-extrabold text-normal lg:text-lg' for="">Patrocinadores</label>
-                                <input value={sponsor} onChange={(e) => setSponsor(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text" />
-                            </div>
-                            <div className='mb-6 pl-2 lg:pl-0'>
-                                <label className='block mb-2 font-extrabold text-normal lg:text-lg' for="">Imagen 2</label>
-                                <input value={imagesURL2} onChange={(e) => setImagesURL2(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="url" />
+                                <label className='block mb-2 font-extrabold text-normal lg:text-lg' for="">Capacidad</label>
+                                <input value={capacidad} onChange={(e) => setCapacidad(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text" />
                             </div>
                             <div className='flex flex-row items-start  lg:mx-0 gap-5 lg:flex-col '>
-                                <button onClick={handlLocation} type="submit" class=" lg:ml-0  py-4 px-4  lg:px-5 lg:py-3 bg-blue rounded-2xl
-                            font-extrabold text-white capitalize
-                            focus:outline-none hover:shadow-none">
-                                    <p className='text-xs lg:text-base  lg:w-24' >Crear Localidad</p>
-                                </button>
-                                <button onClick={handleCreateEvent} type="submit" className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl
+                                <button  type="submit" onClick={handleCreateEvent}  className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl
                             font-extrabold text-white capitalize
                             focus:outline-none hover:shadow-none'>
                                     <p className='text-xs lg:text-base  lg:w-24' >Crear Evento</p>
                                 </button>
 
-                                <button onClick={handlCancel} type="submit" className='lg:ml-0 py-4 px-4 lg:hidden lg:px-5 lg:py-3 bg-blue rounded-2xl
+                                <button  type="submit" onClick={handleCancel}  className='lg:ml-0 py-4 px-4 lg:hidden lg:px-5 lg:py-3 bg-blue rounded-2xl
                             font-extrabold text-white capitalize
                             focus:outline-none hover:shadow-none'>
                                     <p className='text-xs lg:text-base  lg:w-24' >Cancelar</p>
@@ -233,7 +228,7 @@ export const CreateEvent = () => {
                     focus:outline-none hover:shadow-none'>
                                     <p className='lg:w-auto text-xs lg:text-base'>Crear Evento</p>
                                 </button>
-                                <button onClick={handlCancel} type="submit" className='py-3 px-5 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-blue rounded-2xl
+                                <button  type="submit" onClick={handleCancel} className='py-3 px-5 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-blue rounded-2xl
                     font-extrabold text-white capitalize
                     focus:outline-none hover:shadow-none'>
                                     <p className='text-xs lg:text-base'>Cancelar</p>
