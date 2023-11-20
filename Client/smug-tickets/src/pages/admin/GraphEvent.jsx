@@ -4,17 +4,17 @@ import Footer from "../../components/Footer/Footer";
 import { BsFillPersonFill } from "react-icons/bs";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { IoTicket } from "react-icons/io5";
-import { generatePDF } from "../../utils/pdfUtils";
-import { generateExcel } from '../../utils/excelUtils';
+//import { generatePDF } from "../../utils/pdfUtils";
+//import { generateExcel } from '../../utils/excelUtils';
 
 export const GraphEvent = () => {
 
   const handleDownloadPDF = async () => {
-    await generatePDF();
+   // await generatePDF();
   };
 
   const handleDownloadExcel = () => {
-    generateExcel();
+   // generateExcel();
   };
   return (
     <>

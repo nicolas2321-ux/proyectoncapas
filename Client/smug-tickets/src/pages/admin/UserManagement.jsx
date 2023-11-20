@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../../components/Footer/Footer';
+import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 import UserService from '../../services/Users/UsersService';
 
 export const UserManagement = () => {
@@ -66,6 +67,7 @@ export const UserManagement = () => {
 
     return (
         <>
+            <NavbarAdmin />
             <div className='flex flex-col items-center'>
                 <h1 className='m-5 font-bold text-xl md:text-3xl'>Gestión de Usuarios</h1>
 

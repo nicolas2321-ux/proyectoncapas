@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../../components/Footer/Footer';
-import { useNavigate } from 'react-router-dom';
+import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
+import { useNavigate,useParams } from 'react-router-dom';
 import EventService from '../../services/Event/EventService';
 import CategoryService from '../../services/Category/CategoryService';
 import context from '../../Context/UserContext';
@@ -17,7 +18,8 @@ const EditEvent = () => {
   const [imagenUrl1, setImagenUrl1] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
-  const id = 'bf7a377c-43da-48d1-925d-3ea8ed139365';
+
+  const { id } = useParams();//Recibimos el id del evento a editar
 
   const formatearFecha = (fecha) => {
     const fechaFormateada = new Date(fecha).toISOString().split('T')[0];
@@ -79,7 +81,7 @@ const EditEvent = () => {
 
     if (!response.error) {
       console.log('Evento actualizado exitosamente');
-      navigate('/');
+      navigate('/admin/upcoming');
     }
   };
 
@@ -95,11 +97,12 @@ const EditEvent = () => {
   };
 
   const handleCancel = () => {
-    navigate('/');
+    navigate('/admin/upcoming');
   };
 
     return (
         <>
+            <NavbarAdmin />
             <section className='bg-white dark:bg-gray-900'>
                 <div className='container px-6 py-10 mx-auto'>
                     <h1 className='text-base md:text-2xl font-bold text-black capitalize lg:text-4xl dark:text-white text-center'>

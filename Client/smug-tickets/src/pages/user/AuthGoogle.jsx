@@ -13,8 +13,6 @@ function AuthGoogle(props) {
   const clientID = "151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com";
   const navigate = useNavigate();
   const [client, setClient] = useState(false);
-  const name = "MArta";
-  //const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,16 +23,6 @@ function AuthGoogle(props) {
     };
     gapi.load("client:auth2", start);
   }, []);
-  /*
-  useEffect(()=>{
-    if (client) {
-      console.log(client);
-      //navigate('/user/prueba', { state: { myRol: "Cliente" } });
-      //<AppRouter myRol={client} />;
-      //navigate('/user/prueba');
-    }
-  },[client]);
-  */
 
   const handleLogin = async(data) =>{
 
@@ -47,7 +35,7 @@ function AuthGoogle(props) {
    
      switch (result.roles[0].rol) {
       case "Admin":
-      return navigate('/admin');
+      return navigate('/admin/Home');
         
      case "Cliente":
         return navigate('/cliente');
@@ -66,24 +54,7 @@ function AuthGoogle(props) {
       console.log("Error al iniciar sesión!")
     }
   }
-  /*
-  const getRole = async() =>{
-    const token = context.getToken();
-    try {
-        const id = await authService.verifyToken(token);
-        console.log(id);
-        const rol = await rolService.getRoles(id,token);
-        console.log(rol);
-        rol.forEach(element =>{
-          if (element === "Cliente") {
-          setClient(true);
-        }
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
-*/
+
   const onFailure = () => {
     console.log("SALIO MAL :C");
   };

@@ -25,11 +25,11 @@ export const ListOfLocations = () => {
     }, [id]);
 
     const handlHome = () => {
-        navigate('/');
+        navigate('/admin/Home');
     }
 
     const handlCreateEvent = () => {
-        navigate("/create");
+        navigate("/admin/createEvent");
     }
     
 
