@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 import UserService from '../../services/Users/UsersService';
+import UsersService from '../../services/Users/UsersService';
 
 export const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -23,20 +24,8 @@ export const UserManagement = () => {
     const activateUser = async (userId) => {
         try {
             // Realizar la solicitud POST para activar el usuario
-            const response = await fetch(`http://localhost:8080/user/activarUsuario?id=${userId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            // Verificar si la solicitud fue exitosa
-            if (response.ok) {
-                console.log('Usuario activado con éxito');
-                fetchUsers();
-            } else {
-                console.error('Error al activar usuario:', response.statusText);
-            }
+            const response = await UsersService.ActiveUser(userId);
+            fetchUsers();
         } catch (error) {
             console.error('Error al activar usuario:', error);
         }
@@ -45,20 +34,8 @@ export const UserManagement = () => {
     const desactivateUser = async (userId) => {
         try {
             // Realizar la solicitud POST para desactivar el usuario
-            const response = await fetch(`http://localhost:8080/user/desactivarUsuario?id=${userId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            // Verificar si la solicitud fue exitosa
-            if (response.ok) {
-                console.log('Usuario desactivado con éxito');
-                fetchUsers();
-            } else {
-                console.error('Error al desactivar usuario:', response.statusText);
-            }
+            const response = await UsersService.DisableUser(userId);
+            fetchUsers();
         } catch (error) {
             console.error('Error al desactivar usuario:', error);
         }
