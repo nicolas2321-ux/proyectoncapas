@@ -38,7 +38,7 @@ function AuthGoogle(props) {
       return navigate('/admin/Home');
         
      case "Cliente":
-        return navigate('/cliente');
+        return navigate('/cliente/Home');
         
       case "LectorQR":
         return navigate('/lector');

@@ -51,7 +51,7 @@ export const ViewEvent = () => {
     console.log(event.title, event.date);
     const handleBack = () => {
         if (context.getToken != null) {
-            navigate('/user/home');
+            //navigate('/user/Home');
         }else{
             navigate('/');
         }
@@ -59,9 +59,9 @@ export const ViewEvent = () => {
     }
     const handlePurchase = () => {
         if (context.getToken != null) {
-            navigate(`/user/purchase-ticket/${id}`);
+            //navigate(`/user/purchase-ticket/${id}`);
         }else{
-            navigate('/login');
+            //navigate('/login');
         }
     }
     return (

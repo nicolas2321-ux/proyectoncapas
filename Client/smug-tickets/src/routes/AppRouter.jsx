@@ -26,6 +26,9 @@ import UpcomingEvents from "../pages/admin/UpcomingEvents";
 import FinishedEvents from "../pages/admin/FinishedEvents";
 //import GraphEvents from "../pages/admin/GraphEvents";
 
+import Record from "../pages/user/Record";
+import MyTIckets from "../pages/user/MyTIckets";
+
 
 const Location = () => {
 
@@ -54,6 +57,12 @@ const Location = () => {
             
     
             {/*VISTAS DE CLIENTE*/ }
+            <Route path="/cliente/Home" element={<ProtectedCliente component={Home} />} />
+            <Route path="/cliente/history" element={<ProtectedCliente component={Record} />} />
+            <Route path="/cliente/mytickets" element={<ProtectedCliente component={MyTIckets} />} />
+
+            {/*VISTAS DE LECTORQR*/ }
+
             
         </Routes>
     );
