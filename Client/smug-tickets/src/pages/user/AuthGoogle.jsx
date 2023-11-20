@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gapi } from 'gapi-script';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';  // Añade GoogleOAuthProvider aquí
 import logo from '../../assets/smug_ticket.png'
@@ -6,9 +6,16 @@ import {jwtDecode} from 'jwt-decode'
 import authService from '../../services/Auth/AuthService';
 import context from '../../Context/UserContext';
 import rolService from '../../services/Auth/RolService';
+import { useNavigate } from 'react-router-dom';
+import { AppRouter } from '../../routes/AppRouter';
 
 function AuthGoogle(props) {
   const clientID = "151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com";
+  const navigate = useNavigate();
+  const [client, setClient] = useState(false);
+  const name = "MArta";
+  //const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const start = () => {
@@ -18,27 +25,65 @@ function AuthGoogle(props) {
     };
     gapi.load("client:auth2", start);
   }, []);
+  /*
+  useEffect(()=>{
+    if (client) {
+      console.log(client);
+      //navigate('/user/prueba', { state: { myRol: "Cliente" } });
+      //<AppRouter myRol={client} />;
+      //navigate('/user/prueba');
+    }
+  },[client]);
+  */
 
   const handleLogin = async(data) =>{
 
-    const res = await authService.login(data.email);
+    const res = await context.login(data.email);
     if(res.status == 200){
-      context.login(data.email);
-      const id = await authService.verifyToken(res.data.content);
-      console.log(id);
-      getRole(id);
-      console.log("Inicio de sesión exitoso!")
+     const token = localStorage.getItem('content');
+     const object = {token: token}
+     const roles = await rolService.getRol(object)
+     const result = await roles.json()
+   
+     switch (result.roles[0].rol) {
+      case "Admin":
+      return navigate('/admin');
+        
+     case "Cliente":
+        return navigate('/cliente');
+        
+      case "LectorQR":
+        return navigate('/lector');
+        
+      case "Moderador":
+        return navigate('/moderador');
+        
+      default:
+        return navigate('/');
+        
+     }
     }else{
       console.log("Error al iniciar sesión!")
     }
   }
-
-  const getRole = async(data) =>{
-    let token = context.getToken();
-    const rol = await rolService.getRoles(data,token);
-    console.log(rol);
+  /*
+  const getRole = async() =>{
+    const token = context.getToken();
+    try {
+        const id = await authService.verifyToken(token);
+        console.log(id);
+        const rol = await rolService.getRoles(id,token);
+        console.log(rol);
+        rol.forEach(element =>{
+          if (element === "Cliente") {
+          setClient(true);
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
-
+*/
   const onFailure = () => {
     console.log("SALIO MAL :C");
   };
