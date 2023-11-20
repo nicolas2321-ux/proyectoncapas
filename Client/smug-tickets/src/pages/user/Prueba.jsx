@@ -1,7 +1,7 @@
 export const Prueba = () =>{
     return(
         <>
-            <h1>................Página de Prueba............</h1>
+            <h1>................Página solo para admin............</h1>
         </>
     )
 }

@@ -11,7 +11,7 @@ function GoogleRegister() {
 
 
   async function handleRegister(register){
-
+    console.log(register)
     const object = {
       username : register.email,
       email : register.email,

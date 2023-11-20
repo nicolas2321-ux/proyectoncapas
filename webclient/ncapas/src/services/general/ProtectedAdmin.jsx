@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { get_rol } from "../user/rol";
+
 export const ProtectedAdmin = ({component: Component}) => {
     const history = useNavigate();
     const [rol, setRoles] = useState([])
