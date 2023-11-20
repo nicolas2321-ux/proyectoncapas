@@ -1,6 +1,7 @@
 import React from "react";
+import NavbarClient from "../../components/Navbar/NavbarUser.jsx";
 import Footer from "../../components/Footer/Footer";
-import SearchBoxTicket from "../../components/SearchBoxTicket";
+import SearchBoxTicket from "../../components/SearchBox/SearchBoxTicket.jsx";
 import CardMyTicket from "../../components/Card/CardMyTicket";
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +10,7 @@ export const MyTickets = () => {
 
   return (
     <>
+      <NavbarClient />
       <div>
         <h1 className="text-center text-4xl font-bold mt-8 mb-4">Mis Tickets</h1>
         <div className="flex justify-center">

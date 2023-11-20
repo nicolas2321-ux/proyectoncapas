@@ -1,22 +1,9 @@
 import React, { useState} from 'react';
-//import { useNavigate } from 'react-router-dom';
-//import context from '../../context/UserContex';
+import { useNavigate } from 'react-router-dom';
 
 export const CardHome = (props) => {
-    //const navigate = useNavigate();
-    const [code, setCode] = useState("");
+    const navigate = useNavigate();
 
-    /*const hello = () => {
-        const token = context.getToken();
-        
-        
-        if (token == null) {
-            navigate(`/info/${props.id}`)
-        }else if (token != null) {
-            navigate(`/user/info/${props.id}`);
-        }
-        
-    }*/
     return (
         <>
             <div className="bg-white m-auto md:m-0 shadow-lg rounded-t-3xl overflow-hidden w-9/12 md:w-2/3 lg:w-2/3 hover:cursor-pointer" /*>onClick={hello}*/ >

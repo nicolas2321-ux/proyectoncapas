@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavbarHomepage from "../../components/Navbar/NavbarHomepage.jsx";
+import NavbarClient from "../../components/Navbar/NavbarUser.jsx";
 import Carousel from "../../components/Carousel/Carousel.jsx";
 import CardHome from "../../components/Card/CardHome.jsx";
 //import ViewEvent from "./ViewEvent";
@@ -8,14 +9,20 @@ import CardHome from "../../components/Card/CardHome.jsx";
 //import context from "../../context/UserContex";
 import Footer from "../../components/Footer/Footer.jsx";
 import EventService from "../../services/Publico/PublicService.js";
+import context from "../../Context/UserContext.js";
 
 const Home = () => {
   const [event, setEvent] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [title, setTitle] = useState("");
+  const [loggueado, setLoggueado] = useState(false);
 
   useEffect(() => {
+    if(context.getToken() != null){
+      setLoggueado(true);   
+    }
+    
     fetchAllEvents();
   }, [title, currentPage]);
 
@@ -52,7 +59,8 @@ const Home = () => {
 
   return (
     <>
-      <NavbarHomepage />
+     {loggueado ? <NavbarClient /> : <NavbarHomepage />}
+
       <Carousel className="max-h-64"/>
       <div>
         <div className="flex flex-row space-x-32 justify-center bg-blue h-20">
