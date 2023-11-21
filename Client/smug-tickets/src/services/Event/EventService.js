@@ -40,16 +40,12 @@ const eventService = {
         }
     },
     //Buscar un evento
-    searchEventsByTitle: async (token, title, page, size) => {
+    searchEventsByTitle: async (title, page, size) => {
         let payload = {
             title: title
         };
         try {
-            const response = await API.post(`/buscarEventos?page=${page}&size=${size}`, payload, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const response = await API.post(`/buscarEventos?page=${page}&size=${size}`, payload );
 
             if (response.status === 200) {
                 return response.data;

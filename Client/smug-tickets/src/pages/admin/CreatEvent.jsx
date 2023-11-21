@@ -67,7 +67,7 @@ export const CreateEvent = () => {
         );
 
         //Obtener el id del evento creado
-        const search = await EventService.searchEventsByTitle(token,descripcion,0 ,50);
+        const search = await EventService.searchEventsByTitle(descripcion,0 ,50);
 
         const idEventos = search.content.map((evento) => evento.idEvento);
         const id = idEventos;

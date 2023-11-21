@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
-import SearchBoxTicket from "../../components/SearchBox/SearchBoxTicket.jsx";
 import CardGraph from "../../components/Card/CardGraph";
 import { useNavigate } from 'react-router-dom';
 import EventService from "../../services/Event/EventService.js";
@@ -50,9 +49,6 @@ export const GraphEvents = () => {
         <NavbarAdmin />
         <h1 className="text-center text-4xl font-bold mt-8 mb-4">Gráficas de cada evento</h1>
         <div className="flex justify-center">
-          <div className="w-full max-w-lg">
-            <SearchBoxTicket />
-          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-10" style={{ justifyItems: 'center', alignItems: 'center' }}>
           {event &&
