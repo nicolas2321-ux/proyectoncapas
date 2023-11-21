@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import context from '../../Context/UserContext';
-import { FaEye } from "react-icons/fa";
 
 export const CardHome = (props) => {
     const navigate = useNavigate();
