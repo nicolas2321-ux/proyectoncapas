@@ -224,7 +224,7 @@ export const CreateEvent = () => {
                                     <p className='text-xs lg:text-base  lg:w-24' >Cancelar</p>
                                 </button>
                             </div>
-                            <div className='lg:flex hidden lg:flex-row gap-2 lg:gap-5 lg:pt-3 lg:ml-80 '>
+                            <div className='lg:flex hidden lg:flex-row justify-center  gap-2 lg:gap-5 lg:pt-3 lg:mr-52 '>
                                 <button onClick={handleCreateEvent} type="submit" className='ml-14 px-3 lg:px-5 mt-5 lg:py-3 lg:w-32 bg-orange rounded-2xl
                     font-extrabold text-black capitalize
                     focus:outline-none hover:shadow-none'>
