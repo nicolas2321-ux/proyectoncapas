@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import LocalityService from "../../services/Locality/LocalityService";
-import context from '../../Context/UserContext';
 
 export const ListOfLocations = () => {
     const navigate = useNavigate();
@@ -10,9 +9,8 @@ export const ListOfLocations = () => {
 
     useEffect(() => {
         const fetchLocality = async () => {
-            const token = context.getToken();
             try {
-                const response = await LocalityService.getLocalidadesPorEvento(token, id);
+                const response = await LocalityService.getLocalidadesPorEvento(id);
                 if (Array.isArray(response)) {
                     setLocalidades(response);
                 }

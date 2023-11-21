@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Carousel from "../../components/Carousel/Carousel.jsx";
-import CardHome from "../../components/Card/CardHome.jsx";
+import CardHome from "../../components/Card/CardViewAdmin.jsx";
 //import ViewEvent from "./ViewEvent";
 import SearchBox from "../../components/SearchBox/SearchBox.jsx";
 import context from "../../Context/UserContext";

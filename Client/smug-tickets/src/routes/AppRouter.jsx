@@ -26,9 +26,11 @@ import UpcomingEvents from "../pages/admin/UpcomingEvents";
 import FinishedEvents from "../pages/admin/FinishedEvents";
 import GraphEvents from "../pages/admin/GraphEvents";
 import GraphEvent from "../pages/admin/GraphEvent";
+import ViewEventAdmin from "../pages/admin/ViewEvent";
 
 import Record from "../pages/user/Record";
 import MyTIckets from "../pages/user/MyTIckets";
+import ViewEvent from "../pages/user/ViewEvent";
 
 
 const Location = () => {
@@ -39,6 +41,7 @@ const Location = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<AuthGoogle />} />
             <Route path="/register" element={<GoogleRegister />} />
+            <Route path ="/viewEvent/:id" element={<ViewEvent/>}/>
 
             {/*VISTAS DE PRUEBA*/ }
             <Route path="/admin" element={<ProtectedAdmin component={Prueba} />} />
@@ -57,12 +60,14 @@ const Location = () => {
             <Route path="/admin/finished" element={<ProtectedAdmin component={FinishedEvents} />} />
             <Route path="/admin/graph" element={<ProtectedAdmin component={GraphEvents} />} />
             <Route path="/admin/graphEvent" element={<ProtectedAdmin component={GraphEvent} />} />
+            <Route path="/admin/viewEvent/:id" element={<ProtectedAdmin component={ViewEventAdmin} />} />
             
     
             {/*VISTAS DE CLIENTE*/ }
             <Route path="/cliente/Home" element={<ProtectedCliente component={Home} />} />
             <Route path="/cliente/history" element={<ProtectedCliente component={Record} />} />
             <Route path="/cliente/mytickets" element={<ProtectedCliente component={MyTIckets} />} />
+            <Route path="/cliente/viewEvent/:id" element={<ProtectedCliente component={ViewEvent} />} />
 
             {/*VISTAS DE LECTORQR*/ }
 
