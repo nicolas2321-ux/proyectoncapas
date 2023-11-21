@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-export const CardMyTicket = () => {
+export const CardMyTicket = ({ eventName, location, imageUrl }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
@@ -18,28 +18,21 @@ export const CardMyTicket = () => {
   };
 
   return (
-    <>
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden w-9/12 md:w-2/3 lg:w-full" onClick={handleCardTicket}>
-        <div
-          className="relative"
-          onMouseEnter={handleMouseEnter}
-        >
-          {isHovered && (
-            <div className="absolute inset-0 bg-blue-800 bg-opacity-70 flex items-center justify-center backdrop-filter backdrop-blur-lg hover:cursor-pointer">
-              <h2 className="text-white font-bold text-2xl">Esteman</h2>
-            </div>
-          )}
-          <img
-            className="w-full h-72 object-cover object-center rounded-t-lg"
-            src="https://i.pinimg.com/originals/1f/81/88/1f818876783092801d6db8ecc3d46688.jpg"
-            alt="Artista"
-          />
-        </div>
-        <div className="bg-blue h-10">
-          <h2 className="text-white font-bold text-2xl text-center">Ver más</h2>
-        </div>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+      {/* Imagen de la tarjeta */}
+      <div className="relative overflow-hidden" style={{ paddingBottom: '100%' }}>
+        <img className="absolute inset-0 w-full h-full object-cover" src={imageUrl} alt={eventName} />
       </div>
-    </>
+
+      {/* Contenido de la tarjeta */}
+      <div className="px-6 py-4">
+        {/* Título de la tarjeta */}
+        <div className="font-bold text-xl mb-2 text-center overflow-hidden line-clamp-2">{eventName}</div>
+        
+        {/* Descripción de la tarjeta */}
+        <p className="text-gray-700 text-base text-center overflow-hidden line-clamp-3">{location}</p>
+      </div>
+    </div>
   );
 };
 
