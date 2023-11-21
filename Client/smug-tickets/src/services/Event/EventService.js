@@ -3,15 +3,15 @@ import axios from 'axios';
 const BASE_URL_ROLE = 'http://localhost:8080/evento';
 
 const API = axios.create({
-  baseURL: BASE_URL_ROLE,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+    baseURL: BASE_URL_ROLE,
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
 
 const eventService = {
     //Crear un evento nuevo
-    createEvent: async (token, descripcion, tickets_disponibles, fecha_evento,capacidad, id_categoria, imagen ) => {
+    createEvent: async (token, descripcion, tickets_disponibles, fecha_evento, capacidad, id_categoria, imagen) => {
         let payload = {
             descripcion: descripcion,
             tickets_disponibles: tickets_disponibles,
@@ -40,7 +40,7 @@ const eventService = {
         }
     },
     //Buscar un evento
-    searchEventsByTitle: async (token, title, page, size ) => {
+    searchEventsByTitle: async (token, title, page, size) => {
         let payload = {
             title: title
         };
@@ -92,31 +92,31 @@ const eventService = {
             id_categoria: id_categoria,
             imagen: imagen
         };
-      
+
         try {
-          const response = await API.put(`/editarEvento/${id}`, payload, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-      
-          if (response.status == 200) {
-            console.log('Evento editado exitosamente:', response.data);
-            return response.data;
-          } else {
-            throw new Error(`Error en la respuesta del servidor: ${response.status}`);
-          }
+            const response = await API.put(`/editarEvento/${id}`, payload, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.status == 200) {
+                console.log('Evento editado exitosamente:', response.data);
+                return response.data;
+            } else {
+                throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+            }
         } catch (error) {
-          console.error('Error al editar el evento:', error);
-          return {
-            hasError: true,
-          };
+            console.error('Error al editar el evento:', error);
+            return {
+                hasError: true,
+            };
         }
     },
     //Traer todos los eventos ocultos/finalizados
     getAllEventsHide: async (token, page, size) => {
         try {
-            const response = await API.get(`/getEventoCancelados?page=${page}&size=${size}`,{
+            const response = await API.get(`/getEventoCancelados?page=${page}&size=${size}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -131,7 +131,28 @@ const eventService = {
             console.error('Error fetching events:', error);
             throw error;
         }
-    }
+    },
+
+    //Finalizar un evento y ocultarlo de la vista de los usuarios
+    hideEvent: async (token, eventId) => {
+        try {
+            const response = await API.patch(`/actualizarEstado?evento=${eventId}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (response.status === 200) {
+                console.log(response.data);
+                return response.data;
+            } else {
+                throw new Error(response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            throw error;
+        }
+    },
+
 }
 
 export default eventService;
