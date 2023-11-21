@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/smug_ticket.png";
-import SearchBox from '../SearchBox/SearchBox';
 import { useNavigate } from 'react-router-dom';
 import { IoTicketOutline } from "react-icons/io5";
 import { faBars, faTicket,  faHistory, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
@@ -31,9 +30,6 @@ export const NavbarUser = () => {
             <div className="w-2/5 lg:w-1/6 px-5">
                 <img src={logo} alt='Logo de SmugTicket' className="md:w-9/12"></img>
     </div>
-            <div>
-                <SearchBox />
-            </div>
             <div className='lg:hidden px-5'>
                 <button onClick={() => setIsOpen(!isOpen)}>
                     <FontAwesomeIcon icon={faBars} className={`${isOpen ? "hidden" : "block"} md:w-8 md:h-8`} style={{ color: "#ffffff" }} />
