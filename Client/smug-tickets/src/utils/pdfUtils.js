@@ -1,32 +1,17 @@
 import { saveAs } from 'file-saver';
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
-
-const generatePDF = async () => {
+const generatePDF = async ({ event, localidades, individualPercentage, groupPercentage }) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage();
 
   const { width, height } = page.getSize();
 
-  const ticketsVendidos = 200;
-
-  const localidades = [
-    { nombre: 'La Playa', cantidad: 65 },
-    { nombre: 'Platinum', cantidad: 59 },
-    { nombre: 'Platea', cantidad: 60 },
-    { nombre: 'General', cantidad: 81 },
-    { nombre: 'Tribuna', cantidad: 50 },
-    { nombre: 'VIP', cantidad: 55 },
-    { nombre: 'Sombra', cantidad: 40 },
-  ];
-
-  const porcentajeEntradaIndividual = 40;
-  const porcentajeEntradaGrupal = 60;
-
   const fontSize = 12;
   const padding = 20;
 
-  page.drawText('Datos del evento', {
+  // Añadir el nombre del evento al título del PDF
+  page.drawText(`Reporte: ${event.descripcion}`, {
     x: padding,
     y: height - padding,
     size: fontSize + 6,
@@ -34,7 +19,7 @@ const generatePDF = async () => {
     color: rgb(0, 0, 0),
   });
 
-  page.drawText(`Tickets vendidos: ${ticketsVendidos}`, {
+  page.drawText(`Tickets vendidos: ${event.tickets_disponibles}`, {
     x: padding,
     y: height - padding - fontSize * 2,
     size: fontSize,
@@ -52,7 +37,7 @@ const generatePDF = async () => {
 
   for (let index = 0; index < localidades.length; index++) {
     const localidad = localidades[index];
-    const text = `${index + 1}. ${localidad.nombre}: ${localidad.cantidad}`;
+    const text = `${index + 1}. ${localidad.descripcion}: ${localidad.tickets}`;
     page.drawText(text, {
       x: padding,
       y: height - padding - fontSize * (4 + index),
@@ -62,7 +47,7 @@ const generatePDF = async () => {
     });
   }
 
-  page.drawText(`Porcentaje de entradas individuales: ${porcentajeEntradaIndividual}%`, {
+  page.drawText(`Porcentaje de entradas individuales: ${individualPercentage}%`, {
     x: padding,
     y: height - padding - fontSize * (4 + localidades.length),
     size: fontSize,
@@ -70,7 +55,7 @@ const generatePDF = async () => {
     color: rgb(0, 0, 0),
   });
 
-  page.drawText(`Porcentaje de entradas grupales: ${porcentajeEntradaGrupal}%`, {
+  page.drawText(`Porcentaje de entradas grupales: ${groupPercentage}%`, {
     x: padding,
     y: height - padding - fontSize * (5 + localidades.length),
     size: fontSize,
@@ -80,8 +65,9 @@ const generatePDF = async () => {
 
   const pdfBytes = await pdfDoc.save();
 
+  // Guardar el PDF con un nombre específico
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-  saveAs(blob, 'reporte.pdf');
+  saveAs(blob, `reporte_${event.descripcion}.pdf`);
 };
 
 export { generatePDF };
