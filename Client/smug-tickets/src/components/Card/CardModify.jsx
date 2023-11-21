@@ -17,7 +17,7 @@ export const CardModify = (props) => {
           <h2 className="text-white font-bold text-2xl text-center">{props.descripcion}</h2>
         </div>
       </div>
-      <div className='flex flex-row items-center gap-5 pt-3'>
+      <div className='flex flex-row justify-center gap-5 pt-3'>
         <button onClick={handleEditEvent} className='bg-orange rounded-xl text-black font-bold text-lg w-28'>Modificar</button>
         <button className='bg-blue rounded-xl text-white font-bold text-lg w-28'>Desactivar</button>
       </div>
