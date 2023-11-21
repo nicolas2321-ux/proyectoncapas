@@ -62,6 +62,7 @@ public class WebSecurityConfiguration {
 			.authorizeRequests(auth -> auth
 				.requestMatchers("/user/**").permitAll()
 				.requestMatchers("/evento/all").permitAll()
+				.requestMatchers("/evento/buscarEventos").permitAll()
 				.requestMatchers("/email/sendEmail").permitAll()
 				.requestMatchers("/evento/getSingleEvent").permitAll()
 				.requestMatchers("/lugares/getLocalidad").permitAll()
