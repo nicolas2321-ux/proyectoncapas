@@ -68,11 +68,17 @@ export const UserManagement = () => {
                                     <td className='p-4'>
                                         <input type='checkbox' disabled checked={user.active} />
                                     </td>
-                                    <td className='p-4 flex'>
-                                        <button onClick={() => activateUser(user.id)} className='hover:bg-black hover:text-white text-black border-2 font-bold py-2 px-4 rounded'>
+                                    <td className='p-4 flex flex-col items-center lg:flex-row lg:items-center'>
+                                        <button
+                                            onClick={() => activateUser(user.id)}
+                                            className='mb-2 lg:mb-0 lg:mr-2 hover:bg-black hover:text-white text-black border-2 font-bold py-2 px-4 rounded'
+                                        >
                                             Activar
                                         </button>
-                                        <button onClick={() => desactivateUser(user.id)} className='bg-black hover:bg-slate-800 text-white font-bold py-2 px-2 ml-2 rounded'>
+                                        <button
+                                            onClick={() => desactivateUser(user.id)}
+                                            className='bg-black hover:bg-slate-800 text-white font-bold py-2 px-2 rounded'
+                                        >
                                             Desactivar
                                         </button>
                                     </td>
