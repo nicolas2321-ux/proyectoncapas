@@ -2,17 +2,11 @@ import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import context from '../../Context/UserContext';
 
-export const CardHome = (props) => {
+export const CardViewAdmin = (props) => {
     const navigate = useNavigate();
 
     const handleViewEvent = () => {
-        let token = context.getToken();
-    
-        if (token != null) {
-            navigate(`/cliente/viewEvent/${props.id}`);
-        } else {
-            navigate(`/viewEvent/${props.id}`);
-        }
+        navigate(`/admin/viewEvent/${props.id}`);
     }
 
     return (
@@ -29,4 +23,4 @@ export const CardHome = (props) => {
     );
 };
 
-export default CardHome;
+export default CardViewAdmin;

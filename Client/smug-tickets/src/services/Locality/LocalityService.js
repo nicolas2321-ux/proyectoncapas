@@ -38,13 +38,9 @@ const localityService = {
         }
     },
     //Obtener todas las Localidades
-    getLocalidadesPorEvento: async (token, idEvento) => {
+    getLocalidadesPorEvento: async (idEvento) => {
         try {
-            const response = await API.get(`/getLocalidad?evento=${idEvento}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const response = await API.get(`/getLocalidad?evento=${idEvento}`);
 
             if (response.status === 200) {
                 console.log(response.data);

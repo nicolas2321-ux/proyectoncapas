@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarUser from "../../components/Navbar/NavbarUser";
-import NavbarHomepage from "../../components/Navbar/NavbarHomepage";
+import NavbarAdmin from "../../components/Navbar/NavbarAdmin";
 import Footer from "../../components/Footer/Footer";
 import Carousel from "../../components/Carousel/Carousel";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +13,6 @@ import LocalityService from '../../services/Locality/LocalityService';
 const ViewEvent = () => {
     const { id } = useParams();
     const [event, setEvent] = useState(null);
-    const [loggueado, setLoggueado] = useState(context.getToken() !== null);
     const [localidades, setLocalidades] = useState([]);
     const navigate = useNavigate();
 
@@ -24,9 +22,6 @@ const ViewEvent = () => {
     };
 
     useEffect(() => {
-        if (context.getToken()) {
-            setLoggueado(true);
-        }
 
         fetchEventDetails();
         const fetchLocality = async () => {
@@ -58,24 +53,12 @@ const ViewEvent = () => {
     }
 
     const handleBack = () => {
-        if (context.getToken()) {
-            navigate('/cliente/Home');
-        } else {
-            navigate('/');
-        }
-    }
-
-    const handlePurchase = () => {
-        if (context.getToken()) {
-            // navigate(`/user/purchase-ticket/${id}`);
-        } else {
-            // navigate('/login');
-        }
+        navigate('/admin/Home');
     }
 
     return (
         <>
-            {loggueado ? <NavbarUser /> : <NavbarHomepage />}
+            <NavbarAdmin />
             <Carousel />
             <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="flex flex-col items-center">
@@ -109,7 +92,6 @@ const ViewEvent = () => {
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row justify-center py-10 md:justify-between md:px-4">
-                        {loggueado ? <button className="px-4 py-2 bg-orange rounded-md mr-4 text-black font-bold mb-2 md:mb-0" onClick={handlePurchase}>Comprar Ticket</button> : console.log('no logueado')}
 
                         <button className="px-4 py-2 bg-blue rounded-md text-white font-bold" onClick={handleBack}>Regresar</button>
                     </div>
