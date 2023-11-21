@@ -22,10 +22,6 @@ export const NavbarAdmin = () => {
         navigate('/');
     }
 
-    const handleFinished = () => {
-       navigate('/admin/finished');
-    }
-
     const handleGraph = () => {
        navigate('/admin/graph');
     }
@@ -70,11 +66,6 @@ export const NavbarAdmin = () => {
             onClick={handleUpcoming} className="block text-left lg:text-center w-full my-2 items-center border-0 py-2 px-4 text-white bg-blue"
           >
             Eventos próximos
-          </button>
-          <button
-            onClick={handleFinished} className="block text-left lg:text-center w-full my-2 items-center border-0 py-2 px-4 text-white bg-blue"
-          >
-            Eventos finalizados
           </button>
           <button
             onClick={handleManagement} className="block text-left lg:text-center w-full my-2 items-center border-0 py-2 px-4 text-white bg-blue"

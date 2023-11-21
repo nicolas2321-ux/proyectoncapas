@@ -23,7 +23,6 @@ import ListOfLocations from "../pages/admin/ListOfLocations";
 import EditEvent from "../pages/admin/EditEvent";
 import HomeAdmin from "../pages/admin/HomeAdmin";
 import UpcomingEvents from "../pages/admin/UpcomingEvents";
-import FinishedEvents from "../pages/admin/FinishedEvents";
 import GraphEvents from "../pages/admin/GraphEvents";
 import GraphEvent from "../pages/admin/GraphEvent";
 import ViewEventAdmin from "../pages/admin/ViewEvent";
@@ -57,7 +56,6 @@ const Location = () => {
             <Route path="/admin/editEvent/:id" element={<ProtectedAdmin component={EditEvent} />} />
             <Route path="/admin/allusers" element={<ProtectedAdmin component={UserManagement} />} />
             <Route path="/admin/upcoming" element={<ProtectedAdmin component={UpcomingEvents} />} />
-            <Route path="/admin/finished" element={<ProtectedAdmin component={FinishedEvents} />} />
             <Route path="/admin/graph" element={<ProtectedAdmin component={GraphEvents} />} />
             <Route path="/admin/graphEvent" element={<ProtectedAdmin component={GraphEvent} />} />
             <Route path="/admin/viewEvent/:id" element={<ProtectedAdmin component={ViewEventAdmin} />} />
