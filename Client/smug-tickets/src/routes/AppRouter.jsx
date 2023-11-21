@@ -57,7 +57,7 @@ const Location = () => {
             <Route path="/admin/allusers" element={<ProtectedAdmin component={UserManagement} />} />
             <Route path="/admin/upcoming" element={<ProtectedAdmin component={UpcomingEvents} />} />
             <Route path="/admin/graph" element={<ProtectedAdmin component={GraphEvents} />} />
-            <Route path="/admin/graphEvent" element={<ProtectedAdmin component={GraphEvent} />} />
+            <Route path="/admin/graphEvent/:id" element={<ProtectedAdmin component={GraphEvent} />} />
             <Route path="/admin/viewEvent/:id" element={<ProtectedAdmin component={ViewEventAdmin} />} />
             
     
