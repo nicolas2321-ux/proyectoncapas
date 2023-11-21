@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import eventService from '../../services/Event/EventService';
+import context from '../../Context/UserContext'; 
 
 export const CardModify = (props) => {
   const navigate = useNavigate();
@@ -8,6 +10,18 @@ export const CardModify = (props) => {
     const id = props.id;
     navigate(`/admin/editEvent/${id}`);
   };
+
+  const eventHide = async (eventId) => {
+    try {
+        const token = context.getToken();
+        const response = await eventService.hideEvent(token, eventId);
+        //console.log(response);
+        //console.log(token);
+        //console.log(eventId);
+    } catch (error) {
+        console.error('Error al actualizar el evento:', error);
+    }
+};
 
   return (
     <div className='bg-locations-gray shadow-lg rounded-xl overflow-hidden p-5 h-auto'>
@@ -19,7 +33,7 @@ export const CardModify = (props) => {
       </div>
       <div className='flex flex-row items-center gap-5 pt-3'>
         <button onClick={handleEditEvent} className='bg-orange rounded-xl text-black font-bold text-lg w-28'>Modificar</button>
-        <button className='bg-blue rounded-xl text-white font-bold text-lg w-28'>Desactivar</button>
+        <button onClick={() => eventHide(props.id) } className='bg-blue rounded-xl text-white font-bold text-lg w-28'>Finalizar</button>
       </div>
     </div>
   );

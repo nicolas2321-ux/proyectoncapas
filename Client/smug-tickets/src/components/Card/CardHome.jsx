@@ -1,5 +1,7 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaEye } from "react-icons/fa";
+
 
 export const CardHome = (props) => {
     const navigate = useNavigate();
@@ -12,8 +14,6 @@ export const CardHome = (props) => {
                     <h2 className="text-white font-bold text-2xl text-center">{props.descripcion}</h2>
                 </div>
             </div>
-
-
         </>
     );
 };
