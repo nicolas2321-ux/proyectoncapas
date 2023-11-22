@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import eventService from '../../services/Event/EventService';
 import context from '../../Context/UserContext'; 
+import { MessageSuccess, Alert } from '../../utils/Alert';
+import Swal from 'sweetalert2';
 
 export const CardModify = (props) => {
   const navigate = useNavigate();
@@ -10,6 +12,23 @@ export const CardModify = (props) => {
     const id = props.id;
     navigate(`/admin/editEvent/${id}`);
   };
+
+  const verifyFinalization = (id) => {
+
+    Swal.fire({
+        title: '¿Quiere finalizar el evento?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            eventHide(id);
+            MessageSuccess('Evento finalizado')
+        }
+    })
+}
 
   const eventHide = async (eventId) => {
     try {
@@ -33,7 +52,7 @@ export const CardModify = (props) => {
       </div>
       <div className='flex flex-row justify-center gap-5 pt-3'>
         <button onClick={handleEditEvent} className='bg-orange rounded-xl text-black font-bold text-lg w-28'>Modificar</button>
-        <button onClick={() => eventHide(props.id) } className='bg-blue rounded-xl text-white font-bold text-lg w-28'>Finalizar</button>
+        <button onClick={() => verifyFinalization(props.id) } className='bg-blue rounded-xl text-white font-bold text-lg w-28'>Finalizar</button>
       </div>
     </div>
   );
