@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
-//import { MessageSuccess } from '../../utils/Alert';
+import { MessageSuccess, NotFound } from '../../utils/Alert.jsx';
 import { useNavigate } from 'react-router-dom';
 import EventService from '../../services/Event/EventService';
 import CategoryService from '../../services/Category/CategoryService';
@@ -65,18 +65,19 @@ export const CreateEvent = () => {
             selectedCategoryId,
             imagenUrl
         );
-
+        console.log(response);
         //Obtener el id del evento creado
         const search = await EventService.searchEventsByTitle(descripcion,0 ,50);
 
         const idEventos = search.content.map((evento) => evento.idEvento);
         const id = idEventos;
-        if(!response.error){
-            //MessageSuccess('Evento creado exitosamente');
+        if(!response.hasError){
+            MessageSuccess('Evento creado exitosamente');
             console.log("Evento creado exitosamente");
-            console.log(id);
-            navigate(`/admin/newlocation/${id}/${descripcion}`); // Modificación aquí
-
+            navigate(`/admin/newlocation/${id}/${descripcion}`);
+        }else{
+            NotFound('Faltan campos!')
+            //console.log(id); // Modificación aquí
         }
         
     }
@@ -140,7 +141,7 @@ export const CreateEvent = () => {
                             </div>
                             <div className='mb-6 pl-2 lg:p-0'>
                                 <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Ticket Disponibles</label>
-                                <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text"
+                                <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="number"
                                     value={ticketDisponible}
                                     onChange={(e) => setTicketDisponible(e.target.value)} />
                             </div>
@@ -209,7 +210,7 @@ export const CreateEvent = () => {
                             </div>
                             <div className='mb-6 pl-2 lg:pl-0'>
                                 <label className='block mb-2 font-extrabold text-normal lg:text-lg' for="">Capacidad</label>
-                                <input value={capacidad} onChange={(e) => setCapacidad(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text" />
+                                <input value={capacidad} onChange={(e) => setCapacidad(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="number" />
                             </div>
                             <div className='flex flex-row items-start  lg:mx-0 gap-5 lg:flex-col '>
                                 <button  type="submit" onClick={handleCreateEvent}  className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl

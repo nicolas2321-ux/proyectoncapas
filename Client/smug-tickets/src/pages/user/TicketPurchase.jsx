@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarUser from '../../components/Navbars/NavbarUser';
+//import NavbarUser from '../../components/Navbars/NavbarUser';
 import Footer from '../../components/Footer/Footer';
 import LocationButton from '../../components/Button/LocationButton';
 import CardTicket from '../../components/Card/CardTicket';
-import EventService from '../../services/EventServices';
-import context from '../../context/UserContex';
+//import EventService from '../../services/EventServices';
+//import context from '../../context/UserContex';
+import eventService from '../../services/Event/EventService';
+import context from '../../Context/UserContext';
 import { useParams } from 'react-router-dom';
 
 export const TicketPurchase = () => {
@@ -19,20 +21,15 @@ export const TicketPurchase = () => {
     }, []);
     console.log(id);
     const handlePay = () => {
-        navigate(`/user/info-ticket/${id}`);
+        //navigate(`/user/info-ticket/${id}`);
     }
     const handleBack = () => {
         navigate(`/info/${id}`)
     }
     const getInfo = async() => {
         let token = context.getToken();
-        let res = await EventService.gotOneEventAuth(token,id);
-                console.log(res);
-                if (!res.error) {
-                let data = res;
-                console.log(data);
-                setEvent(data);
-            }
+        let res = await eventService.getEventById(id);
+        console.log(res);
     }
     if (!event) {
         return <div>Cargando...</div>;

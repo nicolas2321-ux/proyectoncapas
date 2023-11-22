@@ -67,7 +67,7 @@ const ViewEvent = () => {
 
     const handlePurchase = () => {
         if (context.getToken()) {
-            // navigate(`/user/purchase-ticket/${id}`);
+            navigate(`/cliente/purchase-ticket/${id}`);
         } else {
             // navigate('/login');
         }
