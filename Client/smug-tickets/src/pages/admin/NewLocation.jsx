@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 //import NavbarAdmin from '../../components/Navbars/NavbarAdmin'
 import { useNavigate,useParams } from "react-router-dom";
 import LocalityService from "../../services/Locality/LocalityService";
+import { MessageSuccess, NotFound } from "../../utils/Alert";
 import context from "../../Context/UserContext";
 
 export const NewLocation = () => {
@@ -44,9 +45,11 @@ export const NewLocation = () => {
       capacidad
     );
 
-    if (!response.error) {
-      //MessageSuccess('Localidad creada exitosamente');
+    if (!response.hasError) {
+      MessageSuccess('Localidad creada exitosamente');
       console.log("Localidad creado exitosamente");
+    }else{
+      NotFound('Hay campos vacíos!')
     }
 
     console.log(response);

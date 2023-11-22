@@ -8,6 +8,7 @@ import context from '../../Context/UserContext';
 import rolService from '../../services/Auth/RolService';
 import { useNavigate } from 'react-router-dom';
 import { AppRouter } from '../../routes/AppRouter';
+import { NotFound } from '../../utils/Alert';
 
 function AuthGoogle(props) {
   const clientID = "151373060419-hflbjm4m12o1odr0frs1v4ad7rvpael6.apps.googleusercontent.com";
@@ -25,7 +26,7 @@ function AuthGoogle(props) {
   }, []);
 
   const handleLogin = async(data) =>{
-
+    
     const res = await context.login(data.email);
     if(res.status == 200){
      const token = localStorage.getItem('content');
@@ -51,7 +52,7 @@ function AuthGoogle(props) {
         
      }
     }else{
-      console.log("Error al iniciar sesión!")
+      console.log("Usuario no registrado");
     }
   }
 

@@ -30,6 +30,7 @@ import ViewEventAdmin from "../pages/admin/ViewEvent";
 import Record from "../pages/user/Record";
 import MyTIckets from "../pages/user/MyTIckets";
 import ViewEvent from "../pages/user/ViewEvent";
+import TicketPurchase from "../pages/user/TicketPurchase";
 import TransferTicket from "../pages/user/TransferTicket";
 import { RecibirTicket } from "../pages/user/RecibirTicker";
 
@@ -68,6 +69,7 @@ const Location = () => {
             <Route path="/cliente/history" element={<ProtectedCliente component={Record} />} />
             <Route path="/cliente/mytickets" element={<ProtectedCliente component={MyTIckets} />} />
             <Route path="/cliente/viewEvent/:id" element={<ProtectedCliente component={ViewEvent} />} />
+            <Route path="/cliente/purchase-ticket/:id" element={<ProtectedCliente component={TicketPurchase} />} />
             <Route path="/cliente/transferTicket" element={<ProtectedCliente component={TransferTicket} />} />
             <Route path="/cliente/recibirTicket" element={<ProtectedCliente component={RecibirTicket} />} />
 
