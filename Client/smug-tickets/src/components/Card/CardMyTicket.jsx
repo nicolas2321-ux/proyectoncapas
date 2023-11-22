@@ -4,12 +4,13 @@ import { useNavigate } from 'react-router-dom';
 export const CardMyTicket = ({ idTicket, eventName, location, imageUrl }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
-
+  
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
 
   const handleCardTicket = () => {
+    localStorage.setItem('ticket', idTicket);
     navigate("/cliente/transferTicket");
   };
 
