@@ -31,6 +31,7 @@ import Record from "../pages/user/Record";
 import MyTIckets from "../pages/user/MyTIckets";
 import ViewEvent from "../pages/user/ViewEvent";
 import TransferTicket from "../pages/user/TransferTicket";
+import { RecibirTicket } from "../pages/user/RecibirTicker";
 
 
 const Location = () => {
@@ -68,6 +69,7 @@ const Location = () => {
             <Route path="/cliente/mytickets" element={<ProtectedCliente component={MyTIckets} />} />
             <Route path="/cliente/viewEvent/:id" element={<ProtectedCliente component={ViewEvent} />} />
             <Route path="/cliente/transferTicket" element={<ProtectedCliente component={TransferTicket} />} />
+            <Route path="/cliente/recibirTicket" element={<ProtectedCliente component={RecibirTicket} />} />
 
             {/*VISTAS DE LECTORQR*/ }
 

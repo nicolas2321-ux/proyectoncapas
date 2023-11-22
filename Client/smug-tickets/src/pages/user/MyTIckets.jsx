@@ -51,23 +51,33 @@ export const MyTickets = () => {
   return (
     <>
       <NavbarClient />
-            <div className="text-center text-4xl font-bold mt-8 mb-4">
-                Mis Tickets
-                <div className="flex justify-center mt-5">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {tickets.map((ticket) => (
-                            <div key={ticket.idTicket} className="flex justify-center">
-                                <CardMyTicket
-                                    eventName={ticket.evento.descripcion}
-                                    location={ticket.localidad.descripcion}
-                                    imageUrl={ticket.evento.imagen}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            <Footer />
+      <div className="flex justify-center p-2">
+         
+          <button
+            className="px-4 py-2 bg-blue rounded-md text-white font-bold"
+            onClick={() => navigate('/cliente/recibirTicket')}
+          >
+            Recibir ticket
+          </button>
+        </div>
+      <div className="text-center text-4xl font-bold mt-8 mb-4">
+        Mis Tickets
+        <div className="flex justify-center mt-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tickets.map((ticket) => (
+              <div key={ticket.idTicket} className="flex justify-center">
+                <CardMyTicket
+                  idTicket={ticket.idTicket}
+                  eventName={ticket.evento.descripcion}
+                  location={ticket.localidad.descripcion}
+                  imageUrl={ticket.evento.imagen}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <Footer />
     </>
   );
 };
