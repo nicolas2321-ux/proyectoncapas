@@ -20,7 +20,7 @@ public class EmailConfiguration {
     mailSender.setPort(587);
     
     mailSender.setUsername("smugtickets@gmail.com");
-    mailSender.setPassword("wvvklqohhcrluphl");
+    mailSender.setPassword("qmcy dzvu cedp xyur");
     
     Properties props = mailSender.getJavaMailProperties();
     props.put("mail.transport.protocol", "smtp");

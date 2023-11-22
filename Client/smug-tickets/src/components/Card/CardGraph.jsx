@@ -16,7 +16,7 @@ export const CardGraph = (props) => {
   };
 
     const handleGraphEvent = () => {
-    navigate("/admin/graphEvent");
+    navigate(`/admin/graphEvent/${props.id}`);
 
     }
 

@@ -1,72 +1,68 @@
 import { Bar } from "react-chartjs-2";
 import {
-    Chart as ChartJS,
-    LinearScale,
-    CategoryScale,
-    PointElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    Filler,
+  Chart as ChartJS,
+  LinearScale,
+  CategoryScale,
+  PointElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
 } from "chart.js";
 
 ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    Filler
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
 );
 
+export default function Bars({ localidades }) {
+  var colores = ["#E01A4F", "#E98A15", "#E01A4F", "#E98A15", "#E01A4F", "#E98A15", "#E01A4F"];
 
-
-var ticketVendido = [65, 59, 80, 81, 56, 55, 40];
-var localidad = ["Playa", "Platinum", "Platea", "General", "Tribuna", "vip", "Sombra"];
-var colores = ["#E01A4F", "#E98A15", "#E01A4F" ,"#E98A15","#E01A4F", "#E98A15","#E01A4F"];
-
-var misopciones = {
+  var misopciones = {
     responsive: true,
     animation: false,
     plugins: {
-        legend: {
-            display: false,
-        },
+      legend: {
+        display: false,
+      },
     },
     scales: {
-        y: {
-            min: 0,
-            max: 100,
-            ticks: {
-                stepSize: 20, // Establecer el tamaño del paso en 20
-            },
-            grid: {
-                color: 'transparent', // Establecer el color de la cuadrícula en transparente
-            },
+      y: {
+        min: 0,
+        max: 100,
+        ticks: {
+          stepSize: 20, // Establecer el tamaño del paso en 20
         },
-        x: {
-            ticks: { color: colores },
-            grid: {
-                color: 'transparent', // Establecer el color de la cuadrícula en transparente
-            },
+        grid: {
+          color: 'transparent', // Establecer el color de la cuadrícula en transparente
         },
+      },
+      x: {
+        ticks: { color: colores },
+        grid: {
+          color: 'transparent', // Establecer el color de la cuadrícula en transparente
+        },
+      },
     }
-};
+  };
 
-var midata = {
-    labels: localidad,
+  var midata = {
+    labels: localidades.map((localidad) => localidad.descripcion), // Utiliza el array de localidades
     datasets: [
-        {
-            label: "Ticket Vendido",
-            data: ticketVendido,
-            backgroundColor: colores,
-        }
-    ]
-};
+      {
+        label: "Ticket Vendido",
+        data: localidades.map((localidad) => localidad.tickets), // Utiliza el array de localidades
+        backgroundColor: colores,
+      },
+    ],
+  };
 
-export default function Bars() {
-    return <Bar data={midata} options={misopciones} />;
+  return <Bar data={midata} options={misopciones} />;
 }

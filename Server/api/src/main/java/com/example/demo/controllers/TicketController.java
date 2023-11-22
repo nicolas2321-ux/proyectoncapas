@@ -90,6 +90,9 @@ public class TicketController {
 			Date fechaActualDate = java.sql.Date.valueOf(fechaActual);
 			
 			Traspaso_tickets findTranspaso = traspaso_ticketsService.get_traspaso(find);
+			if(findTranspaso.getEstado() == 2){
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket ya utilizado");
+			}else{
 			User userBeneficiado =  findTranspaso.getIdnuevousuario();
 			find.setEstado(0);
 			findTranspaso.setEstado(2);
@@ -103,6 +106,7 @@ public class TicketController {
 			ticket.setId_localidad(find.getId_localidad());
 			ticketService.saveTicket(ticket);
 			return ResponseEntity.status(HttpStatus.OK).body("Transpaso realizado");
+			}
 
 			
 		}

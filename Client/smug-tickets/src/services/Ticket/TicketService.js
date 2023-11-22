@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL_ROLE = 'http://localhost:8080/ticket';
-
+const BASE_URL = 'http://localhost:8080/';
 const API = axios.create({
     baseURL: BASE_URL_ROLE,
     headers: {
@@ -30,6 +30,36 @@ const ticketService = {
                 hasError: true,
             };
         }
+    },
+    transferirTicket: async(data) => {
+        const response = await fetch(`${BASE_URL}email/sendEmail`,{
+            "method": "POST",
+            headers: {
+                "Authorization": `Bearer ${data.token}`,
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+              
+                    to: data.to,
+                    ticket: data.ticket,
+                 })
+        })
+        const respuesta = await response;
+        return respuesta
+    },
+    recibirTicket : async(data) => {
+        const response = await fetch(`${BASE_URL}ticket/verificarTranspaso`,{
+            "method": "POST",
+            headers: {
+                "Authorization": `Bearer ${data.token}`,
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    ticket: data.ticket,
+                 })
+        })
+        const respuesta = await response;
+        return respuesta
     }
 
 }

@@ -1,46 +1,40 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const CardMyTicket = () => {
+export const CardMyTicket = ({ idTicket, eventName, location, imageUrl }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
-
+  
   const handleMouseEnter = () => {
-    //setIsHovered(true);
+    setIsHovered(true);
   };
 
   const handleCardTicket = () => {
-    //navigate('/user/info-pay-ticket');
+    localStorage.setItem('ticket', idTicket);
+    navigate("/cliente/transferTicket");
   };
 
   const handleMouseLeave = () => {
-    //setIsHovered(false);
+    setIsHovered(false);
   };
 
   return (
-    <>
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden w-9/12 md:w-2/3 lg:w-full" onClick={handleCardTicket}>
-        <div
-          className="relative"
-          onMouseEnter={handleMouseEnter}
-        >
-          {isHovered && (
-            <div className="absolute inset-0 bg-blue-800 bg-opacity-70 flex items-center justify-center backdrop-filter backdrop-blur-lg hover:cursor-pointer">
-              <h2 className="text-white font-bold text-2xl">Esteman</h2>
-            </div>
-          )}
-          <img
-            className="w-full h-72 object-cover object-center rounded-t-lg"
-            src="https://i.pinimg.com/originals/1f/81/88/1f818876783092801d6db8ecc3d46688.jpg"
-            alt="Artista"
-          />
-        </div>
-        <div className="bg-blue h-10">
-          <h2 className="text-white font-bold text-2xl text-center">Ver más</h2>
-        </div>
+    <div className={`bg-white m-auto md:m-0 shadow-lg rounded-t-3xl overflow-hidden w-9/12 md:w-2/3 lg:w-2/3 cursor-pointer ${isHovered ? 'border-2 border-orange' : ''}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleCardTicket}>
+      {/* Imagen de la tarjeta */}
+      <img className="w-full h-64 object-cover object-center rounded-t-lg" src={imageUrl} alt={eventName} />
+
+      {/* Contenido de la tarjeta */}
+      <div className="bg-blue h-17">
+        {/* Título de la tarjeta */}
+        <h2 className="text-white font-bold text-2xl text-center">{eventName}</h2>
+        {/* Localidad */}
+        <h3 className="text-white text-center text-xl ">{location}</h3>
       </div>
-    </>
+    </div>
+
   );
 };
 
 export default CardMyTicket;
+
+
