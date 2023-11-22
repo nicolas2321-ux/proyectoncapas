@@ -1,39 +1,39 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const CardMyTicket = ({ eventName, location, imageUrl }) => {
+export const CardMyTicket = ({ idTicket, eventName, location, imageUrl }) => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   const handleMouseEnter = () => {
-    //setIsHovered(true);
+    setIsHovered(true);
   };
 
   const handleCardTicket = () => {
-    //navigate('/user/info-pay-ticket');
+    navigate("/cliente/transferTicket");
   };
 
   const handleMouseLeave = () => {
-    //setIsHovered(false);
+    setIsHovered(false);
   };
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    <div className={`bg-white m-auto md:m-0 shadow-lg rounded-t-3xl overflow-hidden w-9/12 md:w-2/3 lg:w-2/3 cursor-pointer ${isHovered ? 'border-2 border-orange' : ''}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleCardTicket}>
       {/* Imagen de la tarjeta */}
-      <div className="relative overflow-hidden" style={{ paddingBottom: '100%' }}>
-        <img className="absolute inset-0 w-full h-full object-cover" src={imageUrl} alt={eventName} />
-      </div>
+      <img className="w-full h-64 object-cover object-center rounded-t-lg" src={imageUrl} alt={eventName} />
 
       {/* Contenido de la tarjeta */}
-      <div className="px-6 py-4">
+      <div className="bg-blue h-17">
         {/* Título de la tarjeta */}
-        <div className="font-bold text-xl mb-2 text-center overflow-hidden line-clamp-2">{eventName}</div>
-        
-        {/* Descripción de la tarjeta */}
-        <p className="text-gray-700 text-base text-center overflow-hidden line-clamp-3">{location}</p>
+        <h2 className="text-white font-bold text-2xl text-center">{eventName}</h2>
+        {/* Localidad */}
+        <h3 className="text-white text-center text-xl ">{location}</h3>
       </div>
     </div>
+
   );
 };
 
 export default CardMyTicket;
+
+
