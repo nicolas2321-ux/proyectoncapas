@@ -32,6 +32,7 @@ import MyTIckets from "../pages/user/MyTIckets";
 import ViewEvent from "../pages/user/ViewEvent";
 import TransferTicket from "../pages/user/TransferTicket";
 import { RecibirTicket } from "../pages/user/RecibirTicker";
+import LectorQR from "../pages/admin/LectorQR";
 
 
 const Location = () => {
@@ -72,7 +73,7 @@ const Location = () => {
             <Route path="/cliente/recibirTicket" element={<ProtectedCliente component={RecibirTicket} />} />
 
             {/*VISTAS DE LECTORQR*/ }
-
+            <Route path="/lectorqr" element={<LectorQR component={Home} />} />
             
         </Routes>
     );
