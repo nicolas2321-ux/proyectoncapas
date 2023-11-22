@@ -1,33 +1,27 @@
 import React, { useState, useEffect } from "react";
-import NavbarHomepage from "../../components/Navbar/NavbarHomepage.jsx";
-import NavbarClient from "../../components/Navbar/NavbarUser.jsx";
-import Carousel from "../../components/Carousel/Carousel.jsx";
-import CardHome from "../../components/Card/CardHome.jsx";
+import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
+import Carousel from "../../components/Carousel/Carousel.jsx";
+import CardHome from "../../components/Card/CardViewAdmin.jsx";
 import EventService from "../../services/Publico/PublicService.js";
 import eventService from "../../services/Event/EventService.js";
-import context from "../../Context/UserContext.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-const Home = () => {
+const HomeAdmin = () => {
   const [events, setEvents] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [title, setTitle] = useState("");
-  const [loggueado, setLoggueado] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    if (context.getToken() != null) {
-      setLoggueado(true);
-    }
-
     fetchEvents();
   }, [title, currentPage]);
 
+
+
   const fetchEvents = async () => {
-    const token = context.getToken();
     let response;
 
     if (title.trim() !== "") {
@@ -53,7 +47,7 @@ const Home = () => {
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages - 1) {
+    if (currentPage < totalPages-1) {
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
@@ -62,14 +56,14 @@ const Home = () => {
     setTitle(text);
   };
 
+
   return (
     <>
-      {loggueado ? <NavbarClient /> : <NavbarHomepage />}
-
-      <Carousel className="max-h-64" />
+      <NavbarAdmin />
+      <Carousel className="max-h-64"/>
       <div>
         <div className="flex flex-row space-x-32 justify-center bg-blue h-20">
-          <h1 className="text-center text-white text-2xl font-bold my-5 md:text-3xl md:my-4 lg:text-4xl">Cartelera</h1>
+          <h1 className=" text-center text-white text-2xl font-bold my-5 md:text-3xl md:my-4 lg:text-4xl">Cartelera</h1>
           <form className="flex flex-row items-center">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -134,11 +128,11 @@ const Home = () => {
         </div>
 
         <div className="mt-2">
-          <Footer />
+        <Footer />
         </div>
       </div>
     </>
   );
 };
 
-export default Home;
+export default HomeAdmin;
