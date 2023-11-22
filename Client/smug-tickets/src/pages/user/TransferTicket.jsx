@@ -10,12 +10,11 @@ export const TransferTicket = () => {
     const navigate = useNavigate();
 
     const handleCancelTransfer = () => {
-        navigate('/user/info-pay-ticket');    
+        navigate('/cliente/mytickets');    
     };
 
     const handleTransfer = () => {
         MessageSuccess('Se ha transferido el ticket correctamente');
-        //
     }
 
 
