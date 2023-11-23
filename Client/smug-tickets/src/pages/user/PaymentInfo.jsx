@@ -21,11 +21,10 @@ export const PaymentInfo = () => {
 
     useEffect(() => {
         getInfo();
-    }, []);
+    }, [1]);
 
     const getInfo = async() => {
         //console.log(state);
-
         let res = await eventService.getEventById(id)
         let response = await localityService.getLocalidadesPorEvento(id)
         if (!res.hasError && !response.hasError) {
@@ -49,8 +48,11 @@ export const PaymentInfo = () => {
         console.log(date());
         let fecha = new Date();
         fecha = date()
-        let res = ticketService.crearTicket(token,fecha,id,total,state.localityId)
+        let res = ticketService.crearTicket(token,fecha,id,state.ticketsCount,state.localityId)
         console.log(res);
+        if(!res.hasError){
+            MessageSuccess('Compra realizada')
+        }
     }
 
     const date = () =>{
