@@ -163,7 +163,7 @@ export const CreateEvent = () => {
                                 </div>
                                 <div className='w-full px-3 sm:w-auto'>
                                     <div className='mb-5 pl-2 lg:pl-0'>
-                                        <label for="time" class=" mb-3 block text-base font-extrabold text-black">Hora</label>
+                                        <label for="time" className=" mb-3 block text-base font-extrabold text-black">Hora</label>
                                         <input
                                             type="time"
                                             name="time"
@@ -177,7 +177,7 @@ export const CreateEvent = () => {
                                 </div>
                                 <div className='lg:w-full lg:px-3 sm:w-1/2'>
                                     <div className='mb-5 pl-5 lg:pl-0'>
-                                        <label for="time" class=" mb-3 block text-base font-extrabold text-black">Duracion(hr)</label>
+                                        <label for="time" className=" mb-3 block text-base font-extrabold text-black">Duracion(hr)</label>
                                         <input
                                             type="number"
                                             name="number"
