@@ -45,10 +45,11 @@ export const PaymentInfo = () => {
 
     const payment = () =>{
         let token = context.getToken();
+        console.log(state.localityId, id, total, token);
         console.log(date());
         let fecha = new Date();
         fecha = date()
-        let res = ticketService.crearTicket(token,'2023-06-23',id,total,state.localityId)
+        let res = ticketService.crearTicket(token,fecha,id,total,state.localityId)
         console.log(res);
     }
 

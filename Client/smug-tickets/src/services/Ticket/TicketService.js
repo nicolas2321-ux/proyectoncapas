@@ -86,7 +86,7 @@ const ticketService = {
     },
     crearTicket: async (token, fecha, idEvento, cantidadTicket, idLocalidad)=>{
         try {
-            const response = await API.post('/ticket/crearTicket', {
+            const response = await API.post('/crearTicket', {
                 fecha: fecha,
                 evento: idEvento,
                 cantidadTickets: cantidadTicket,
