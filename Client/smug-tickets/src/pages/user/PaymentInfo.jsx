@@ -21,7 +21,7 @@ export const PaymentInfo = () => {
 
     useEffect(() => {
         getInfo();
-    }, [1]);
+    }, []);
 
     const getInfo = async() => {
         //console.log(state);
@@ -83,7 +83,8 @@ export const PaymentInfo = () => {
             if (result.isConfirmed) {
                 //MessageSuccess('Compra realizada con éxito')
                 //navigate(`/cliente/info-ticket/${id}`);
-                payment();
+                //payment();
+                navigate(`/cliente/pay-ticket/${id}`,{state: {localityId: state.localityId, ticketsCount: state.ticketsCount, total: total}})
             }
         })
     }
@@ -119,7 +120,7 @@ export const PaymentInfo = () => {
                             <p className="ml-2">${total}</p>
                         </div>
                     </div>
-                    <button className='bg-orange md:text-lg rounded-full text-white p-2 font-semibold mb-5 w-32 sm:w-36' onClick={confirmPayment}>Pagar</button>
+                    <button className='bg-orange md:text-lg rounded-full text-white p-2 font-semibold mb-5 w-32 sm:w-36' onClick={confirmPayment}>Siguiente</button>
                 </div>
             </div>
 
