@@ -3,6 +3,8 @@ import NavbarAdmin from "../../components/Navbar/NavbarAdmin.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import UserService from '../../services/Users/UsersService';
 import UsersService from '../../services/Users/UsersService';
+import { MessageSuccess } from '../../utils/Alert';
+import { MessageDisable } from '../../utils/Alert';
 
 export const UserManagement = () => {
     const [users, setUsers] = useState([]);
@@ -27,6 +29,7 @@ export const UserManagement = () => {
             // Realizar la solicitud POST para activar el usuario
             const response = await UsersService.ActiveUser(userId);
             fetchUsers();
+            MessageSuccess("Usuario activado!")
         } catch (error) {
             console.error('Error al activar usuario:', error);
         }
@@ -37,6 +40,7 @@ export const UserManagement = () => {
             // Realizar la solicitud POST para desactivar el usuario
             const response = await UsersService.DisableUser(userId);
             fetchUsers();
+            MessageDisable("Usuario desactivado!")
         } catch (error) {
             console.error('Error al desactivar usuario:', error);
         }

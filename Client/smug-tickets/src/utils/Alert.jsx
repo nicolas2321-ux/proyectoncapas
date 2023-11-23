@@ -31,6 +31,15 @@ export const MessageSuccess = (message) => {
         timer: 1500
     })
 }
+export const MessageDisable = (message) => {
+    Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: message,
+        showConfirmButton: false,
+        timer: 1500
+    })
+}
 
 export const LoadMessage=()=>{
     let timerInterval
