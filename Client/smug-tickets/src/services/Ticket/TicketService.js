@@ -60,6 +60,29 @@ const ticketService = {
         })
         const respuesta = await response;
         return respuesta
+    },
+    verificarTicket: async (token, eventoId) => {
+        try {
+            const response = await API.post('/changeEstado', {
+                evento: eventoId,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 200) {
+                console.log(response.data);
+                return response.data;
+            } else {
+                throw new Error(response.status);
+            }
+        } catch (error) {
+            console.error(error);
+            return {
+                hasError: true,
+            };
+        }
     }
 
 }

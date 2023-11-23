@@ -1,14 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useZxing } from "react-zxing";
 import NavbarQR from "../../components/Navbar/NavbarQR";
+import ticketService from "../../services/Ticket/TicketService";
+import context from "../../Context/UserContext";
 
 const LectorQR = () => {
   const [result, setResult] = useState("");
+  const [verificationResult, setVerificationResult] = useState(null);
   const { ref } = useZxing({
     onDecodeResult(result) {
       setResult(result.getText());
     },
   });
+
+  useEffect(() => {
+    const verificarTicket = async () => {
+      if (result) {
+        try {
+          const token = context.getToken();
+          const eventoId = result; 
+
+          const response = await ticketService.verificarTicket(token, eventoId);
+
+          // Actualiza el estado con el resultado de la verificación
+          setVerificationResult(response);
+        } catch (error) {
+          console.error("Error al verificar el ticket:", error);
+          // Maneja el error según tus necesidades
+        }
+      }
+    };
+
+    verificarTicket();
+  }, [result]);
 
   const containerStyle = {
     display: "flex",
@@ -50,10 +74,10 @@ const LectorQR = () => {
         <p style={titleStyle}>Escanea tu ticket</p>
         <div style={videoContainerStyle}>
           <video style={previewStyle} ref={ref} />
-          {result && (
+          {verificationResult && (
             <div style={ticketContainerStyle}>
-              <p style={{ fontSize: "18px", fontWeight: "bold" }}>Ticket:</p>
-              <p style={{ fontSize: "14px" }}>{result}</p>
+              <p style={{ fontSize: "18px", fontWeight: "bold" }}>Resultado de la verificación:</p>
+              <p style={{ fontSize: "14px" }}>{JSON.stringify(verificationResult)}</p>
             </div>
           )}
         </div>
@@ -63,4 +87,5 @@ const LectorQR = () => {
 };
 
 export default LectorQR;
+
 
