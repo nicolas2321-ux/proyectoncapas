@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaQrcode } from 'react-icons/fa';
+import { FaQrcode, FaShare } from 'react-icons/fa';
 
 const CardMyTicket = ({ idTicket, eventName, location, imageUrl }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -11,12 +11,11 @@ const CardMyTicket = ({ idTicket, eventName, location, imageUrl }) => {
   };
 
   const handleCardTicket = () => {
-    localStorage.setItem('ticket', idTicket);
-    navigate("/cliente/transferTicket");
+    navigate("/cliente/transferTicket" , { state: { idTicket } });
   };
 
   const handleViewQR = () => {
-    navigate("/cliente/viewQR");
+    navigate("/cliente/viewQR", { state: { idTicket } });
   };
 
   const handleMouseLeave = () => {
@@ -41,25 +40,25 @@ const CardMyTicket = ({ idTicket, eventName, location, imageUrl }) => {
         {/* Título de la tarjeta */}
         <h2 className="text-white font-bold text-2xl text-center">{eventName}</h2>
         {/* Localidad */}
-        <h3 className="text-white text-center text-xl">{location}</h3>
+        <h3 className="text-white text-center text-xl mb-2">{location}</h3>
 
         {/* Botones */}
-        <div className="flex justify-between mt-4">
+        <div className="flex flex-col items-center mt-2">
 
           {/* Botón de transferir */}
           <button
-            className="bg-orange hover:bg-orange-dark text-white font-bold py-2 px-4 rounded focus:outline-none text-lg"
+            className="bg-orange hover:bg-orange-dark text-white font-bold py-2 px-4 rounded mb-2 focus:outline-none text-lg flex items-center justify-center"
             onClick={handleCardTicket}
           >
-            Transferir
+            <FaShare className="mr-1" /> Transferir
           </button>
 
           {/* Botón de ver ticket con icono de QR */}
           <button
-            className="bg-orange hover:bg-orange-dark text-white font-bold py-2 px-4 rounded flex items-center focus:outline-none text-lg"
+            className="bg-orange hover:bg-orange-dark text-white font-bold py-2 px-4 rounded flex items-center justify-center focus:outline-none text-lg"
             onClick={handleViewQR}
           >
-            <FaQrcode className="mr-1" /> Ticket
+            <FaQrcode className="mr-1" /> Generar QR
           </button>
         </div>
       </div>
@@ -68,4 +67,7 @@ const CardMyTicket = ({ idTicket, eventName, location, imageUrl }) => {
 };
 
 export default CardMyTicket;
+
+
+
 
