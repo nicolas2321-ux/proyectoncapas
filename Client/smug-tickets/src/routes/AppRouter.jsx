@@ -31,6 +31,8 @@ import TicketPurchase from "../pages/user/TicketPurchase";
 import TransferTicket from "../pages/user/TransferTicket";
 import { RecibirTicket } from "../pages/user/RecibirTicker";
 import LectorQR from "../pages/admin/LectorQR";
+import TicketInformation from "../pages/user/TicketInformation";
+import PaymentInfo from "../pages/user/PaymentInfo";
 
 
 const Location = () => {
@@ -68,6 +70,8 @@ const Location = () => {
             <Route path="/cliente/mytickets" element={<ProtectedCliente component={MyTIckets} />} />
             <Route path="/cliente/viewEvent/:id" element={<ProtectedCliente component={ViewEvent} />} />
             <Route path="/cliente/purchase-ticket/:id" element={<ProtectedCliente component={TicketPurchase} />} />
+            <Route path="/cliente/payment-info/:id" element={<ProtectedCliente component={PaymentInfo} />} />
+            <Route path="/cliente/info-ticket/:id" element={<ProtectedCliente component={TicketInformation} />} />
             <Route path="/cliente/transferTicket" element={<ProtectedCliente component={TransferTicket} />} />
             <Route path="/cliente/recibirTicket" element={<ProtectedCliente component={RecibirTicket} />} />
 
