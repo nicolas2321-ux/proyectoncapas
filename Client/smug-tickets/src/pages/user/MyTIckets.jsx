@@ -11,7 +11,7 @@ export const MyTickets = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetchTickets();
+    fetchTickets();    
   }, []);
 
   const fetchTickets = async () => {
@@ -46,6 +46,23 @@ export const MyTickets = () => {
     }
   };
 
+  const cardStyle = {
+    maxWidth: '300px', // Ajusta según tus necesidades
+  };
+
+  /*const pruebaTicket = {
+    idTicket: 1,
+    evento: {
+      idEvento: 1,
+      descripcion: "Retumbar",
+      imagen: "https://i.pinimg.com/originals/a0/08/cb/a008cbe67fba1ea160f75dc6d20d0aa6.jpg",
+    },
+    localidad: {
+      idLocalidad: 1,
+      descripcion: "VIP",
+      
+    },
+  };*/
 
 
   return (
@@ -64,6 +81,35 @@ export const MyTickets = () => {
         Mis Tickets
         <div className="flex justify-center mt-5">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Agregar la card de prueba 
+            <div className="flex justify-center">
+              <CardMyTicket
+                idTicket={pruebaTicket.idTicket}
+                eventName={pruebaTicket.evento.descripcion}
+                location={pruebaTicket.localidad.descripcion}
+                imageUrl={pruebaTicket.evento.imagen}
+                style={cardStyle}
+              />
+            </div>
+            <div className="flex justify-center">
+              <CardMyTicket
+                idTicket={pruebaTicket.idTicket}
+                eventName={pruebaTicket.evento.descripcion}
+                location={pruebaTicket.localidad.descripcion}
+                imageUrl="https://d1af7m13b2f34i.cloudfront.net/media/league-of-legends-worlds-2023-sportstiger-1673357714695-original.jpg"
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <CardMyTicket
+                idTicket={pruebaTicket.idTicket}
+                eventName={pruebaTicket.evento.descripcion}
+                location={pruebaTicket.localidad.descripcion}
+                imageUrl="https://d1af7m13b2f34i.cloudfront.net/media/league-of-legends-worlds-2023-sportstiger-1673357714695-original.jpg"
+              />
+            </div>
+          */}
+                        
             {tickets.map((ticket) => (
               <div key={ticket.idTicket} className="flex justify-center">
                 <CardMyTicket
@@ -72,6 +118,7 @@ export const MyTickets = () => {
                   location={ticket.localidad.descripcion}
                   imageUrl={ticket.evento.imagen}
                 />
+                
               </div>
             ))}
           </div>
