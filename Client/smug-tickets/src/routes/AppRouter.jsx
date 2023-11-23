@@ -2,12 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthGoogle from "../pages/user/AuthGoogle";
 import GoogleRegister from "../pages/user/GoogleRegister";
-import { DashboardClient } from "./DashboardClient";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import Private from "./Private";
 import Prueba from "../pages/user/Prueba";
 import Prueba2 from "../pages/user/Prueba2";
-import { useLocation } from "react-router-dom";
 import { ProtectedAdmin } from "./ProtectedAdmin";
 import { ProtectedLectorQR } from "./ProtectedLectorQR";
 import { ProtectedCliente } from "./ProtectedClient";
@@ -75,7 +72,8 @@ const Location = () => {
             <Route path="/cliente/recibirTicket" element={<ProtectedCliente component={RecibirTicket} />} />
 
             {/*VISTAS DE LECTORQR*/ }
-            <Route path="/lectorqr" element={<LectorQR component={Home} />} />
+            <Route path="/lectorQR/Home" element={<ProtectedLectorQR component={LectorQR} />} />
+            
             
         </Routes>
     );

@@ -9,9 +9,6 @@ import context from '../../Context/UserContext';
 export const NavbarQR = () => {
   const navigate = useNavigate();
 
-    const handleHome = () => {
-        navigate('/admin/Home');
-    }
     const handleLogout = () => {
         context.logout();
         navigate('/');
@@ -44,11 +41,6 @@ export const NavbarQR = () => {
         }`}
       >
         <div className="text-sm md:text-xl lg:text-lg lg:flex lg:flex-row">
-        <button
-            onClick={handleHome} className="block text-left lg:text-center w-full my-2 items-center border-0 py-2 px-4 text-white bg-blue"
-          >
-            Inicio
-          </button>
           <button
             onClick={handleLogout} className="block text-left lg:text-center w-full my-2 items-center border-0 py-2 px-4 text-white bg-blue"
           >
