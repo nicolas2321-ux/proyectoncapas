@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import NavbarUser from '../../components/Navbars/NavbarUser';
 import Footer from '../../components/Footer/Footer';
-import LocationButton from '../../components/Button/LocationButton';
 import CardTicket from '../../components/Card/CardTicket';
 import localityService from '../../services/Locality/LocalityService';
 import eventService from '../../services/Event/EventService';
-import context from '../../Context/UserContext';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 export const TicketPurchase = () => {
@@ -23,14 +21,24 @@ export const TicketPurchase = () => {
     }, []);
 
     const handleNext = () => {
-        console.log(selectedLocalityId, count);
-        navigate(`/cliente/payment-info/${id}`, {state: {localityId: selectedLocalityId, ticketsCount: count}} );
+        if (selectedLocalityId && count > 0){
+            console.log(selectedLocalityId, count);
+            navigate(`/cliente/payment-info/${id}`,
+            {state: {localityId: selectedLocalityId, ticketsCount: count}} );
+
+        } 
+        else{
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Debes seleccionar una localidad y la cantidad de tickets a comprar!',
+              })
+        }   
     }
     const handleBack = () => {
         navigate(`/cliente/viewEvent/${id}`)
     }
     const getInfo = async() => {
-        //let token = context.getToken();
         let res = await eventService.getEventById(id)
         let response = await localityService.getLocalidadesPorEvento(id);
         if (!res.hasError && !response.hasError) {

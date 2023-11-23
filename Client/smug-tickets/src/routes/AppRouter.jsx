@@ -34,6 +34,7 @@ import LectorQR from "../pages/admin/LectorQR";
 import TicketInformation from "../pages/user/TicketInformation";
 import PaymentInfo from "../pages/user/PaymentInfo";
 import Pay from "../pages/user/Pay";
+import ViewQR from "../pages/user/ViewQR";
 
 
 const Location = () => {
@@ -76,6 +77,7 @@ const Location = () => {
             <Route path="/cliente/pay-ticket/:id" element={<ProtectedCliente component={Pay} />} />
             <Route path="/cliente/transferTicket" element={<ProtectedCliente component={TransferTicket} />} />
             <Route path="/cliente/recibirTicket" element={<ProtectedCliente component={RecibirTicket} />} />
+            <Route path="/cliente/viewQR" element={<ProtectedCliente component={ViewQR} />} />
 
             {/*VISTAS DE LECTORQR*/ }
             <Route path="/lectorQR/Home" element={<ProtectedLectorQR component={LectorQR} />} />
