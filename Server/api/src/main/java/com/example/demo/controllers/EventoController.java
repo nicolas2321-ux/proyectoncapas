@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/evento")
+@CrossOrigin("*")
 public class EventoController {
 
 	@Autowired
@@ -58,11 +60,11 @@ public class EventoController {
 			User user2 = userService.findUserAuthenticated();
 			Evento newEvento = new Evento(
 				eventoDto.getDescripcion(),
-				eventoDto.getTickets_disponibles(),
+				eventoDto.getLugar(),
+				eventoDto.getHora(),
+				eventoDto.getDuracion(),
 				0,
 				eventoDto.getFecha_evento(),
-				
-				eventoDto.getCapacidad(),
 				get_categoria,
 				user2,
 				eventoDto.getImagen()
@@ -81,9 +83,10 @@ public class EventoController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se encontro el evento");
 		}else{
 			Categoria categoria = categoriaService.get_categoria(info.getId_categoria());
-			findEvento.setCapacidad(info.getCapacidad());
 			findEvento.setDescripcion(info.getDescripcion());
-			findEvento.setTickets_disponibles(info.getTickets_disponibles());
+			findEvento.setLugar(info.getLugar());
+			findEvento.setHora(info.getHora());
+			findEvento.setDuracion(info.getDuracion());
 			findEvento.setId_categoria(categoria);
 			findEvento.setImagen(info.getImagen());
 			eventoservice.save(findEvento);
