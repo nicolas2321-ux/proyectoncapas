@@ -17,5 +17,5 @@ public interface TicketsService {
 	List<Tickets> getMyTickets(User user);
 	void cambiarEstado(Tickets ticket);
 	void saveTicket(Tickets ticket);
-	//List<Tickets> ticketxEvento(UUID code);
+	List<Tickets> ticketxEvento(Evento code);
 }

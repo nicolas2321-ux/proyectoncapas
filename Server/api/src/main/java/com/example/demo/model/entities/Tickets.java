@@ -42,7 +42,7 @@ public class Tickets {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_evento", nullable = false)
-	Evento id_evento;
+	Evento idEvento;
 
 	public Tickets(Integer estado, Date fecha_venta, User id_cliente, Lugares id_localidad, Evento id_evento) {
 		super();
@@ -50,7 +50,7 @@ public class Tickets {
 		this.fecha_venta = fecha_venta;
 		this.idCliente = id_cliente;
 		this.id_localidad = id_localidad;
-		this.id_evento = id_evento;
+		this.idEvento = id_evento;
 	}
 	
 	

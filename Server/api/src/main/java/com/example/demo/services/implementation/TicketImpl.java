@@ -37,7 +37,7 @@ public class TicketImpl implements TicketsService{
 		            ticket.setEstado(1);
 		            ticket.setFecha_venta(fecha);
 		            ticket.setIdCliente(user);
-		            ticket.setId_evento(evento);
+		            ticket.setIdEvento(evento);
 		            ticket.setId_localidad(lugar);
 		            ticketrepository.save(ticket);
 		        }
@@ -65,10 +65,16 @@ public class TicketImpl implements TicketsService{
 		ticketrepository.save(ticket);
 	}
 
-	/*
 	@Override
-	public List<Tickets> ticketxEvento(UUID code) {
-		return ticketrepository.findByEvento_IdEvento(code);
+	public List<Tickets> ticketxEvento(Evento code) {
+		List<Tickets> gettickets = ticketrepository.findByIdEvento(code);
+		return gettickets;
 	}
-    */
+
+	
+	// @Override
+	// public List<Tickets> findByIdTicket(UUID code) {
+	// 	return ticketrepository.findByEvento_IdEvento(code);
+	// }
+    
 }

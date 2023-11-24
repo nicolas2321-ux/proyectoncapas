@@ -84,12 +84,13 @@ public class TicketController {
 	    if (eventoId == null) {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El ID del evento no puede ser nulo");
 	    }
-
+		Evento findEvento = eventoservice.get_evento(eventoId);
+		List<Tickets> tickets = ticketService.ticketxEvento(findEvento);
 	    //List<Tickets> tickets = ticketService.ticketxEvento(eventoId);
-	    Tickets find = ticketService.traerTicket(eventoId);
+	   // Tickets find = ticketService.traerTicket(eventoId);
 	    
-	    if (find != null) {
-	        return ResponseEntity.status(HttpStatus.OK).body(find);
+	    if (tickets != null) {
+	        return ResponseEntity.status(HttpStatus.OK).body(tickets);
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron tickets para el evento con ID: " + eventoId);
 	    }
@@ -125,7 +126,7 @@ public class TicketController {
 			ticket.setEstado(1);
 			ticket.setFecha_venta(fechaActualDate);
 			ticket.setIdCliente(userBeneficiado);
-			ticket.setId_evento(find.getId_evento());
+			ticket.setIdEvento(find.getIdEvento());
 			ticket.setId_localidad(find.getId_localidad());
 			ticketService.saveTicket(ticket);
 			return ResponseEntity.status(HttpStatus.OK).body("Transpaso realizado");
