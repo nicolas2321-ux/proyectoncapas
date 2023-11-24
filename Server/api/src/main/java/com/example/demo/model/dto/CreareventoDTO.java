@@ -14,12 +14,14 @@ public class CreareventoDTO{
     private String descripcion;
 
 
-    private Integer tickets_disponibles;
+    private String lugar;
+    
+    private String hora;
+    
+    private Integer duracion;
 
   
     private Date fecha_evento;
-
-    private Integer capacidad;
 
     private UUID id_categoria;
     

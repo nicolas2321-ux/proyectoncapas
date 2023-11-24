@@ -42,7 +42,7 @@ function AuthGoogle(props) {
         return navigate('/cliente/Home');
         
       case "LectorQR":
-        return navigate('/lector');
+        return navigate('/lectorQR/Home');
         
       case "Moderador":
         return navigate('/moderador');

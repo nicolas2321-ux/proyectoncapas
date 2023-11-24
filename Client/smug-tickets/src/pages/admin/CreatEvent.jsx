@@ -11,11 +11,10 @@ export const CreateEvent = () => {
     const navigate = useNavigate();
     const [imagenUrl, setImagenUrl] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const [ticketDisponible, setTicketDisponible] = useState('');
+    const [lugar, setLugar] = useState('');
     const [fecha, setFecha] = useState('');
     const [hora, setHora] = useState('');
     const [duracion, setDuracion] = useState('');
-    const [capacidad, setCapacidad] = useState('');
     const [imagenUrl1, setImagenUrl1] = useState('');
     const [categories, setCategories] = useState([]); // Lista de categorias
 
@@ -54,14 +53,15 @@ export const CreateEvent = () => {
         const token = context.getToken();
 
         //TODO: Falta validaciones de campo --> cuando ya esten las alertas se debe de implementar
-        console.log(token, descripcion, ticketDisponible, fecha, capacidad, selectedCategoryId, imagenUrl)
+        console.log(token, descripcion, lugar, fecha, selectedCategoryId, imagenUrl)
 
         const response = await EventService.createEvent(
             token,
             descripcion,
-            ticketDisponible,
+            lugar,
+            hora,
+            duracion,
             fecha,
-            capacidad,
             selectedCategoryId,
             imagenUrl
         );
@@ -77,7 +77,6 @@ export const CreateEvent = () => {
             navigate(`/admin/newlocation/${id}/${descripcion}`);
         }else{
             NotFound('Faltan campos!')
-            //console.log(id); // Modificación aquí
         }
         
     }
@@ -140,10 +139,10 @@ export const CreateEvent = () => {
                                     onChange={(e) => setDescripcion(e.target.value)} />
                             </div>
                             <div className='mb-6 pl-2 lg:p-0'>
-                                <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Ticket Disponibles</label>
-                                <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="number"
-                                    value={ticketDisponible}
-                                    onChange={(e) => setTicketDisponible(e.target.value)} />
+                                <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Lugar</label>
+                                <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text"
+                                    value={lugar}
+                                    onChange={(e) => setLugar(e.target.value)} />
                             </div>
                             <div className='-mx-3 flex lg:flex-nowrap lg:flex-row flex-col' >
                                 <div className='w-full px-3 sm:w-auto'>
@@ -163,7 +162,7 @@ export const CreateEvent = () => {
                                 </div>
                                 <div className='w-full px-3 sm:w-auto'>
                                     <div className='mb-5 pl-2 lg:pl-0'>
-                                        <label for="time" class=" mb-3 block text-base font-extrabold text-black">Hora</label>
+                                        <label for="time" className=" mb-3 block text-base font-extrabold text-black">Hora</label>
                                         <input
                                             type="time"
                                             name="time"
@@ -177,7 +176,7 @@ export const CreateEvent = () => {
                                 </div>
                                 <div className='lg:w-full lg:px-3 sm:w-1/2'>
                                     <div className='mb-5 pl-5 lg:pl-0'>
-                                        <label for="time" class=" mb-3 block text-base font-extrabold text-black">Duracion(hr)</label>
+                                        <label for="time" className=" mb-3 block text-base font-extrabold text-black">Duracion(hr)</label>
                                         <input
                                             type="number"
                                             name="number"
@@ -207,10 +206,6 @@ export const CreateEvent = () => {
                                         </form>
                                     </button>
                                 </div>
-                            </div>
-                            <div className='mb-6 pl-2 lg:pl-0'>
-                                <label className='block mb-2 font-extrabold text-normal lg:text-lg' for="">Capacidad</label>
-                                <input value={capacidad} onChange={(e) => setCapacidad(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="number" />
                             </div>
                             <div className='flex flex-row items-start  lg:mx-0 gap-5 lg:flex-col '>
                                 <button  type="submit" onClick={handleCreateEvent}  className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl

@@ -3,21 +3,106 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons'
 import { faCcMastercard, faCcVisa } from '@fortawesome/free-brands-svg-icons';
-import NavbarUser from "../../components/Navbars/NavbarUser";
+//import NavbarUser from "../../components/Navbars/NavbarUser";
 import Footer from "../../components/Footer/Footer";
-import { useParams } from 'react-router-dom';
-import { Alert } from '../../utils/Alert';
-
+import { useParams, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import eventService from '../../services/Event/EventService';
+import context from '../../Context/UserContext';
+import localityService from '../../services/Locality/LocalityService';
+import ticketService from '../../services/Ticket/TicketService';
+import { MessageSuccess, NotFound } from '../../utils/Alert';
+import Swal from 'sweetalert2';
 
 export const Pay = () => {
     const navigate = useNavigate();
+    const {state} = useLocation();
     const { id } = useParams();
-    const handleTransaction = () => {
-        Alert('¿Estas seguro de efectuar la compra?','Compra realizada')
-        navigate(`/user/succesful-transaction/${id}`);
+    const [event, setEvent] = useState(null);
+    const [locality, setLocality] = useState({});
+    const [name, setName] = useState('');
+    const [card, setCard] = useState('');
+    const [cvv, setCvv] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
+
+
+    useEffect(() => {
+        getInfo();
+    }, []);
+
+    const getInfo = async() => {
+        console.log(state);
+        let res = await eventService.getEventById(id)
+        let response = await localityService.getLocalidadesPorEvento(id)
+        if (!res.hasError && !response.hasError) {
+            console.log(res);
+            setEvent(res)
+            //Verificar el id de la localidad seleccionada
+            response.forEach((selectedLocality)=>{
+                if (state.localityId === selectedLocality.code ) {
+                    setLocality({code: selectedLocality.code, descripcion: selectedLocality.descripcion, precio: selectedLocality.precio})
+                    //setTotal(state.ticketsCount * selectedLocality.precio)
+                }
+            })
+        }
     }
+    if (!event) {
+        return <div>Cargando...</div>;
+    }
+
+    const payment = () =>{
+        let token = context.getToken();
+        console.log(state.localityId, id, state.total, token);
+        console.log(date());
+        let fecha = new Date();
+        fecha = date()
+        let res = ticketService.crearTicket(token,fecha,id,state.ticketsCount,state.localityId)
+        console.log(res);
+        if(!res.hasError){
+            MessageSuccess('Compra realizada')
+            navigate('/cliente/mytickets');
+        }
+    }
+
+    const date = () =>{
+        // Obtén la fecha actual
+        const currentDate = new Date();
+        // Obtiene el año, mes y día
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Agrega cero inicial si es necesario
+        const day = String(currentDate.getDate()).padStart(2, '0'); // Agrega cero inicial si es necesario
+        // Formatea la fecha en el formato deseado
+        const formattedDate = `${year}-${month}-${day}`;
+        //console.log(formattedDate);
+        return formattedDate;
+    }
+
+    const confirmPayment = () =>{
+        if (card != '' && cvv != '' && name != '' && isChecked) {
+            //console.log(card,cvv,name, isChecked);
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Estas seguro de efectuar la compra?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //MessageSuccess('Compra realizada con éxito')
+                    payment();
+                }
+            })
+        }else{
+            NotFound('Hay campos vacíos');
+        }
+    }
+
+
+
     const handleBack = () => {
-        navigate(`/user/purchase-ticket/${id}`);
+        navigate(`/cliente/viewEvent/${id}`)
     }
     return (
         <>
@@ -30,12 +115,14 @@ export const Pay = () => {
                         <div className='mt-4'>
                             <label className='block text-base mb-2 font-bold lg:text-md' for="">Nombre del tarjetahabiente:</label>
                             <input type='text' className='lg:ml-0 text-center w-80 placeholder:text-sm placeholder:text-center placeholder:pl-2 lg:w-5/6 p-1 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded'
-                                placeholder="José Simeon Cañas">
+                                placeholder="José Simeon Cañas" value={name}
+                                onChange={(e) => setName(e.target.value)}>
                             </input>
                             <label className='block text-base mb-2 mt-4 font-bold lg:text-md' for="">Numero de Tarjeta</label>
                             <div class="relative mt-2 rounded shadow-sm">
                                 <input type='text' className='lg:ml-0 text-center w-80 placeholder:text-xs xl:placeholder:text-center placeholder:text-left placeholder:pl-2 lg:w-5/6 p-1 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded'
-                                    placeholder="Numero de tarjeta sin espacios ni guiones">
+                                    placeholder="Numero de tarjeta sin espacios ni guiones" value={card}
+                                    onChange={(e) => setCard(e.target.value)}>
                                 </input>
                                 <div className='absolute inset-y-0 space-x-2 right-0 xl:pr-12 lg:pr-10 md:pr-24 pr-6 flex items-center text-sm'>
                                     <FontAwesomeIcon icon={faCreditCard} className='h-4' />
@@ -47,7 +134,8 @@ export const Pay = () => {
                             <div className='mt-4'>
                                 <label className='block text-base mb-2 font-bold lg:text-md' for="">Codigo de verificacion (CVV):</label>
                                 <input type='text' className='lg:ml-0 w-20  text-center  placeholder:text-sm placeholder:text-center lg:w-20 p-1 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded'
-                                    placeholder="000">
+                                    placeholder="000" value={cvv}
+                                    onChange={(e) => setCvv(e.target.value)}>
                                 </input>
                             </div>
                             <div className='mt-4 '>
@@ -97,46 +185,32 @@ export const Pay = () => {
                     <div className='rounded-xl shadow-2xl lg:ml-5 xl:w-1/3 bg-white2 drop-shadow-xl md:w-2/3 bg-pay-gray pb-3'>
 
                         <div className='mt-5 pt-3 '>
-                            <label className=' font-extrabold text-lg'> Informacion del pago: </label>
+                            <label className=' font-extrabold text-lg'>{event.descripcion} </label>
                         </div>
+
                         <table className='table-auto m-auto mt-4 lg:m-auto md:m-auto md:mt-4 lg:mt-4'>
-                            <tbody>
+                            {
+                                <tbody>
                                 <tr>
-                                    <td className='pl-4 pr-32'>+1 Concierto Bad Bunny</td>
-                                    <td>$30</td>
-                                </tr>
-                                <tr>
-                                    <div>
-                                        <td className='pl-4'>+2 Concierto Rosalia</td>
-                                    </div>
-                                    <td>$70</td>
-
-                                </tr>
-                                <tr>
-                                    <div>
-                                        <td className='pl-4'>+1 Obra Romeo y Julieta</td>
-                                    </div>
-                                    <td>$10</td>
-
+                                    <td className='pl-4 pr-32'>{state.ticketsCount} {locality.descripcion}</td>
+                                    <td>${locality.precio}</td>
                                 </tr>
                                 <tr className='border-t-2 border-b-2 md: lg:w-2/3 lg:ml-5'>
-                                    <td className=' px-60 pl-4 lg:pl-0'>Subtotal</td>
-                                    <td>$110</td>
                                 </tr>
-
                                 <tr>
                                     <td className=' font-bold text-left pl-4'>Total</td>
-                                    <td className='font-bold'>$110</td>
+                                    <td className='font-bold'>${state.total}</td>
                                 </tr>
                             </tbody>
+                            }
                         </table>
 
                         <div className='w-full mt-5'>
-                            <input type="checkbox" className='' />
+                            <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(!isChecked)} className='' />
                             <label htmlFor="" className='text-sm'>Acepto haber leido los terminos y condiciones y politicas de privacidad para hacer este pago</label>
                         </div>
 
-                        <button type='submit' className='mt-4 bg-pay-gray  hover:bg-locations-gray text-black font-bold p-3 rounded-lg' onClick={handleTransaction}>
+                        <button type='submit' className='mt-4 bg-pay-gray  hover:bg-locations-gray text-black font-bold p-3 rounded-lg' onClick={confirmPayment}>
                             <p>Efectuar pago</p>
                         </button>
                         <button type='submit' className='mt-4 bg-pay-gray  hover:bg-locations-gray text-black font-bold p-3 rounded-lg' onClick={handleBack}>

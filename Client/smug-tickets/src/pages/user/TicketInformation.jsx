@@ -1,8 +1,9 @@
 import Footer from "../../components/Footer/Footer";
 import Card from "../../components/Card/CardHome";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const TicketInformation = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const handleTransferTicket = () => {

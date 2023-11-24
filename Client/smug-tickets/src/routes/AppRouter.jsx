@@ -2,18 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthGoogle from "../pages/user/AuthGoogle";
 import GoogleRegister from "../pages/user/GoogleRegister";
-import { DashboardClient } from "./DashboardClient";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import Private from "./Private";
-import Prueba from "../pages/user/Prueba";
-import Prueba2 from "../pages/user/Prueba2";
-import { useLocation } from "react-router-dom";
 import { ProtectedAdmin } from "./ProtectedAdmin";
 import { ProtectedLectorQR } from "./ProtectedLectorQR";
 import { ProtectedCliente } from "./ProtectedClient";
 import { ProtectedModerador } from "./ProtectedModerador";
-import Prueba3 from "../pages/user/Prueba3";
-import Prueba4 from "../pages/user/Prueba4";
 
 import Home from "../pages/user/Home";
 import CreateEvent from "../pages/admin/CreatEvent";
@@ -34,6 +27,10 @@ import TicketPurchase from "../pages/user/TicketPurchase";
 import TransferTicket from "../pages/user/TransferTicket";
 import { RecibirTicket } from "../pages/user/RecibirTicker";
 import LectorQR from "../pages/admin/LectorQR";
+import TicketInformation from "../pages/user/TicketInformation";
+import PaymentInfo from "../pages/user/PaymentInfo";
+import Pay from "../pages/user/Pay";
+import ViewQR from "../pages/user/ViewQR";
 
 
 const Location = () => {
@@ -46,11 +43,6 @@ const Location = () => {
             <Route path="/register" element={<GoogleRegister />} />
             <Route path ="/viewEvent/:id" element={<ViewEvent/>}/>
 
-            {/*VISTAS DE PRUEBA*/ }
-            <Route path="/admin" element={<ProtectedAdmin component={Prueba} />} />
-            <Route path="/lector" element={<ProtectedLectorQR component={Prueba2} />} />
-            <Route path="/cliente" element={<ProtectedCliente component={Prueba3} />} />
-            <Route path="/moderador" element={<ProtectedModerador component={Prueba4} />} />
 
             {/*VISTAS DE ADMIN*/ }
             <Route path="/admin/Home" element={<ProtectedAdmin component={HomeAdmin} />} />
@@ -71,11 +63,16 @@ const Location = () => {
             <Route path="/cliente/mytickets" element={<ProtectedCliente component={MyTIckets} />} />
             <Route path="/cliente/viewEvent/:id" element={<ProtectedCliente component={ViewEvent} />} />
             <Route path="/cliente/purchase-ticket/:id" element={<ProtectedCliente component={TicketPurchase} />} />
+            <Route path="/cliente/payment-info/:id" element={<ProtectedCliente component={PaymentInfo} />} />
+            <Route path="/cliente/info-ticket/:id" element={<ProtectedCliente component={TicketInformation} />} />
+            <Route path="/cliente/pay-ticket/:id" element={<ProtectedCliente component={Pay} />} />
             <Route path="/cliente/transferTicket" element={<ProtectedCliente component={TransferTicket} />} />
             <Route path="/cliente/recibirTicket" element={<ProtectedCliente component={RecibirTicket} />} />
+            <Route path="/cliente/viewQR" element={<ProtectedCliente component={ViewQR} />} />
 
             {/*VISTAS DE LECTORQR*/ }
-            <Route path="/lectorqr" element={<LectorQR component={Home} />} />
+            <Route path="/lectorQR/Home" element={<ProtectedLectorQR component={LectorQR} />} />
+            
             
         </Routes>
     );

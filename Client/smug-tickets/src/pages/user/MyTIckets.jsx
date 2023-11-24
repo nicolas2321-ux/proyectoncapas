@@ -11,18 +11,19 @@ export const MyTickets = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetchTickets();
+    fetchTickets();    
   }, []);
 
   const fetchTickets = async () => {
     const token = context.getToken();
 
     const response = await ticketService.getMyTickets(token);
+    console.log(response);
 
     if (!response.hasError) {
       // Mapear la respuesta para obtener la información deseada
       const mappedTickets = response.map((ticket) => {
-        const evento = ticket.id_evento;
+        const evento = ticket.idEvento;
         const localidad = ticket.id_localidad;
 
         return {
@@ -46,7 +47,9 @@ export const MyTickets = () => {
     }
   };
 
-
+  const cardStyle = {
+    maxWidth: '300px', // Ajusta según tus necesidades
+  };
 
   return (
     <>
@@ -64,6 +67,7 @@ export const MyTickets = () => {
         Mis Tickets
         <div className="flex justify-center mt-5">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        
             {tickets.map((ticket) => (
               <div key={ticket.idTicket} className="flex justify-center">
                 <CardMyTicket
@@ -72,6 +76,7 @@ export const MyTickets = () => {
                   location={ticket.localidad.descripcion}
                   imageUrl={ticket.evento.imagen}
                 />
+                
               </div>
             ))}
           </div>

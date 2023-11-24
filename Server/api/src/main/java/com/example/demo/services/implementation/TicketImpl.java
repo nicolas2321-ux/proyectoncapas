@@ -11,6 +11,7 @@ import com.example.demo.model.entities.Evento;
 import com.example.demo.model.entities.Lugares;
 import com.example.demo.model.entities.Tickets;
 import com.example.demo.model.entities.User;
+import com.example.demo.repository.LugarRepository;
 import com.example.demo.repository.TicketRepository;
 import com.example.demo.services.TicketsService;
 @Service
@@ -18,6 +19,10 @@ public class TicketImpl implements TicketsService{
 
 	@Autowired
 	private TicketRepository ticketrepository;
+	
+	@Autowired
+	private LugarRepository lugarRepository;
+	
 	@Override
 	public Tickets traerTicket(UUID code) {
 	Tickets ticket = ticketrepository.findByIdTicket(code);
@@ -26,16 +31,21 @@ public class TicketImpl implements TicketsService{
 
 	@Override
 	public void crearTicket(User user, Lugares lugar, Evento evento, Date fecha,Integer cantidadTickets) {
-		
-		for (int i = 1; i <= cantidadTickets; i++) {
-			Tickets ticket = new Tickets();
-			ticket.setEstado(1);
-			ticket.setFecha_venta(fecha);
-			ticket.setIdCliente(user);
-			ticket.setId_evento(evento);
-			ticket.setId_localidad(lugar);
-			ticketrepository.save(ticket);
-		}
+		 if (lugar.tieneSuficientesTickets(cantidadTickets)) {
+		        for (int i = 1; i <= cantidadTickets; i++) {
+		            Tickets ticket = new Tickets();
+		            ticket.setEstado(1);
+		            ticket.setFecha_venta(fecha);
+		            ticket.setIdCliente(user);
+		            ticket.setIdEvento(evento);
+		            ticket.setId_localidad(lugar);
+		            ticketrepository.save(ticket);
+		        }
+		        lugar.restarTickets(cantidadTickets);
+		        lugarRepository.save(lugar);
+		    } else {
+		        throw new RuntimeException("No hay suficientes tickets disponibles en la localidad");
+		    }
 	}
 
 
@@ -55,4 +65,16 @@ public class TicketImpl implements TicketsService{
 		ticketrepository.save(ticket);
 	}
 
+	@Override
+	public List<Tickets> ticketxEvento(Evento code) {
+		List<Tickets> gettickets = ticketrepository.findByIdEvento(code);
+		return gettickets;
+	}
+
+	
+	// @Override
+	// public List<Tickets> findByIdTicket(UUID code) {
+	// 	return ticketrepository.findByEvento_IdEvento(code);
+	// }
+    
 }

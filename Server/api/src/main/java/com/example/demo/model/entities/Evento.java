@@ -29,8 +29,14 @@ public class Evento {
 	@Column(name = "descripcion")
 	String descripcion;
 
-	@Column(name = "tickets_disponibles")
-	Integer tickets_disponibles;
+	@Column(name = "lugar")
+	String lugar;
+	
+	@Column(name = "hora")
+	String hora;
+	
+	@Column(name = "duracion")
+	Integer duracion;
 	
 	@Column(name = "estado")
 	Integer estado;
@@ -41,10 +47,6 @@ public class Evento {
 	@Column(name = "fecha_evento")
 	Date fecha_evento;
 
-
-	
-	@Column(name = "capacidad")
-	Integer capacidad;
 	
 	@Column(name = "imagen")
 	String imagen;
@@ -57,16 +59,16 @@ public class Evento {
 	@JoinColumn(name = "usuarios_creador", nullable = false)
 	User usuario_creador;
 
-	public Evento(String descripcion, Integer tickets_disponibles, Integer estado,
-			Date fecha_evento, Integer capacidad, Categoria id_categoria, User usuario_creador, String imagen) {
+	public Evento(String descripcion, String lugar, String hora, Integer duracion, Integer estado,
+			Date fecha_evento, Categoria id_categoria, User usuario_creador, String imagen) {
 
 		this.descripcion = descripcion;
-		this.tickets_disponibles = tickets_disponibles;
+		this.lugar= lugar;
+		this.hora = hora;
+		this.duracion = duracion;
 		this.estado = estado;
 		this.fecha_creacion =  new Date();
 		this.fecha_evento = fecha_evento;
-		
-		this.capacidad = capacidad;
 		this.id_categoria = id_categoria;
 		this.usuario_creador = usuario_creador;
 		this.imagen = imagen;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import NavbarAdmin from '../../components/Navbars/NavbarAdmin'
 import { useNavigate,useParams } from "react-router-dom";
 import LocalityService from "../../services/Locality/LocalityService";
 import { MessageSuccess, NotFound } from "../../utils/Alert";
@@ -12,6 +11,7 @@ export const NewLocation = () => {
   const [precio, setPrecio] = useState("");
 
   const { id, evento} = useParams();
+
 
   const reset = () => {
     // Reiniciar los estados a sus valores iniciales

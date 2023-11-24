@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { faHourglass } from '@fortawesome/free-solid-svg-icons';
 import Footer from "../../components/Footer/Footer";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { MessageSuccess, NotFound } from '../../utils/Alert';
 import ticketService from '../../services/Ticket/TicketService';
 
@@ -10,17 +10,19 @@ import ticketService from '../../services/Ticket/TicketService';
 export const TransferTicket = () => {
     const [email, setEmail] = useState(''); 
     const navigate = useNavigate();
+    const {state} = useLocation();
 
     const handleCancelTransfer = () => {
         navigate('/cliente/mytickets');    
     };
 
     const handleTransfer = async (e) => {
+        const idTicket = state.idTicket;
         e.preventDefault();
         const data = {
             to: email,
             token: localStorage.getItem('content'),
-            ticket: localStorage.getItem('ticket')
+            ticket: idTicket
         }
         const res = await ticketService.transferirTicket(data);
         if(res.status === 200){
