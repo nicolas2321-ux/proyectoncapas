@@ -1,5 +1,6 @@
 import axios from "axios"; 
-const BASE_API = process.env.REACT_APP_API_URL
+
+const BASE_API = 'https://api.smug.solutions';
 
 
 const API = axios.create(
@@ -10,7 +11,7 @@ const API = axios.create(
         }
     }
 );
-
+console.log(BASE_API);
 const authService = {
     //Obtenemos el token del usuario que contiene la información del usuario
     login: async (identifier)=>{
