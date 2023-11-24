@@ -20,13 +20,13 @@ export const Record = () => {
         const response = await ticketService.getMyTickets(token);
         if (!response.error) {
           // Filtrar eventos únicos por su idEvento
-          const uniqueEvents = [...new Map(response.map(event => [event.id_evento.idEvento, event])).values()];
+          const uniqueEvents = [...new Map(response.map(event => [event.idEvento.idEvento, event])).values()];
       
           // Mapear los eventos para obtener solo la información deseada
           const simplifiedEvents = uniqueEvents.map(event => ({
-            idEvento: event.id_evento.idEvento,
-            descripcion: event.id_evento.descripcion,
-            imagen: event.id_evento.imagen,
+            idEvento: event.idEvento.idEvento,
+            descripcion: event.idEvento.descripcion,
+            imagen: event.idEvento.imagen,
             //nombreLocalidad: event.id_localidad.descripcion,
           }));
       

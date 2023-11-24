@@ -1,7 +1,7 @@
 import { saveAs } from 'file-saver';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
-const generatePDF = async ({ event, localidades, individualPercentage, groupPercentage }) => {
+const generatePDF = async ({ event, localidades, noVendidos }) => {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage();
 
@@ -47,22 +47,13 @@ const generatePDF = async ({ event, localidades, individualPercentage, groupPerc
     });
   }
 
-  page.drawText(`Porcentaje de entradas individuales: ${individualPercentage}%`, {
+  page.drawText(`Cantidad de entradas no vendidas: ${noVendidos}`, {
     x: padding,
     y: height - padding - fontSize * (4 + localidades.length),
     size: fontSize,
     font: await pdfDoc.embedFont(StandardFonts.Helvetica),
     color: rgb(0, 0, 0),
   });
-
-  page.drawText(`Porcentaje de entradas grupales: ${groupPercentage}%`, {
-    x: padding,
-    y: height - padding - fontSize * (5 + localidades.length),
-    size: fontSize,
-    font: await pdfDoc.embedFont(StandardFonts.Helvetica),
-    color: rgb(0, 0, 0),
-  });
-
   const pdfBytes = await pdfDoc.save();
 
   // Guardar el PDF con un nombre específico
