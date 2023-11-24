@@ -13,8 +13,8 @@ const EditEvent = () => {
   const [descripcion, setDescripcion] = useState('');
   const [lugar, setLugar] = useState('');
   const [fecha, setFecha] = useState('');
-  const [hora, setHora] = useState('04:32');
-  const [duracion, setDuracion] = useState('2');
+  const [hora, setHora] = useState('');
+  const [duracion, setDuracion] = useState('');
   const [imagenUrl1, setImagenUrl1] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
@@ -45,6 +45,7 @@ const EditEvent = () => {
     }
   };
 
+
   useEffect(() => {
     const fetchCategories = async () => {
       const token = context.getToken();
@@ -64,9 +65,7 @@ const EditEvent = () => {
 
   const handleEditEvent = async () => {
     const token = context.getToken();
-    const payload = {
-        
-    }
+
     const response = await EventService.editEvent(
       token,
       id,
@@ -190,7 +189,7 @@ const EditEvent = () => {
                                     <div className='mb-5 pl-5 lg:pl-0'>
                                         <label for="time" className=" mb-3 block text-base font-extrabold text-black">Duracion(hr)</label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             name="number"
                                             id="number"
                                             value={duracion}
