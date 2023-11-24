@@ -15,11 +15,12 @@ CREATE TABLE categoria (
 CREATE TABLE evento (
 	id_evento uuid NOT NULL DEFAULT gen_random_uuid(),
 	descripcion varchar NOT NULL,
-	tickets_disponibles int4 NOT NULL,
+	lugar varchar NOT NULL,
+	hora varchar NOT NULL,
+	duracion int4 NOT NULL,
 	estado int4 NOT NULL,
 	fecha_creacion date NOT NULL,
 	fecha_evento date NOT NULL,
-	capacidad int4 NOT NULL,
 	id_categoria uuid NOT NULL,
 	usuarios_creador uuid NOT NULL,
 	imagen varchar NULL DEFAULT 'https://i.pinimg.com/originals/24/58/5f/24585fc9b7433a224a6ff5506e346969.png'::character varying,
@@ -201,3 +202,31 @@ CREATE TABLE usuarios_asignados_eventos (
 
 ALTER TABLE public.usuarios_asignados_eventos ADD CONSTRAINT usuarios_asignados_eventos_fk FOREIGN KEY (id_evento) REFERENCES evento(id_evento);
 ALTER TABLE public.usuarios_asignados_eventos ADD CONSTRAINT usuarios_asignados_eventos_fk_1 FOREIGN KEY (id_usuario) REFERENCES "user"(id);
+
+
+-- Agregar el rol Cliente
+INSERT INTO rol (rol, descripcion, estado) VALUES ('Cliente', 'Rol para clientes', 1);
+
+-- Agregar el rol Admin
+INSERT INTO rol (rol, descripcion, estado) VALUES ('Admin', 'Rol para administradores', 1);
+
+-- Agregar el rol Moderador
+INSERT INTO rol (rol, descripcion, estado) VALUES ('Moderador', 'Rol para moderadores', 1);
+
+-- Agregar el rol LectorQR
+INSERT INTO rol (rol, descripcion, estado) VALUES ('LectorQR', 'Rol para usuarios con permisos de escaneo de códigos QR', 1);
+
+
+
+--Categorias
+-- Agregar la categoría Concierto
+INSERT INTO categoria (descripcion, estado) VALUES ('Concierto', 1);
+
+-- Agregar la categoría Conferencia
+INSERT INTO categoria (descripcion, estado) VALUES ('Conferencia', 1);
+
+-- Agregar la categoría Teatro
+INSERT INTO categoria (descripcion, estado) VALUES ('Teatro', 1);
+
+-- Agregar la categoría Danza
+INSERT INTO categoria (descripcion, estado) VALUES ('Danza', 1);
