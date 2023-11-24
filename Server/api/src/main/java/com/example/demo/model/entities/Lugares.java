@@ -56,4 +56,12 @@ public class Lugares {
 		this.tickets = tickets;
 		
 	}
+	
+	public boolean tieneSuficientesTickets(int cantidadTickets) {
+        return this.tickets >= cantidadTickets;
+    }
+
+    public void restarTickets(int cantidadTickets) {
+        this.tickets -= cantidadTickets;
+    }
 }
