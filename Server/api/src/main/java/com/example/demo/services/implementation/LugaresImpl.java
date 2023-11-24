@@ -64,13 +64,7 @@ public class LugaresImpl implements LugaresService{
 		for (Lugares lugar : localidad) {
 			tickets_disponibles = tickets_disponibles + lugar.getTickets();
 		}
-		Integer available = (evento.getTickets_disponibles() - tickets_disponibles);
-		System.out.println(available);
-		if(tickets > available){
-			return false;//No hay espacio suficiente para estos tickets
-		}else{
-			return true;
-		}
+		return true;
 		
 	}
 

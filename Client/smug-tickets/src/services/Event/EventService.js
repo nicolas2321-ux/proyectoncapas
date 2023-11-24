@@ -11,12 +11,13 @@ const API = axios.create({
 
 const eventService = {
     //Crear un evento nuevo
-    createEvent: async (token, descripcion, tickets_disponibles, fecha_evento, capacidad, id_categoria, imagen) => {
+    createEvent: async (token, descripcion, lugar, hora, duracion, fecha_evento, id_categoria, imagen) => {
         let payload = {
             descripcion: descripcion,
-            tickets_disponibles: tickets_disponibles,
+            lugar: lugar,
+            hora: hora,
+            duracion: duracion,
             fecha_evento: fecha_evento,
-            capacidad: capacidad,
             id_categoria: id_categoria,
             imagen: imagen
         };
@@ -79,12 +80,13 @@ const eventService = {
         }
     },
     //Editar un evento
-    editEvent: async (token, id, descripcion, tickets_disponibles, fecha_evento, capacidad, id_categoria, imagen) => {
+    editEvent: async (token, id, descripcion, lugar, hora, duracion, fecha_evento, id_categoria, imagen) => {
         let payload = {
             descripcion: descripcion,
-            tickets_disponibles: tickets_disponibles,
+            lugar: lugar,
+            hora: hora,
+            duracion: duracion,
             fecha_evento: fecha_evento,
-            capacidad: capacidad,
             id_categoria: id_categoria,
             imagen: imagen
         };

@@ -3,14 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthGoogle from "../pages/user/AuthGoogle";
 import GoogleRegister from "../pages/user/GoogleRegister";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import Prueba from "../pages/user/Prueba";
-import Prueba2 from "../pages/user/Prueba2";
 import { ProtectedAdmin } from "./ProtectedAdmin";
 import { ProtectedLectorQR } from "./ProtectedLectorQR";
 import { ProtectedCliente } from "./ProtectedClient";
 import { ProtectedModerador } from "./ProtectedModerador";
-import Prueba3 from "../pages/user/Prueba3";
-import Prueba4 from "../pages/user/Prueba4";
 
 import Home from "../pages/user/Home";
 import CreateEvent from "../pages/admin/CreatEvent";
@@ -47,11 +43,6 @@ const Location = () => {
             <Route path="/register" element={<GoogleRegister />} />
             <Route path ="/viewEvent/:id" element={<ViewEvent/>}/>
 
-            {/*VISTAS DE PRUEBA*/ }
-            <Route path="/admin" element={<ProtectedAdmin component={Prueba} />} />
-            <Route path="/lector" element={<ProtectedLectorQR component={Prueba2} />} />
-            <Route path="/cliente" element={<ProtectedCliente component={Prueba3} />} />
-            <Route path="/moderador" element={<ProtectedModerador component={Prueba4} />} />
 
             {/*VISTAS DE ADMIN*/ }
             <Route path="/admin/Home" element={<ProtectedAdmin component={HomeAdmin} />} />
