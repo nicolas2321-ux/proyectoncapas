@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/user';
 
+const BASE_API = process.env.REACT_APP_API_URL
 const API = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_API,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -14,7 +14,7 @@ const UsersService = {
     //Traer todos los usuarios
     getAllUsers: async () => {
         try {
-            const response = await API.get("/getALL");
+            const response = await API.get("/user/getALL");
 
             if (response.status == 200) {
                 return response.data;
@@ -33,7 +33,7 @@ const UsersService = {
     //Activar usuario
     ActiveUser: async ( userId) => {
         try {
-            const response = await API.post(`/activarUsuario?id=${userId}`, {
+            const response = await API.post(`/user/activarUsuario?id=${userId}`, {
             });
 
             if (response.status == 200) {
@@ -54,7 +54,7 @@ const UsersService = {
     //Desactivar usuario
     DisableUser: async ( userId) => {
         try {
-            const response = await API.post(`/desactivarUsuario?id=${userId}`, {
+            const response = await API.post(`/user/desactivarUsuario?id=${userId}`, {
             });
 
             if (response.status == 200) {

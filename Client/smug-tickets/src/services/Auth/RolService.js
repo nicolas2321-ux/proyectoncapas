@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const BASE_URL_ROLE = 'http://localhost:8080/userRol';
+const BASE_API = process.env.REACT_APP_API_URL
+
 
 const API = axios.create({
-  baseURL: BASE_URL_ROLE,
+  baseURL: BASE_API,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -13,7 +14,7 @@ const rolService = {
     //Obtener el rol del usuario por medio del ID
   getRoles: async (userid, token) => {
     try {
-      const response = await API.get(`/getRolesById?userid=${userid}`, {
+      const response = await API.get(`/userRol/getRolesById?userid=${userid}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,7 +37,7 @@ const rolService = {
   },
   getRol: async (data) => {
     try {
-      const response = await fetch(`${BASE_URL_ROLE}/getRoles`,{
+      const response = await fetch(`${BASE_API}/userRol/getRoles`,{
         "method": "GET",
         headers: {
             "Authorization": `Bearer ${data.token}`,

@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const BASE_URL_ROLE = 'http://localhost:8080/evento';
+const BASE_API = process.env.REACT_APP_API_URL
+
 
 const API = axios.create({
-    baseURL: BASE_URL_ROLE,
+    baseURL: BASE_API,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -22,7 +23,7 @@ const eventService = {
             imagen: imagen
         };
         try {
-            const response = await API.post('/crearEvento', payload, {
+            const response = await API.post('/evento/crearEvento', payload, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -46,7 +47,7 @@ const eventService = {
             title: title
         };
         try {
-            const response = await API.post(`/buscarEventos?page=${page}&size=${size}`, payload );
+            const response = await API.post(`/evento/buscarEventos?page=${page}&size=${size}`, payload );
 
             if (response.status === 200) {
                 return response.data;
@@ -64,7 +65,7 @@ const eventService = {
     //Traer información de un evento
     getEventById: async (event) => {
         try {
-            const response = await API.get(`/getSingleEvent?event=${event}`);
+            const response = await API.get(`/evento/getSingleEvent?event=${event}`);
 
             if (response.status === 200) {
                 return response.data;
@@ -92,7 +93,7 @@ const eventService = {
         };
 
         try {
-            const response = await API.put(`/editarEvento/${id}`, payload, {
+            const response = await API.put(`/evento/editarEvento/${id}`, payload, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -114,7 +115,7 @@ const eventService = {
     //Traer todos los eventos ocultos/finalizados
     getAllEventsHide: async (token, page, size) => {
         try {
-            const response = await API.get(`/getEventoCancelados?page=${page}&size=${size}`, {
+            const response = await API.get(`/evento/getEventoCancelados?page=${page}&size=${size}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -134,7 +135,7 @@ const eventService = {
     //Finalizar un evento y ocultarlo de la vista de los usuarios
     hideEvent: async (token, eventId) => {
         try {
-            const response = await API.patch(`/actualizarEstado?evento=${eventId}`, null, {
+            const response = await API.patch(`/evento/actualizarEstado?evento=${eventId}`, null, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

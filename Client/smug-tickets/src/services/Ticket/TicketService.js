@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL_ROLE = 'http://localhost:8080/ticket';
-const BASE_URL = 'http://localhost:8080/';
+const BASE_API = process.env.REACT_APP_API_URL
 const API = axios.create({
-    baseURL: BASE_URL_ROLE,
+    baseURL: BASE_API,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -13,7 +12,7 @@ const ticketService = {
 
     getMyTickets: async (token) => {
         try {
-            const response = await API.get('/getMyEvents', {
+            const response = await API.get('/ticket/getMyEvents', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -32,7 +31,7 @@ const ticketService = {
         }
     },
     transferirTicket: async(data) => {
-        const response = await fetch(`${BASE_URL}email/sendEmail`,{
+        const response = await fetch(`${API}email/sendEmail`,{
             "method": "POST",
             headers: {
                 "Authorization": `Bearer ${data.token}`,
@@ -48,7 +47,7 @@ const ticketService = {
         return respuesta
     },
     recibirTicket : async(data) => {
-        const response = await fetch(`${BASE_URL}ticket/verificarTranspaso`,{
+        const response = await fetch(`${API}ticket/verificarTranspaso`,{
             "method": "POST",
             headers: {
                 "Authorization": `Bearer ${data.token}`,
@@ -63,7 +62,7 @@ const ticketService = {
     },
     verificarTicket: async (token, eventoId) => {
         try {
-            const response = await API.post('/changeEstado', {
+            const response = await API.post('/ticket/changeEstado', {
                 evento: eventoId,
             }, {
                 headers: {
@@ -86,7 +85,7 @@ const ticketService = {
     },
     crearTicket: async (token, fecha, idEvento, cantidadTicket, idLocalidad)=>{
         try {
-            const response = await API.post('/crearTicket', {
+            const response = await API.post('/ticket/crearTicket', {
                 fecha: fecha,
                 evento: idEvento,
                 cantidadTickets: cantidadTicket,
@@ -112,7 +111,7 @@ const ticketService = {
     },
     getAllTickets: async (token, eventoId) => {
         try {
-            const response = await API.post('/ticket', {
+            const response = await API.post('/ticket/ticket', {
                 evento: eventoId,
             }, {
                 headers: {

@@ -1,10 +1,10 @@
 import axios from "axios"; 
+const BASE_API = process.env.REACT_APP_API_URL
 
-const BASE_URL = "http://localhost:8080/user";
 
 const API = axios.create(
     {
-        baseURL: BASE_URL,
+        baseURL: BASE_API,
         headers: {
             "Content-Type": "application/json",
         }
@@ -17,7 +17,7 @@ const authService = {
         let payload = { identifier: identifier};
         try {
 
-            let response = await API.post('/login', payload);
+            let response = await API.post('/user/login', payload);
             console.log(response);
             if (response.status === 200) {
                 return response;
@@ -35,7 +35,7 @@ const authService = {
     //Extraemos del token el ID del usuario
     verifyToken: async (token) => {
         try {
-            let response = await API.get('/revisar', {
+            let response = await API.get('/user/revisar', {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -56,7 +56,7 @@ const authService = {
 
     register: async (user) => {
         try {
-            const response = await API.post('/signup', user);
+            const response = await API.post('/user/signup', user);
             if (response.status === 200) {
                 return response.status;
             } else {

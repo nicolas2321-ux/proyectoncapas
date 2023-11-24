@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const BASE_URL_ROLE = 'http://localhost:8080/lugares';
+const BASE_API = process.env.REACT_APP_API_URL
+
 
 const API = axios.create({
-  baseURL: BASE_URL_ROLE,
+  baseURL: BASE_API,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -19,7 +20,7 @@ const localityService = {
             tickets: tickets
         };
         try {
-            const response = await API.post('/saveLugar', payload, {
+            const response = await API.post('/lugares/saveLugar', payload, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -40,7 +41,7 @@ const localityService = {
     //Obtener todas las Localidades
     getLocalidadesPorEvento: async (idEvento) => {
         try {
-            const response = await API.get(`/getLocalidad?evento=${idEvento}`);
+            const response = await API.get(`/lugares/getLocalidad?evento=${idEvento}`);
 
             if (response.status === 200) {
                 console.log(response.data);
