@@ -11,11 +11,10 @@ const EditEvent = () => {
   const navigate = useNavigate();
   const [imagenUrl, setImagenUrl] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [ticketDisponible, setTicketDisponible] = useState('');
+  const [lugar, setLugar] = useState('');
   const [fecha, setFecha] = useState('');
   const [hora, setHora] = useState('04:32');
   const [duracion, setDuracion] = useState('2');
-  const [capacidad, setCapacidad] = useState('');
   const [imagenUrl1, setImagenUrl1] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
@@ -34,11 +33,10 @@ const EditEvent = () => {
 
       if (response) {
         setDescripcion(response.descripcion);
-        setTicketDisponible(response.tickets_disponibles);
+        setLugar(response.lugar);
         setFecha(formatearFecha(response.fecha_evento));
         setHora(response.hora);
         setDuracion(response.duracion);
-        setCapacidad(response.capacidad);
         setImagenUrl1(response.imagen);
         setSelectedCategoryId(response.id_categoria.idCategoria);
       }
@@ -73,9 +71,10 @@ const EditEvent = () => {
       token,
       id,
       descripcion,
-      ticketDisponible,
+      lugar,
+      hora,
+      duracion,
       fecha,
-      capacidad,
       selectedCategoryId,
       imagenUrl1
     );
@@ -152,10 +151,10 @@ const EditEvent = () => {
                                     onChange={(e) => setDescripcion(e.target.value)} />
                             </div>
                             <div className='mb-6 pl-2 lg:p-0'>
-                                <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Ticket Disponibles</label>
-                                <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="number"
-                                    value={ticketDisponible}
-                                    onChange={(e) => setTicketDisponible(e.target.value)} />
+                                <label className='block text-base mb-2 font-extrabold lg:text-lg' for="">Lugar</label>
+                                <input className='inline-block lg:ml-0 w-80 lg:w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="text"
+                                    value={lugar}
+                                    onChange={(e) => setLugar(e.target.value)} />
                             </div>
                             <div className='-mx-3 flex lg:flex-nowrap lg:flex-row flex-col' >
                                 <div className='w-full px-3 sm:w-auto'>
@@ -219,10 +218,6 @@ const EditEvent = () => {
                                         </form>
                                     </button>
                                 </div>
-                            </div>
-                            <div className='mb-6 pl-2 lg:pl-0'>
-                                <label className='block mb-2 font-extrabold text-normal lg:text-lg' for="">Capacidad</label>
-                                <input value={capacidad} onChange={(e) => setCapacidad(e.target.value)} className='inline-block w-5/6 p-2 leading-6 text-lg font-normal bg-white shadow border-2 border-gray rounded' type="number" />
                             </div>
                             <div className='flex flex-row items-start  lg:mx-0 gap-5 lg:flex-col '>
                                 <button  type="submit" onClick={handleEditEvent}  className='lg:ml-0 lg:hidden py-4 px-4  lg:px-5 lg:py-3 bg-orange rounded-2xl

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { faHourglass } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import QRCode from 'react-qr-code';
+import NavbarUser from '../../components/Navbar/NavbarUser';
 
 export const ViewQR = () => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ export const ViewQR = () => {
   
     return (
       <div>
+        <NavbarUser />
         <div className="container px-4 mx-auto">
           <div className="max-w-lg mx-auto py-8">
             <div className="text-center mb-8">

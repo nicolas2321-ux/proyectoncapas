@@ -84,11 +84,11 @@ const ViewEvent = () => {
                         </div>
                         <div className="flex items-center space-x-2">
                             <FontAwesomeIcon icon={faClock} className='w-8 h-8 text-blue' />
-                            <p className="text-2xl">05:00</p>
+                            <p className="text-2xl">{event.hora}</p>
                         </div>
                         <div className="flex items-center space-x-2">
                             <FontAwesomeIcon icon={faLocationDot} className='w-8 h-8 text-blue' />
-                            <p className="text-2xl">Estadio Cuscatlan</p>
+                            <p className="text-2xl">{event.lugar}</p>
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row justify-center py-10 md:justify-between md:px-4">
