@@ -16,3 +16,26 @@ SmugTickets es una aplicación web intuitiva y fácil de usar que te permite com
 - **Nombre de usuario:** SmugTicket 2023
 - **Correo electrónico:** smugtickets2023@gmail.com
 - **Rol:** LectorQR
+
+
+# Cómo instalar una PWA
+
+1. En tu computadora, abre tu navegador web y entra a la página de Smug Tickets.
+   ![paso1](/Data/Resource/Inicio.png)
+
+2. Ve a las configuraciones del navegador.
+
+   ![paso2](/Data/Resource/configuracion.png)
+
+3. Entra en aplicaciones y da clic en instalar Smug Tickets.
+
+   ![paso3](/Data/Resource/Instalar.png)
+
+4. Aquí debes elegir qué permisos, luego dar clic en permitir.
+
+   ![paso4](/Data/Resource/permisos.png)
+
+5. Listo, ya tendrás instalada la aplicación de Smug Tickets y podrás ver el icono en el escritorio.
+
+   ![paso5](/Data/Resource/listo.png)
+
