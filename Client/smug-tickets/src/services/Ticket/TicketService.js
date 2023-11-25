@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const BASE_API = 'https://api.smug.solutions'
+
 const API = axios.create({
     baseURL: BASE_API,
     headers: {
@@ -31,7 +32,7 @@ const ticketService = {
         }
     },
     transferirTicket: async(data) => {
-        const response = await fetch(`${API}email/sendEmail`,{
+        const response = await fetch(`${API}/email/sendEmail`,{
             "method": "POST",
             headers: {
                 "Authorization": `Bearer ${data.token}`,
