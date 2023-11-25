@@ -32,7 +32,7 @@ const ticketService = {
         }
     },
     transferirTicket: async(data) => {
-        const response = await fetch(`${API}/email/sendEmail`,{
+        const response = await fetch(`${BASE_API}/email/sendEmail`,{
             "method": "POST",
             headers: {
                 "Authorization": `Bearer ${data.token}`,
@@ -48,7 +48,7 @@ const ticketService = {
         return respuesta
     },
     recibirTicket : async(data) => {
-        const response = await fetch(`${API}ticket/verificarTranspaso`,{
+        const response = await fetch(`${BASE_API}ticket/verificarTranspaso`,{
             "method": "POST",
             headers: {
                 "Authorization": `Bearer ${data.token}`,
