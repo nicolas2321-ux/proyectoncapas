@@ -1,6 +1,9 @@
 # SmugTickets
 SmugTickets es una aplicación web intuitiva y fácil de usar que te permite comprar boletos para una amplia variedad de eventos en un solo lugar. Ya sea que estés buscando asistir a conciertos, festivales, eventos deportivos, SmugTickets tiene todo lo que necesitas.
 
+##documentación del testing
+# https://docs.google.com/spreadsheets/d/1eh25dKlBCEn4LGMo6pzd2NH6pGBx5gATgAieiWNF4kM/edit?usp=drivesdk
+
 ## Enlace de [SmugTickets](https://smugtickets.netlify.app/)
 
 ## Enlace documentacion API [SmugTickets](https://documenter.getpostman.com/view/20859166/2s93zE3L2K)
